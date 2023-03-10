@@ -1,12 +1,11 @@
 const express = require('express');
 const app = express();
-const {port} = require('./config');
-//const apiRouter = require('./routes/api');
+const { hostname, port } = require('./src/configs/server.config');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
 // db
-require('./database/sqlite');
+require('./src/services/database/sqlite');
 
 //parsers
 app.use(bodyParser.json());
@@ -15,9 +14,10 @@ app.use(bodyParser.json());
 app.use(cors());
 
 // routes
-//app.use('/api/', apiRouter);
+const dcsRoute = require('./src/routes/dcs/dcs')
+app.use('/dcs', dcsRoute);
 
 // server
-app.listen(port, function(){
-    console.log('serwer słucha... http://localhost:' + port);
-});
+app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+  });
