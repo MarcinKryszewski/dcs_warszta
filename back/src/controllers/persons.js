@@ -7,6 +7,11 @@ class PersonActions {
         res.status(200).send(persons);
     }
 
+    async AllPersonsExisting(req, res) {
+        const persons = await Person.findAll({ where: { Delete : 0}});
+        res.status(200).send(persons);
+    }
+
     async GetPerson(req, res) {
         const id = req.params.id;
         const person = await Person.findOne({ where: { Id: id }});
@@ -41,7 +46,10 @@ class PersonActions {
 
     async DeletePerson(req, res) {
         const id = parseInt(req.params.id);
-        await Person.destroy({ where: { Id: id }});
+        const person = await Person.findOne({ where: { Id: id }});
+        person.Delete = true;
+        person.DeleteDate = new Date().toJSON().slice(0, 10);
+        await person.save();
         res.sendStatus(204);
     }
 }

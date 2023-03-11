@@ -7,6 +7,11 @@ class TaskActions {
         res.status(200).send(tasks);
     }
 
+    async AllTasksExisting(req, res) {
+        const tasks = await Task.findAll({ where: { Delete : 0}});
+        res.status(200).send(tasks);
+    }
+
     async GetTask(req, res) {
         const id = req.params.id;
         const task = await Task.findOne({ where: { Id: id }});
@@ -56,7 +61,10 @@ class TaskActions {
 
     async DeleteTask(req, res) {
         const id = parseInt(req.params.id);
-        await Task.destroy({ where: { Id: id }});
+        const task = await Task.findOne({ where: { Id: id }});
+        task.Delete = true;
+        task.DeleteDate = new Date().toJSON().slice(0, 10);
+        await task.save();
         res.sendStatus(204);
     }
 }

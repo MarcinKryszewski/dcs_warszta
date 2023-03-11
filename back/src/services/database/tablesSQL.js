@@ -4,6 +4,8 @@ module.exports = {
         Id INTEGER NOT NULL UNIQUE, \
         Area TEXT NOT NULL, \
         MachineName TEXT NOT NULL, \
+        Delete	INTEGER NOT NULL DEFAULT 0, \
+	    DeleteDate	TEXT, \
         PRIMARY KEY(Id AUTOINCREMENT) \
     )",
     
@@ -22,6 +24,9 @@ module.exports = {
         Name	TEXT NOT NULL, \
         Surname	TEXT NOT NULL, \
         Login	TEXT, \
+        Role	INTEGER NOT NULL DEFAULT 2, \
+        Delete	INTEGER NOT NULL DEFAULT 0, \
+        DeleteDate	TEXT, \
         PRIMARY KEY(Id AUTOINCREMENT) \
     )",
     
@@ -35,6 +40,8 @@ module.exports = {
         Author	INTEGER NOT NULL, \
         Machine	INTEGER NOT NULL, \
         Responsible	INTEGER NOT NULL, \
+        Delete	INTEGER NOT NULL DEFAULT 0, \
+	    DeleteDate	TEXT, \
         PRIMARY KEY(Id AUTOINCREMENT), \
         FOREIGN KEY(Responsible) REFERENCES Persons(Id), \
         FOREIGN KEY(Author) REFERENCES Persons(Id), \
@@ -51,5 +58,11 @@ module.exports = {
         FOREIGN KEY(Person) REFERENCES Persons(Id), \
         PRIMARY KEY(Id AUTOINCREMENT) \
     )",
+
+    roles : "CREATE TABLE Roles ( \
+        Id	INTEGER NOT NULL, \
+        Name	TEXT NOT NULL, \
+        PRIMARY KEY(Id AUTOINCREMENT) \
+    )"
 }
 

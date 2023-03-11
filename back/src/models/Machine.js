@@ -13,6 +13,12 @@ Machine.init({
     }, 
     MachineName : {
         type: DataTypes.TEXT
+    }, 
+    Delete : {
+        type: DataTypes.BOOLEAN
+    }, 
+    DeleteDate : {
+        type: DataTypes.DATEONLY
     }
 }, {
     sequelize, 

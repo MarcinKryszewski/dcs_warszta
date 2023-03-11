@@ -7,6 +7,11 @@ class MachineActions {
         res.status(200).send(machines);
     }
 
+    async AllMachinesExisting(req, res) {
+        const machines = await Machine.findAll({ where: { Delete : 0}});
+        res.status(200).send(machines);
+    }
+
     async GetMachine(req, res) {
         const id = req.params.id;
         const machine = await Machine.findOne({ where: { Id: id }});
@@ -37,7 +42,10 @@ class MachineActions {
 
     async DeleteMachine(req, res) {
         const id = parseInt(req.params.id);
-        await Machine.destroy({ where: { Id: id }});
+        const machine = await Machine.findOne({ where: { Id: id }});
+        machine.Delete = true;
+        machine.DeleteDate = new Date().toJSON().slice(0, 10);
+        await machine.save();
         res.sendStatus(204);
     }
 }

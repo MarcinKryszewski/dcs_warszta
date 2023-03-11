@@ -31,6 +31,12 @@ Task.init({
     },
     Responsible : {
         type: DataTypes.INTEGER
+    }, 
+    Delete : {
+        type: DataTypes.BOOLEAN
+    }, 
+    DeleteDate : {
+        type: DataTypes.DATEONLY
     }
 }, {
     sequelize, 
