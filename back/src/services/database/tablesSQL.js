@@ -29,9 +29,9 @@ module.exports = {
         Id	INTEGER NOT NULL UNIQUE, \
         Description	TEXT NOT NULL, \
         Category	TEXT NOT NULL, \
-        Priority	TEXT NOT NULL DEFAULT 'C', \
-        CreationDate	TEXT NOT NULL, \
-        FinishDate	TEXT NOT NULL, \
+        Priority	TEXT DEFAULT 'C', \
+        CreationDate	TEXT, \
+        FinishDate	TEXT, \
         Author	INTEGER NOT NULL, \
         Machine	INTEGER NOT NULL, \
         Responsible	INTEGER NOT NULL, \
