@@ -1,24 +1,27 @@
 const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
 const sequelize = require('../services/database/sqlite');
 
-class Machine extends Model {}
+class Person extends Model {}
 
-Machine.init({
+Person.init({
     Id : {
         type: DataTypes.INTEGER,
         primaryKey: true
     },
-    Area : {
+    Name : {
         type: DataTypes.TEXT
     }, 
-    MachineName : {
+    Surname : {
+        type: DataTypes.TEXT
+    },
+    Login : {
         type: DataTypes.TEXT
     }
 }, {
     sequelize, 
-    modelName: 'machine',
+    modelName: 'person',
     timestamps: false,
-    tableName: 'Machines'
+    tableName: 'Persons'
 })
 
-module.exports = Machine;
+module.exports = Person;

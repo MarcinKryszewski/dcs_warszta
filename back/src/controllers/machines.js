@@ -17,14 +17,16 @@ class MachineActions {
         const area = req.body.Area;
         const machineName = req.body.MachineName;
         const machine = Machine.build({
+            Id: null,
             Area: area,
             MachineName: machineName
         });
+        console.log(machine);
         await machine.save();
         res.status(200).send(machine);
     }
 
-    async UpdateMachines(req, res) {
+    async UpdateMachine(req, res) {
         const id = req.params.id;
         const machine = await Machine.findOne({ where: { Id: id }});
         machine.Area = req.body.Area;
@@ -33,7 +35,7 @@ class MachineActions {
         res.status(201).json(machine);
     }
 
-    async DeleteMachines(req, res) {
+    async DeleteMachine(req, res) {
         const id = parseInt(req.params.id);
         await Machine.destroy({ where: { Id: id }});
         res.sendStatus(204);

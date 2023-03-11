@@ -17,9 +17,11 @@ app.use(cors());
 // routes
 const dcsRoute = require('./src/routes/dcs/dcs');
 const machineRoute = require('./src/routes/dcs/machineRoutes');
+const personRoute = require('./src/routes/dcs/personRoutes');
 
 app.use('/dcs', dcsRoute);
 app.use('/machine', machineRoute);
+app.use('/person', personRoute);
 
 // server
 app.listen(port, hostname, () => {
