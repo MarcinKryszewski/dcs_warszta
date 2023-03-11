@@ -6,6 +6,9 @@ const router = express.Router()
 router.get("/TEST",(req,res,next) => {
     res.send("DCS ROUTE TEST SUCCESSFUL");
 })
+
+//machines
+
   
 // Importing the router
 module.exports = router

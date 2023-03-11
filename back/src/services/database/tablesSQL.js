@@ -1,32 +1,32 @@
 module.exports = {
 
     machines : "CREATE TABLE Machines ( \
-        MachineId INTEGER NOT NULL UNIQUE, \
-        Area INTEGER NOT NULL, \
-        Machine INTEGER, \
-        PRIMARY KEY(MachineId AUTOINCREMENT) \
+        Id INTEGER NOT NULL UNIQUE, \
+        Area TEXT NOT NULL, \
+        MachineName TEXT NOT NULL, \
+        PRIMARY KEY(Id AUTOINCREMENT) \
     )",
     
     partsStatuses : "CREATE TABLE PartsStatuses ( \
-        PartsStatusId	INTEGER NOT NULL UNIQUE, \
-        Task	INTEGER NOT NULL, \
+        Id	INTEGER NOT NULL UNIQUE, \
+        Task	TEXT NOT NULL, \
         Status	TEXT NOT NULL, \
         Date	TEXT NOT NULL, \
         Person	INTEGER NOT NULL, \
-        PRIMARY KEY(PartsStatusId AUTOINCREMENT), \
-        FOREIGN KEY(Person) REFERENCES Persons(PersonId) \
+        PRIMARY KEY(Id AUTOINCREMENT), \
+        FOREIGN KEY(Person) REFERENCES Persons(Id) \
     )",
     
     persons : "CREATE TABLE Persons ( \
-        PersonId	INTEGER NOT NULL UNIQUE, \
+        Id	INTEGER NOT NULL UNIQUE, \
         Name	TEXT NOT NULL, \
         Surname	TEXT NOT NULL, \
         Login	TEXT, \
-        PRIMARY KEY(PersonId AUTOINCREMENT) \
+        PRIMARY KEY(Id AUTOINCREMENT) \
     )",
     
     tasks : "CREATE TABLE Tasks ( \
-        TaskId	INTEGER NOT NULL UNIQUE, \
+        Id	INTEGER NOT NULL UNIQUE, \
         Description	TEXT NOT NULL, \
         Category	TEXT NOT NULL, \
         Priority	TEXT NOT NULL DEFAULT 'C', \
@@ -35,21 +35,21 @@ module.exports = {
         Author	INTEGER NOT NULL, \
         Machine	INTEGER NOT NULL, \
         Responsible	INTEGER NOT NULL, \
-        PRIMARY KEY(TaskId AUTOINCREMENT), \
-        FOREIGN KEY(Responsible) REFERENCES Persons(PersonId), \
-        FOREIGN KEY(Author) REFERENCES Persons(PersonId), \
-        FOREIGN KEY(Machine) REFERENCES Machines(MachineId) \
+        PRIMARY KEY(Id AUTOINCREMENT), \
+        FOREIGN KEY(Responsible) REFERENCES Persons(Id), \
+        FOREIGN KEY(Author) REFERENCES Persons(Id), \
+        FOREIGN KEY(Machine) REFERENCES Machines(Id) \
     )",
     
     taksConfirms : "CREATE TABLE TasksConfirms ( \
-        TaskConfirm	INTEGER NOT NULL UNIQUE, \
+        Id	INTEGER NOT NULL UNIQUE, \
         Task	INTEGER NOT NULL, \
         Status	TEXT NOT NULL, \
         Person	INTEGER NOT NULL, \
         Date	TEXT NOT NULL, \
-        FOREIGN KEY(Task) REFERENCES Tasks(TaskId), \
-        FOREIGN KEY(Person) REFERENCES Persons(PersonId), \
-        PRIMARY KEY(TaskConfirm AUTOINCREMENT) \
+        FOREIGN KEY(Task) REFERENCES Tasks(Id), \
+        FOREIGN KEY(Person) REFERENCES Persons(Id), \
+        PRIMARY KEY(Id AUTOINCREMENT) \
     )",
 }
 
