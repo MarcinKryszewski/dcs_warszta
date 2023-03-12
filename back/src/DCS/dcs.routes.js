@@ -1,9 +1,9 @@
 const express = require("express")
 const router = express.Router()  
 
-const machineRoute = require('./machineRoutes');
-const personRoute = require('./personRoutes');
-const taskRoute = require('./taskRoutes')
+const machineRoute = require('./Machines/machines.routes');
+const personRoute = require('./Persons/person.routes');
+const taskRoute = require('./Tasks/tasks.routes')
 
 router.use('/machine', machineRoute);
 router.use('/person', personRoute);

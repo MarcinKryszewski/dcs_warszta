@@ -1,4 +1,4 @@
-const Machine = require('../models/Machine');
+const Machine = require('./machines.model');
 
 class MachineActions {
 

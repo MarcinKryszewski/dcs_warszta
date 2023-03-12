@@ -1,6 +1,6 @@
 const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
-const sequelize = require('../services/database/sqlite');
-const Machine = require('./Machine');
+const sequelize = require('../database/dcs.database.sqlite');
+const Machine = require('../Machines/machines.model');
 
 class Task extends Model {
     

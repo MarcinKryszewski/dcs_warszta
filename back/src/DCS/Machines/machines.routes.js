@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const MachineActions = require('../../controllers/machines')
+const MachineActions = require('./machines.api')
 
 router.get('/all', MachineActions.AllMachinesExisting);
 router.get('/all/force', MachineActions.AllMachines);

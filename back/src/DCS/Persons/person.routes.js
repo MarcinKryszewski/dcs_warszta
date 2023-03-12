@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const PersonActions = require('../../controllers/persons')
+const PersonActions = require('./persons.api')
 
 router.get('/all', PersonActions.AllPersonsExisting);
 router.get('/all/force', PersonActions.AllPersons);

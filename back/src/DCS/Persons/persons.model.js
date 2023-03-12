@@ -1,22 +1,20 @@
 const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
-const sequelize = require('../services/database/sqlite');
-const Task = require('./Task');
+const sequelize = require('../database/dcs.database.sqlite');
 
-class Machine extends Model {
-    static associate(models) {
-        Machine.hasMany(Task, {foreignKey: 'Machine', as: 'Machine'})
-    }    
-}
+class Person extends Model {}
 
-Machine.init({
+Person.init({
     Id : {
         type: DataTypes.INTEGER,
         primaryKey: true
     },
-    Area : {
+    Name : {
         type: DataTypes.TEXT
     }, 
-    MachineName : {
+    Surname : {
+        type: DataTypes.TEXT
+    },
+    Login : {
         type: DataTypes.TEXT
     }, 
     Delete : {
@@ -27,9 +25,9 @@ Machine.init({
     }
 }, {
     sequelize, 
-    modelName: 'machine',
+    modelName: 'person',
     timestamps: false,
-    tableName: 'Machines'
-});
+    tableName: 'Persons'
+})
 
-module.exports = Machine;
+module.exports = Person;

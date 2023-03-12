@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const TaskActions = require('../../controllers/tasks')
+const TaskActions = require('./tasks.api')
 
 router.get('/all', TaskActions.AllTasks);
 router.get('/:id', TaskActions.GetTask);

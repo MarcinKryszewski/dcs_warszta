@@ -1,6 +1,6 @@
-const Task = require('./Task');
-const Machine = require('./Machine');
-const Person = require('./Person');
+const Task = require('./Tasks/tasks.model');
+const Machine = require('./Machines/machines.model');
+const Person = require('./Persons/persons.model');
 
 console.log("RELATIONSHIP");
 

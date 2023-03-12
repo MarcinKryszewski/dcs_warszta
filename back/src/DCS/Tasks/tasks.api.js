@@ -1,6 +1,6 @@
-const Task = require('../models/Task');
-const Machine = require('../models/Machine');
-const Person = require('../models/Person')
+const Task = require('./tasks.model');
+const Machine = require('../Machines/machines.model');
+const Person = require('../Persons/persons.model')
 
 class TaskActions {
 
