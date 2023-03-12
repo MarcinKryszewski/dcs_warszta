@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 const sqlite3 = require('sqlite3').verbose();
-const { databaseName, databasePath } = require('../dcs.db.config');
+const { databaseName, databasePath } = require('./dcs.database.config');
 const fs = require('fs');
 const dbPath = databasePath + databaseName + '.sqlite3';
 

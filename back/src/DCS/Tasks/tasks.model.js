@@ -1,13 +1,7 @@
 const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
 const sequelize = require('../database/dcs.database.sqlite');
-const Machine = require('../Machines/machines.model');
 
-class Task extends Model {
-    
-    /*static associate(models) {
-        this.belongsTo(Machine, {foreignKey: 'Machine', as: 'Machine'})
-    } */
-}
+class Task extends Model {}
 
 Task.init({
     Id : {

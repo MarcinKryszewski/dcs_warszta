@@ -1,9 +1,9 @@
 const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
 const sequelize = require('../database/dcs.database.sqlite');
 
-class PartsStatus extends Model {}
+class TasksConfirm extends Model {}
 
-PartsStatus.init({
+TasksConfirm.init({
     Id : {
         type: DataTypes.INTEGER,
         primaryKey: true
@@ -22,9 +22,9 @@ PartsStatus.init({
     }
 }, {
     sequelize, 
-    modelName: 'partsStatus',
+    modelName: 'tasksConfirm',
     timestamps: false,
-    tableName: 'PartsStatuses'
+    tableName: 'TasksConfirms'
 });
 
-module.exports = PartsStatus;
+module.exports = TasksConfirm;

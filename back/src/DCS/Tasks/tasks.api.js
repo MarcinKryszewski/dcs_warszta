@@ -17,7 +17,6 @@ class TaskActions {
                 as: 'Responsible'
             }
             ]
-            //include: Person
         });
         res.status(200).send(tasks);
     }

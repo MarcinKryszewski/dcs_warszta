@@ -1,5 +1,5 @@
 module.exports = {
     databaseConnectionString : process.env.DATABASE || '',
-    databaseName : 'dsc_warsztat',
+    databaseName : 'dsc.database',
     databasePath : './src/DCS/database/'
 };

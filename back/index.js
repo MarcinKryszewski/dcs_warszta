@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const { hostname, port } = require('./src/configs/server.config');
-const relationships =  require('./src/DCS/dcs.relationships');
+const relationships =  require('./src/DCS/database/dcs.database.relationships');
 
 // db
 const sequelize = require('./src/DCS/database/dcs.database.sqlite');

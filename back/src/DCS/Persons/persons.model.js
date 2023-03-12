@@ -16,7 +16,11 @@ Person.init({
     },
     Login : {
         type: DataTypes.TEXT
-    }, 
+    },
+    Role : {
+        type: DataTypes.TEXT,
+        defaultValue: 2
+    },  
     Delete : {
         type: DataTypes.BOOLEAN
     }, 
