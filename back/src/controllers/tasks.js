@@ -1,9 +1,24 @@
 const Task = require('../models/Task');
+const Machine = require('../models/Machine');
+const Person = require('../models/Person')
 
 class TaskActions {
 
     async AllTasks(req, res) {
-        const tasks = await Task.findAll();
+        const tasks = await Task.findAll({ 
+            include: [{
+                model: Machine,
+                as: 'Machine'
+            }, {
+                model: Person,
+                as: 'Author'
+            }, {
+                model: Person,
+                as: 'Responsible'
+            }
+            ]
+            //include: Person
+        });
         res.status(200).send(tasks);
     }
 
@@ -24,9 +39,9 @@ class TaskActions {
         const priority = req.body.Priority;
         const creationDate = req.body.CreationDate;
         const finishDate = req.body.FinishDate;
-        const author = req.body.Author;
-        const machine = req.body.Machine;
-        const responsible = req.body.Responsible;
+        const author = req.body.AuthorId;
+        const machine = req.body.MachineId;
+        const responsible = req.body.ResponsibleId;
         const task = Task.build({
             Id: null,
             Description : description,
@@ -34,9 +49,9 @@ class TaskActions {
             Priority : priority,
             CreationDate : creationDate,
             FinishDate : finishDate,
-            Author : author,
-            Machine : machine,
-            Responsible : responsible
+            AuthorId : author,
+            MachineId : machine,
+            ResponsibleId : responsible
         });
         await task.save();
         res.status(200).send(task);
@@ -51,9 +66,9 @@ class TaskActions {
         task.Priority = req.body.Priority;
         task.CreationDate = req.body.CreationDate;
         task.FinishDate = req.body.FinishDate;
-        task.Author = req.body.Author;
-        task.Machine = req.body.Machine;
-        task.Responsible = req.body.Responsible;
+        task.AuthorId = req.body.Author;
+        task.MachineId = req.body.Machine;
+        task.ResponsibleId = req.body.Responsible;
 
         await task.save();
         res.status(201).json(task);

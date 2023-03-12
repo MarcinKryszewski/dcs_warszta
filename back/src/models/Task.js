@@ -1,7 +1,13 @@
 const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
 const sequelize = require('../services/database/sqlite');
+const Machine = require('./Machine');
 
-class Task extends Model {}
+class Task extends Model {
+    
+    /*static associate(models) {
+        this.belongsTo(Machine, {foreignKey: 'Machine', as: 'Machine'})
+    } */
+}
 
 Task.init({
     Id : {
@@ -23,13 +29,13 @@ Task.init({
     FinishDate : {
         type: DataTypes.DATEONLY
     },
-    Author : {
+    AuthorId : {
+        type: DataTypes.INTEGER,
+    },
+    MachineId : {
         type: DataTypes.INTEGER
     },
-    Machine : {
-        type: DataTypes.INTEGER
-    },
-    Responsible : {
+    ResponsibleId : {
         type: DataTypes.INTEGER
     }, 
     Delete : {
@@ -43,6 +49,6 @@ Task.init({
     modelName: 'task',
     timestamps: false,
     tableName: 'Tasks'
-})
+});
 
 module.exports = Task;

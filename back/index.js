@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
 const { hostname, port } = require('./src/configs/server.config');
+const relationships =  require('./src/models/relationships');
 
 // db
 const sequelize = require('./src/services/database/sqlite');
 sequelize.sync().then(() => console.log('Database connected'));
+
 
 //parsers
 const bodyParser = require('body-parser');
@@ -17,7 +19,6 @@ app.use(cors());
 // routes
 const dcsRoute = require('./src/routes/dcs/dcsRoutes');
 app.use('/dcs', dcsRoute);
-
 
 // server
 app.listen(port, hostname, () => {

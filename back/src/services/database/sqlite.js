@@ -8,11 +8,9 @@ fs.access(dbPath, fs.constants.F_OK, (err) => {
     if (err) {
         console.log("Creating database");
         const db = require('./dbCreate');
-
       } else {        
         const db = new sqlite3.Database(dbPath);
       }
-
   });
 
   const sequelize = new Sequelize(databaseName, 'user', 'password', {

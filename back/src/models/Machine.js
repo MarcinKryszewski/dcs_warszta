@@ -1,7 +1,12 @@
 const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
 const sequelize = require('../services/database/sqlite');
+const Task = require('./Task');
 
-class Machine extends Model {}
+class Machine extends Model {
+    static associate(models) {
+        Machine.hasMany(Task, {foreignKey: 'Machine', as: 'Machine'})
+    }    
+}
 
 Machine.init({
     Id : {
@@ -25,6 +30,6 @@ Machine.init({
     modelName: 'machine',
     timestamps: false,
     tableName: 'Machines'
-})
+});
 
 module.exports = Machine;
