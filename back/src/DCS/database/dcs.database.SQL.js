@@ -25,10 +25,11 @@ module.exports = {
         Name TEXT NOT NULL, \
         Surname TEXT NOT NULL, \
         Login TEXT, \
-        Role INTEGER NOT NULL DEFAULT 2, \
+        RoleId INTEGER NOT NULL DEFAULT 2, \
         Delete INTEGER NOT NULL DEFAULT 0, \
         DeleteDate TEXT, \
         PRIMARY KEY(Id AUTOINCREMENT) \
+        FOREIGN KEY(RoleId) REFERENCES Roles(Id) \
     )",
     
     tasks : "CREATE TABLE Tasks ( \
@@ -55,8 +56,8 @@ module.exports = {
         Status TEXT NOT NULL, \
         PersonId INTEGER NOT NULL, \
         Date TEXT NOT NULL, \
-        FOREIGN KEY(Task) REFERENCES Tasks(Id), \
-        FOREIGN KEY(Person) REFERENCES Persons(Id), \
+        FOREIGN KEY(TaskId) REFERENCES Tasks(Id), \
+        FOREIGN KEY(PersonId) REFERENCES Persons(Id), \
         PRIMARY KEY(Id AUTOINCREMENT) \
     )",
 

@@ -1,15 +1,34 @@
-const TasksConfirm = require('./tasksConfirms.model');
+const TasksConfirm = require('./tasksconfirms.model');
+const Task = require('../Tasks/tasks.model');
+const Person = require('../Persons/persons.model');
 
 class TasksConfirmActions {
 
     async AllTasksConfirms(req, res) {
-        const tasksConfirms = await TasksConfirm.findAll();
+        const tasksConfirms = await TasksConfirm.findAll({
+            include: [{
+                model: Task,
+                as: 'Task'
+            },
+            {
+                model: Person,
+                as: 'Person'
+            }]
+        });
         res.status(200).send(tasksConfirms);
     }
 
     async GetTasksConfirm(req, res) {
         const id = req.params.id;
-        const tasksConfirm = await TasksConfirm.findOne({ where: { Id: id }});
+        const tasksConfirm = await TasksConfirm.findOne({ where: { Id: id },
+            include: [{
+                model: Task,
+                as: 'Task'
+            },
+            {
+                model: Person,
+                as: 'Person'
+            }]});
         res.status(200).json(tasksConfirm);
     }
 
@@ -18,6 +37,12 @@ class TasksConfirmActions {
         const status = req.body.Status;
         const personId = req.body.PersonId;
         const date = req.body.Date;
+
+        console.log(taskId);
+        console.log(status);
+        console.log(personId);
+        console.log(date);
+
         const tasksConfirm = TasksConfirm.build({
             Id: null,
             TaskId: taskId,

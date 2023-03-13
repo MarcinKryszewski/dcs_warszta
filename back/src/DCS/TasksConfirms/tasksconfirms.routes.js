@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const TasksConfirmActions = require('./tasksConfirms.api')
+const TasksConfirmActions = require('./tasksconfirms.api')
 
 router.get('/all', TasksConfirmActions.AllTasksConfirms);
 router.get('/:id', TasksConfirmActions.GetTasksConfirm);

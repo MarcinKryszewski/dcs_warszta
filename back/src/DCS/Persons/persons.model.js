@@ -2,7 +2,7 @@ const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
 const sequelize = require('../database/dcs.database.sqlite');
 
 class Person extends Model {}
-
+console.log("Person");
 Person.init({
     Id : {
         type: DataTypes.INTEGER,
@@ -17,7 +17,7 @@ Person.init({
     Login : {
         type: DataTypes.TEXT
     },
-    Role : {
+    RoleId : {
         type: DataTypes.TEXT,
         defaultValue: 2
     },  

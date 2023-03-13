@@ -2,7 +2,7 @@ const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
 const sequelize = require('../database/dcs.database.sqlite');
 
 class Task extends Model {}
-
+console.log("Task");
 Task.init({
     Id : {
         type: DataTypes.INTEGER,

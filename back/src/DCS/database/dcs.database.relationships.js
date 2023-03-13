@@ -1,26 +1,9 @@
 const Machine = require('../Machines/machines.model');
-const PartsStatuse = require('../PartsStatuses/partsstatuses.model');
+const PartsStatus = require('../PartsStatuses/partsstatuses.model');
 const Person = require('../Persons/persons.model');
-//const Role = require();
+const Role = require('../Roles/roles.model');
 const Task = require('../Tasks/tasks.model');
 const TasksConfirm = require('../TasksConfirms/tasksconfirms.model');
-
-
-
-Task.belongsTo(Machine, {
-    foreignKey: 'MachineId',
-    as: 'Machine'
-});
-
-Task.belongsTo(Person, {
-    foreignKey: 'AuthorId',
-    as: 'Author'
-});
-
-Task.belongsTo(Person, {
-    foreignKey: 'ResponsibleId',
-    as: 'Responsible'
-});
 
 Machine.hasMany(Task, {
     foreignKey: 'MachineId',
@@ -36,3 +19,80 @@ Person.hasMany(Task, {
     foreignKey: 'ResponsibleId',
     as: 'Responsible'
 });
+
+Person.hasMany(PartsStatus)
+
+Person.hasMany(TasksConfirm)
+
+Role.hasMany(Person, {
+    foreignKey: 'RoleID',
+    as: 'Role'
+})
+
+Task.hasMany(PartsStatus)
+
+Task.hasMany(TasksConfirm)
+
+
+
+TasksConfirm.belongsTo(Task, {
+    foreignKey: 'TaskId',
+    as: 'Task'
+});
+TasksConfirm.belongsTo(Person, {
+    foreignKey: 'PersonId',
+    as: 'Person'
+});
+PartsStatus.belongsTo(Person, {
+    foreignKey: 'PersonId',
+    as: 'Person'
+});
+PartsStatus.belongsTo(Task, {
+    foreignKey: 'TaskId',
+    as: 'Task'
+});
+Person.belongsTo(Role);
+Task.belongsTo(Machine);
+Task.belongsTo(Person, {as: 'Author'});
+Task.belongsTo(Person, {as: 'Responsible'});
+
+/*
+TasksConfirm.belongsTo(Task, {
+    foreignKey: 'TaskId',
+    as: 'Task'
+})
+TasksConfirm.belongsTo(Person, {
+    foreignKey: 'PersonId',
+    as: 'Person'
+})
+
+PartsStatus.belongsTo(Person, {
+    foreignKey: 'PersonId',
+    as: 'Person'
+})
+
+PartsStatus.belongsTo(Task, {
+    foreignKey: 'TaskId',
+    as: 'Task'
+})
+
+Person.belongsTo(Role, {
+    foreignKey: 'RoleID',
+    as: 'Role'
+})
+
+Task.belongsTo(Machine, {
+    foreignKey: 'MachineId',
+    as: 'Machine'
+});
+
+Task.belongsTo(Person, {
+    foreignKey: 'AuthorId',
+    as: 'Author'
+});
+
+Task.belongsTo(Person, {
+    foreignKey: 'ResponsibleId',
+    as: 'Responsible'
+});
+*/

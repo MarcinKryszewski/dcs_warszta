@@ -39,7 +39,18 @@ class TaskActions {
 
     async GetTask(req, res) {
         const id = req.params.id;
-        const task = await Task.findOne({ where: { Id: id }});
+        const task = await Task.findOne({ where: { Id: id },
+            include: [{
+                model: Machine,
+                as: 'Machine'
+            }, {
+                model: Person,
+                as: 'Author'
+            }, {
+                model: Person,
+                as: 'Responsible'
+            }
+            ]});
         res.status(200).json(task);
     }
 

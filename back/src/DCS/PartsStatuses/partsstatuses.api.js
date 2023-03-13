@@ -1,15 +1,34 @@
 const PartsStatus = require('./partsstatuses.model');
+const Task = require('../Tasks/tasks.model');
+const Person = require('../Persons/persons.model');
 
 class PartsStatusActions {
 
     async AllPartsStatuss(req, res) {
-        const partsStatuss = await PartsStatus.findAll();
+        const partsStatuss = await PartsStatus.findAll({
+            include: [{
+                model: Task,
+                as: 'Task'
+            },
+            {
+                model: Person,
+                as: 'Person'
+            }]
+        });
         res.status(200).send(partsStatuss);
     }
 
     async GetPartsStatus(req, res) {
         const id = req.params.id;
-        const partsStatus = await PartsStatus.findOne({ where: { Id: id }});
+        const partsStatus = await PartsStatus.findOne({ where: { Id: id },
+            include: [{
+                model: Task,
+                as: 'Task'
+            },
+            {
+                model: Person,
+                as: 'Person'
+            }]});
         res.status(200).json(partsStatus);
     }
 

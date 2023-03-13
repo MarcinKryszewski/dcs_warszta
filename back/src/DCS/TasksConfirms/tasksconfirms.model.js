@@ -3,6 +3,7 @@ const sequelize = require('../database/dcs.database.sqlite');
 
 class TasksConfirm extends Model {}
 
+console.log("TasksConfirm");
 TasksConfirm.init({
     Id : {
         type: DataTypes.INTEGER,

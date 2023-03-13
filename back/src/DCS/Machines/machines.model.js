@@ -3,7 +3,7 @@ const sequelize = require('../database/dcs.database.sqlite');
 const Task = require('../Tasks/tasks.model');
 
 class Machine extends Model {}
-
+console.log("Machine");
 Machine.init({
     Id : {
         type: DataTypes.INTEGER,
