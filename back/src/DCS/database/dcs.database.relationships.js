@@ -1,8 +1,11 @@
-const Task = require('../Tasks/tasks.model');
 const Machine = require('../Machines/machines.model');
+const PartsStatuse = require('../PartsStatuses/partsstatuses.model');
 const Person = require('../Persons/persons.model');
+//const Role = require();
+const Task = require('../Tasks/tasks.model');
+const TasksConfirm = require('../TasksConfirms/tasksconfirms.model');
 
-console.log("RELATIONSHIP");
+
 
 Task.belongsTo(Machine, {
     foreignKey: 'MachineId',

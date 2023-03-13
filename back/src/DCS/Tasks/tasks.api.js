@@ -22,7 +22,18 @@ class TaskActions {
     }
 
     async AllTasksExisting(req, res) {
-        const tasks = await Task.findAll({ where: { Delete : 0}});
+        const tasks = await Task.findAll({ where: { Delete : 0},
+            include: [{
+                model: Machine,
+                as: 'Machine'
+            }, {
+                model: Person,
+                as: 'Author'
+            }, {
+                model: Person,
+                as: 'Responsible'
+            }
+            ]});
         res.status(200).send(tasks);
     }
 
