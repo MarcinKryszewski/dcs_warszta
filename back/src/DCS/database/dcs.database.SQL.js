@@ -22,10 +22,11 @@ module.exports = {
     
     persons : "CREATE TABLE Persons ( \
         Id INTEGER NOT NULL UNIQUE, \
-        Name TEXT NOT NULL, \
-        Surname TEXT NOT NULL, \
+        Name TEXT, \
+        Surname TEXT, \
         Login TEXT, \
         RoleId INTEGER NOT NULL DEFAULT 2, \
+        Password TEXT NOT NULL, \
         Delete INTEGER NOT NULL DEFAULT 0, \
         DeleteDate TEXT, \
         PRIMARY KEY(Id AUTOINCREMENT) \

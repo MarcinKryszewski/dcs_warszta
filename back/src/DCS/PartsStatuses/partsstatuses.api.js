@@ -66,6 +66,15 @@ class PartsStatusActions {
         await partsStatus.destroy();
         res.sendStatus(204);
     }
+
+    async LastPartsStatus(req, res) {
+        const id = parseInt(req.params.id);
+        const partsStatus = await PartsStatus.findOne({ 
+            where: { TaskId: id },
+            order: [['Date', 'DESC'],['Id', 'DESC']],
+        });
+        res.status(200).json(partsStatus);
+    }
 }
 
 module.exports = new PartsStatusActions();

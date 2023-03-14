@@ -37,12 +37,14 @@ class PersonActions {
         const surname = req.body.Surname;
         const login = req.body.Login;
         const role = req.body.RoleId;
+        const password = req.body.Password;
         const person = Person.build({
             Id: null,
             Name : name,
             Surname : surname,
             Login : login,
-            RoleId : role
+            RoleId : role,
+            Password : password
         });
         await person.save();
         res.status(200).send(person);
@@ -56,6 +58,7 @@ class PersonActions {
         person.Surname = req.body.Surname;
         person.Login = req.body.Login;
         person.RoleId = req.body.RoleId;
+        person.Password = req.body.Password;
 
         await person.save();
         res.status(201).json(person);

@@ -18,6 +18,10 @@ app.use(cors());
 // routes
 const dcsRoute = require('./src/DCS/dcs.routes');
 app.use('/dcs', dcsRoute);
+//app.use(express.static('../front/build/static'));
+app.use('/dcs/', express.static('../front/build/'));
+
+
 
 // server
 app.listen(port, hostname, () => {

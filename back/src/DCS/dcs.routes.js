@@ -8,6 +8,7 @@ const roleRoute = require('./Roles/roles.routes');
 const taskRoute = require('./Tasks/tasks.routes');
 const tasksConfirms = require('./TasksConfirms/tasksconfirms.routes');
 
+router.use('/dcs/', express.static('../front/build/'));
 router.use('/machine', machineRoute);
 router.use('/parts-status', partsStatusRoute);
 router.use('/person', personRoute);
