@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const PartsStatusActions = require('./partsstatuses.api')
 
-router.get('/all', PartsStatusActions.AllPartsStatuss);
+router.get('/all', PartsStatusActions.AllPartsStatus);
 router.get('/:id', PartsStatusActions.GetPartsStatus);
 router.post('/add', PartsStatusActions.AddPartsStatus);
 router.put('/:id', PartsStatusActions.UpdatePartsStatus);

@@ -4,7 +4,7 @@ const Person = require('../Persons/persons.model');
 
 class PartsStatusActions {
 
-    async AllPartsStatuss(req, res) {
+    async AllPartsStatus(req, res) {
         const partsStatuss = await PartsStatus.findAll({
             include: [{
                 model: Task,

@@ -5,35 +5,14 @@ const Role = require('../Roles/roles.model');
 const Task = require('../Tasks/tasks.model');
 const TasksConfirm = require('../TasksConfirms/tasksconfirms.model');
 
-Machine.hasMany(Task, {
-    foreignKey: 'MachineId',
-    as: 'Machine'
-});
-
-Person.hasMany(Task, {
-    foreignKey: 'AuthorId',
-    as: 'Author'
-});
-
-Person.hasMany(Task, {
-    foreignKey: 'ResponsibleId',
-    as: 'Responsible'
-});
-
-Person.hasMany(PartsStatus)
-
-Person.hasMany(TasksConfirm)
-
-Role.hasMany(Person, {
-    foreignKey: 'RoleID',
-    as: 'Role'
-})
-
-Task.hasMany(PartsStatus)
-
-Task.hasMany(TasksConfirm)
-
-
+//Machine.hasMany(Task);
+//Person.hasMany(Task);
+//Person.hasMany(Task);
+//Person.hasMany(PartsStatus);
+//Person.hasMany(TasksConfirm);
+//Role.hasMany(Person);
+//Task.hasMany(PartsStatus);
+//Task.hasMany(TasksConfirm);
 
 TasksConfirm.belongsTo(Task, {
     foreignKey: 'TaskId',
@@ -51,48 +30,19 @@ PartsStatus.belongsTo(Task, {
     foreignKey: 'TaskId',
     as: 'Task'
 });
-Person.belongsTo(Role);
-Task.belongsTo(Machine);
-Task.belongsTo(Person, {as: 'Author'});
-Task.belongsTo(Person, {as: 'Responsible'});
-
-/*
-TasksConfirm.belongsTo(Task, {
-    foreignKey: 'TaskId',
-    as: 'Task'
-})
-TasksConfirm.belongsTo(Person, {
-    foreignKey: 'PersonId',
-    as: 'Person'
-})
-
-PartsStatus.belongsTo(Person, {
-    foreignKey: 'PersonId',
-    as: 'Person'
-})
-
-PartsStatus.belongsTo(Task, {
-    foreignKey: 'TaskId',
-    as: 'Task'
-})
-
 Person.belongsTo(Role, {
     foreignKey: 'RoleID',
     as: 'Role'
-})
-
+});
 Task.belongsTo(Machine, {
     foreignKey: 'MachineId',
     as: 'Machine'
 });
-
-Task.belongsTo(Person, {
-    foreignKey: 'AuthorId',
-    as: 'Author'
-});
-
 Task.belongsTo(Person, {
     foreignKey: 'ResponsibleId',
+    as: 'Author'
+});
+Task.belongsTo(Person, {
+    foreignKey: 'AuthorId',
     as: 'Responsible'
 });
-*/

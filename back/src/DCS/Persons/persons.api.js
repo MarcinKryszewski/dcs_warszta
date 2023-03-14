@@ -36,7 +36,7 @@ class PersonActions {
         const name = req.body.Name;
         const surname = req.body.Surname;
         const login = req.body.Login;
-        const role = req.body.Role;
+        const role = req.body.RoleId;
         const person = Person.build({
             Id: null,
             Name : name,
@@ -67,7 +67,7 @@ class PersonActions {
         person.Delete = true;
         person.DeleteDate = new Date().toJSON().slice(0, 10);
         await person.save();
-        res.sendStatus(204);
+        res.status(200).json(person);
     }
 }
 
