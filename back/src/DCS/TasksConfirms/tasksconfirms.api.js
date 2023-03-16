@@ -38,10 +38,7 @@ class TasksConfirmActions {
         const personId = req.body.PersonId;
         const date = req.body.Date;
 
-        console.log(taskId);
-        console.log(status);
-        console.log(personId);
-        console.log(date);
+        console.log(req);
 
         const tasksConfirm = TasksConfirm.build({
             Id: null,
@@ -71,6 +68,26 @@ class TasksConfirmActions {
         const tasksConfirm = await TasksConfirm.findOne({ where: { Id: id }});
         await tasksConfirm.destroy();
         res.sendStatus(204);
+    }
+
+    async AddTaskConfirmToTask(task) {
+        console.log("@@@@@@@@@@@@@@@@@@@22");
+        console.log(task);
+        console.log("@@@@@@@@@@@@@@@@@@@22");
+        const taskId = task.TaskId;
+        const status = task.Status;
+        const personId = task.PersonId;
+        const date = new Date().toJSON().slice(0, 10);
+
+        const tasksConfirm = TasksConfirm.build({
+            Id: null,
+            TaskId: taskId,
+            Status: status,
+            PersonId: personId,
+            Date: date
+        });
+        console.log(tasksConfirm);
+        await tasksConfirm.save();
     }
 }
 

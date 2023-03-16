@@ -44,7 +44,6 @@ class PartsStatusActions {
             PersonId: personId,
             Date: date
         });
-        console.log(partsStatus);
         await partsStatus.save();
         res.status(200).send(partsStatus);
     }

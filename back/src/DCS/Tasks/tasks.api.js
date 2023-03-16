@@ -1,6 +1,7 @@
 const Task = require('./tasks.model');
 const Machine = require('../Machines/machines.model');
-const Person = require('../Persons/persons.model')
+const Person = require('../Persons/persons.model');
+const TasksConfirm = require('../TasksConfirms/tasksconfirms.api');
 
 class TaskActions {
 
@@ -53,7 +54,7 @@ class TaskActions {
             ]});
         res.status(200).json(task);
     }
-
+//Id: null,
     async AddTask(req, res) {
         const description = req.body.Description;
         const category = req.body.Category;
@@ -63,8 +64,7 @@ class TaskActions {
         const author = req.body.AuthorId;
         const machine = req.body.MachineId;
         const responsible = req.body.ResponsibleId;
-        const task = Task.build({
-            Id: null,
+        const task = Task.build({            
             Description : description,
             Category : category,
             Priority : priority,
@@ -73,8 +73,14 @@ class TaskActions {
             AuthorId : author,
             MachineId : machine,
             ResponsibleId : responsible
-        });
-        await task.save();
+        }, { isNewRecord: true });
+        await task.save({omitNull: true});
+        const taskConfirm = {
+            TaskId : task.null,
+            Status : "START",
+            PersonId : author
+        }
+        TasksConfirm.AddTaskConfirmToTask(taskConfirm);
         res.status(200).send(task);
     }
 

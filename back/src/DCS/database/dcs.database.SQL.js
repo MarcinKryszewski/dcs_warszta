@@ -34,7 +34,7 @@ module.exports = {
     )",
     
     tasks : "CREATE TABLE Tasks ( \
-        Id INTEGER NOT NULL UNIQUE, \
+        Id INTEGER UNIQUE, \
         Description TEXT NOT NULL, \
         Category TEXT NOT NULL, \
         Priority TEXT DEFAULT 'C', \

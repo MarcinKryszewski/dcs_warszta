@@ -42,7 +42,8 @@ Task.init({
     sequelize, 
     modelName: 'task',
     timestamps: false,
-    tableName: 'Tasks'
+    tableName: 'Tasks',
+    id: false
 });
 
 module.exports = Task;
