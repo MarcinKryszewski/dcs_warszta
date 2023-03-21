@@ -4,7 +4,5 @@
     "index.html": "/dcs/index.html",
     "main.bb1e84e3.js.map": "/dcs/static/js/main.bb1e84e3.js.map"
   },
-  "entrypoints": [
-    "static/js/main.bb1e84e3.js"
-  ]
+  "entrypoints": ["static/js/main.bb1e84e3.js"]
 }

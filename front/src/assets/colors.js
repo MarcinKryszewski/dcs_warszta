@@ -22,13 +22,13 @@ const blackColor = "#000";
 const whiteColor = "#FFF";
 
 export {
-    primaryColor,
-    warningColor,
-    dangerColor,
-    successColor,
-    infoColor,
-    roseColor,
-    grayColor,
-    blackColor,
-    whiteColor
+  primaryColor,
+  warningColor,
+  dangerColor,
+  successColor,
+  infoColor,
+  roseColor,
+  grayColor,
+  blackColor,
+  whiteColor,
 };
