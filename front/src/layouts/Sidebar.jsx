@@ -17,8 +17,10 @@ import {
 } from "../assets/colors";
 import { defaultFont } from "../assets/fonts";
 import ConstructionIcon from "@mui/icons-material/Construction";
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
+  console.log("SIDEBAR")
   return (
     <div>
       <Drawer
@@ -106,10 +108,10 @@ function Sidebar() {
 
         <List>
           <ListItem>
-            <ListItemText>1</ListItemText>
+            <NavLink to="/admin/dashboard">DASHBOARD</NavLink>
           </ListItem>
           <ListItem>
-            <ListItemText>2</ListItemText>
+          <NavLink to="/admin/tables">TABLES</NavLink>
           </ListItem>
         </List>
       </Drawer>

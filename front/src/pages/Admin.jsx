@@ -1,11 +1,12 @@
 import React from "react";
-import { PageContainer } from "../layouts/_layouts";
+import { PageContainer, Sidebar } from "../layouts/_layouts";
 import { Dashboard, Tables } from "../features/_features";
 import { Route, Routes } from "react-router-dom";
 
 function Admin() {
   return (
     <div>
+      <Sidebar />
       <PageContainer>
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
