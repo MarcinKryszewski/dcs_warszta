@@ -1,8 +1,9 @@
+import { Box } from "@mui/material";
 import React from "react";
 
 function Dashboard() {
   console.log("Dashboard")
-  return <div>Dashboard</div>;
+  return <Box height={"100%"}>Dashboard</Box>;
 }
 
 export default Dashboard;

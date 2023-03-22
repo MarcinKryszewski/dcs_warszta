@@ -12,6 +12,8 @@ export default defineConfig({
     open: true,
   },
   resolve: {
-    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
-  },
+    alias: {
+      src: path.resolve('src/'),
+    },
+  }
 });

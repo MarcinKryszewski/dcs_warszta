@@ -1,19 +1,21 @@
 import React from "react";
 import { PageContainer, Sidebar } from "../layouts/_layouts";
 import { Dashboard, Tables } from "../features/_features";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { Box } from "@mui/material";
 
 function Admin() {
   return (
-    <div>
+    <Box sx={{display: "flex", height: "100%", width: "100%", position: "absolute"}}>
       <Sidebar />
       <PageContainer>
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/tables" element={<Tables />} />
+          <Route path="/*" element={<Navigate to="/dashboard" replace />} /> 
         </Routes>
       </PageContainer>
-    </div>
+    </Box>
   );
 }
 export default Admin;

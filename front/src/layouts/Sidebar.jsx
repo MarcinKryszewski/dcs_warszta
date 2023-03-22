@@ -1,122 +1,125 @@
-import React from "react";
-import {
-  Drawer,
-  Hidden,
-  List,
-  ListItem,
-  ListItemText,
-  Box,
-  Link,
-} from "@mui/material";
-import { hexToRgb } from "../utils/hexToRgb";
-import {
-  blackColor,
-  grayColor,
-  whiteColor,
-  primaryColor,
-} from "../assets/colors";
-import { defaultFont } from "../assets/fonts";
-import ConstructionIcon from "@mui/icons-material/Construction";
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { Sidebar as ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import { Box, Typography, useTheme, Divider } from "@mui/material";
+import { Link } from "react-router-dom";
+import { tokens } from "src/assets/theme";
+import ConstructionIcon from '@mui/icons-material/Construction';
 
-function Sidebar() {
-  console.log("SIDEBAR")
+function Sidebar() {  
+  console.log("SIDEBAR");
+
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [selected, setSelected] = useState("Dashboard");
+
+  const Item = ({ title, to, icon, selected, setSelected }) => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
+    return (
+      <MenuItem
+        active={selected === title}
+        rootStyles={{
+          color: colors.grey[100],
+          paddingLeft: "20px",
+        }}
+        onClick={() => setSelected(title)}
+        icon={icon}
+        component={<Link to={to} />}
+      >
+        <Typography>{title}</Typography>
+      </MenuItem>
+    );
+  };
+
   return (
-    <div>
-      <Drawer
-        sx={{
-          width: 260,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: 260,
-            boxSizing: "border-box",
-            background: blackColor,
-            opacity: ".8",
-            boxShadow:
-              "0 10px 30px -12px rgba(" +
-              hexToRgb(blackColor) +
-              ", 0.42), 0 4px 25px 0px rgba(" +
-              hexToRgb(blackColor) +
-              ", 0.12), 0 8px 10px -5px rgba(" +
-              hexToRgb(blackColor) +
-              ", 0.2)",
+  <Box sx={{ display: 'flex', height: '100%', bgcolor: (colors.primary[400]) }} width="270">
+    <ProSidebar backgroundColor="transparent" 
+    rootStyles={{
+      border: 0, 
+      backgroundColor: "transparent",
+      }}>
+
+      <Menu menuItemStyles={{
+        button: {
+            backgroundColor: "transparent",
+            '&:hover': {
+              backgroundColor: "transparent",
+            },
+            '&:active': {
+              backgroundColor: "transparent",
+            }
+          },
+        
+        }}>
+        <MenuItem component={<Link to="/admin/dashboard" />}>
+          <Box display={"flex"} p={0} m={1} gap={2} textTransform={"uppercase"} >
+            <ConstructionIcon fontSize="large" />
+            <Typography variant="h3">dcs warsztat</Typography> 
+          </Box>
+          <Divider />
+        </MenuItem>
+      </Menu>
+
+
+      <Menu menuItemStyles={{
+        button: {
+          backgroundColor: "transparent",
+            '&:hover': {
+              color: "#868dfb",
+              backgroundColor: "transparent",
+            },
+            '&.ps-active': {
+              color: "#6870fa",
+              backgroundColor: "transparent",
+            },
+          }, 
+        subMenuContent: {
+          backgroundColor: "transparent"
           },
         }}
-        variant="permanent"
-        anchor="left"
-        open
-      >
-        <Box
-          sx={{
-            position: "relative",
-            padding: "15px 15px",
-            zIndex: "4",
-            "&:after": {
-              content: '""',
-              position: "absolute",
-              bottom: "0",
-              height: "1px",
-              right: "15px",
-              width: "calc(100% - 30px)",
-              backgroundColor: "rgba(" + hexToRgb(grayColor[6]) + ", 0.3)",
-            },
-          }}
-        >
-          <Link
-            sx={{
-              ...defaultFont,
-              textTransform: "uppercase",
-              padding: "5px 0",
-              display: "block",
-              fontSize: "18px",
-              textAlign: "left",
-              fontWeight: "400",
-              lineHeight: "30px",
-              textDecoration: "none",
-              backgroundColor: "transparent",
-              "&,&:hover": {
-                color: whiteColor,
-              },
-            }}
-            underline="none"
-            color={whiteColor}
-            component="button"
-          >
-            <Box
-              sx={{
-                width: "30px",
-                display: "inline-block",
-                maxHeight: "30px",
-                marginLeft: "10px",
-                marginRight: "15px",
-              }}
-            >
-              <ConstructionIcon
-                sx={{
-                  fontSize: 32,
-                  color: grayColor[4],
-                  width: "35px",
-                  top: "22px",
-                  verticalAlign: "middle",
-                  border: "0",
-                }}
-              />
-            </Box>
-            dcs warsztat
-          </Link>
-        </Box>
+        
+        transitionDuration={1} >
+        <SubMenu label="DCS Warsztat" defaultOpen >
+          <Item
+              title="Dashboard"
+              to="/admin/dashboard"
+              //icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+          />
+          <Typography variant="h6" color={colors.grey[300]} sx={{ m: "15px 0 5px 25px" }}>TABLES</Typography>
 
-        <List>
-          <ListItem>
-            <NavLink to="/admin/dashboard">DASHBOARD</NavLink>
-          </ListItem>
-          <ListItem>
-          <NavLink to="/admin/tables">TABLES</NavLink>
-          </ListItem>
-        </List>
-      </Drawer>
-    </div>
+          <Item
+              title="Tasks"
+              to="/admin/tables"
+              //icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+          />
+
+          <Item
+              title="Machines"
+              to="/admin/tables"
+              //icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+          />
+
+          <Item
+              title="Persons"
+              to="/admin/tables"
+              //icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+          />
+          
+        </SubMenu>
+      </Menu>
+    </ProSidebar>
+  </Box>    
   );
+  
 }
 
 export default Sidebar;
