@@ -8,8 +8,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter basename="/dcs">
       <ProSidebarProvider>
-      <App />
-      </ProSidebarProvider>      
-    </BrowserRouter>    
+        <App />
+      </ProSidebarProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

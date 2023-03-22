@@ -19,8 +19,11 @@ function App() {
         <CssBaseline />
         <div className="app">
           <Routes>
-            <Route path="/admin/*" element={<Admin />} />  
-            <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />      
+            <Route path="/admin/*" element={<Admin />} />
+            <Route
+              path="*"
+              element={<Navigate to="/admin/dashboard" replace />}
+            />
           </Routes>
         </div>
       </ThemeProvider>
