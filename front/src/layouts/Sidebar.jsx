@@ -25,15 +25,20 @@ function Sidebar() {
         }}
         onClick={() => setSelected(title)}
         icon={icon}
-        component={<Link to={to} />}
-      >
+        component={<Link to={to} />} >
         <Typography>{title}</Typography>
       </MenuItem>
     );
   };
 
   return (
-  <Box sx={{ display: 'flex', height: '100%', bgcolor: (colors.primary[400]) }} width="270">
+  <Box 
+    sx={{ 
+      display: 'flex', 
+      height: '100%', 
+      background: (colors.primary[400]),
+    }} 
+      width="270">
     <ProSidebar backgroundColor="transparent" 
     rootStyles={{
       border: 0, 
@@ -66,11 +71,11 @@ function Sidebar() {
         button: {
           backgroundColor: "transparent",
             '&:hover': {
-              color: "#868dfb",
+              color: (colors.blueAccent[400]),
               backgroundColor: "transparent",
             },
             '&.ps-active': {
-              color: "#6870fa",
+              color: (colors.blueAccent[600]),
               backgroundColor: "transparent",
             },
           }, 
