@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { ColorModeContext, useMode } from "./assets/theme";
+import { ColorModeContext, useMode } from "src/assets/themes/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 
 //################TEMP###############

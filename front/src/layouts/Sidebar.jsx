@@ -7,7 +7,7 @@ import {
 } from "react-pro-sidebar";
 import { Box, Typography, useTheme, Divider } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
-import { tokens } from "src/assets/theme";
+import { tokens } from "src/assets/themes/theme";
 import ConstructionIcon from "@mui/icons-material/Construction";
 
 function capitalizeFirstLetter(string) {
