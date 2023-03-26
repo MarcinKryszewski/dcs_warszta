@@ -7,11 +7,19 @@ const PageContainer = ({ children }) => {
   console.log("PageContainer");
   return (
     <Box sx={{ width: "calc(100% - 260px)" }} m={2.5}>
-      <Box sx={{ width: "100%", float: "right" }}>
+      <Box
+        sx={{
+          width: "100%",
+          float: "right",
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+        }}
+      >
         <Navbar />
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
         {children}
-        <Footer />
+        {/*<Footer />*/}
       </Box>
     </Box>
   );

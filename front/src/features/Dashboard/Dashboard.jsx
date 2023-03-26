@@ -1,13 +1,14 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { tokens } from "src/assets/themes/theme";
 import React from "react";
 
 function Dashboard() {
   console.log("Dashboard");
-  return (
-    <Box height={"100%"} bgcolor={"red"}>
-      Dashboard
-    </Box>
-  );
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const columns = [];
+  return <Box>Dashboard</Box>;
 }
 
 export default Dashboard;
