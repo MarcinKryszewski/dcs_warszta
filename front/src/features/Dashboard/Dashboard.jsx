@@ -2,7 +2,7 @@ import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
-import { HeaderTitleContext } from "../../context/HeaderTitleContext";
+import { HeaderTitleContext } from "src/context/HeaderTitleContext";
 //import { HeaderTitle } from "src/layouts/PageContainer";
 
 function Dashboard() {

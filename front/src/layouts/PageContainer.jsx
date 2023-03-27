@@ -1,8 +1,8 @@
 import { Box, Button } from "@mui/material";
 import { Header } from "src/components/_components";
 import React, { useState, createContext } from "react";
-import { Footer, Navbar } from "./_layouts";
-import { HeaderTitleContext } from "../context/HeaderTitleContext";
+import { Footer, Navbar } from "src/layouts/_layouts";
+import { HeaderTitleContext } from "src/context/HeaderTitleContext";
 
 const PageContainer = ({ children }) => {
   console.log("PageContainer");
