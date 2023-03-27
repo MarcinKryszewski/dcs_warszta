@@ -1,10 +1,19 @@
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { HeaderTitle } from "src/layouts/PageContainer";
 
 function Dashboard() {
   console.log("Dashboard");
+  const [title, setTitle] = useContext(HeaderTitle);
+
+  useEffect(() => {
+    setTitle({
+      title: "Dashboard",
+      subtitle: "Awesome dashboard",
+    });
+  }, []);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [];
