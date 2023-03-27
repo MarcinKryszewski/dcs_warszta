@@ -124,6 +124,7 @@ export const tokens = (mode) => ({
 // mui theme settings
 export const themeSettings = (mode) => {
   const colors = tokens(mode);
+  const scrollbarStyle = ScrollbarStyle;
   return {
     palette: {
       mode: mode,
@@ -191,6 +192,7 @@ export const themeSettings = (mode) => {
         fontSize: 14,
       },
     },
+    scrollbarStyle,
   };
 };
 
@@ -212,4 +214,44 @@ export const useMode = () => {
 
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return [theme, colorMode];
+};
+
+const ScrollbarStyle = () => {
+  const colors = tokens(mode);
+  console.log("srtle");
+  return {
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: {
+            scrollbarColor: colors.grey[400] + " " + colors.grey[800],
+            "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
+              backgroundColor: colors.grey[800],
+            },
+            "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
+              borderRadius: 8,
+              backgroundColor: colors.grey[400],
+              minHeight: 24,
+              border: "3px solid " + colors.grey[800],
+            },
+            "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus":
+              {
+                backgroundColor: colors.grey[300],
+              },
+            "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active":
+              {
+                backgroundColor: colors.grey[300],
+              },
+            "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
+              {
+                backgroundColor: colors.grey[300],
+              },
+            "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
+              backgroundColor: colors.grey[800],
+            },
+          },
+        },
+      },
+    },
+  };
 };

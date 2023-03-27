@@ -1,10 +1,12 @@
 import { Box } from "@mui/material";
 import { Header } from "src/components/_components";
-import React from "react";
+import React, { useState } from "react";
 import { Footer, Navbar } from "./_layouts";
 
 const PageContainer = ({ children }) => {
   console.log("PageContainer");
+  const [pageTitle, setPageTitle] = useState({ title: "", subtitle: "" });
+
   return (
     <Box sx={{ width: "calc(100% - 260px)" }} m={2.5}>
       <Box
