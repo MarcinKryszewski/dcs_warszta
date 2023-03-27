@@ -2,24 +2,11 @@ import { Box, Button } from "@mui/material";
 import { Header } from "src/components/_components";
 import React, { useState, createContext } from "react";
 import { Footer, Navbar } from "./_layouts";
-
-export const HeaderTitle = createContext({
-  title: { title: "en", subtitle: "aaa" },
-  setTitle: () => {},
-});
+import { HeaderTitleContext } from "../context/HeaderTitleContext";
 
 const PageContainer = ({ children }) => {
   console.log("PageContainer");
-
-  const [headerTitleValue, setHeaderTitleValue] = useState({
-    title: "",
-    subtitle: "",
-  });
-
-  function setupTitle(title, subtitle) {
-    setHeaderTitleValue({ title: title, subtitle: subtitle });
-  }
-  //{ title: "", subtitle: "" }
+  const [titleText, setTitleText] = useState([]);
 
   return (
     <Box sx={{ width: "calc(100% - 260px)" }} m={2.5}>
@@ -32,21 +19,15 @@ const PageContainer = ({ children }) => {
           height: "100%",
         }}
       >
-        <HeaderTitle.Provider value={[headerTitleValue, setHeaderTitleValue]}>
+        <HeaderTitleContext.Provider value={{ titleText, setTitleText }}>
           <Navbar />
-          <Header
-            title={headerTitleValue.title}
-            subtitle={headerTitleValue.subtitle}
-          />
-
+          <Header />
           {children}
           {/*<Footer />*/}
-        </HeaderTitle.Provider>
+        </HeaderTitleContext.Provider>
       </Box>
     </Box>
   );
 };
 
 export default PageContainer;
-
-//<Header title="DASHBOARD" subtitle="Welcome to your dashboard" />

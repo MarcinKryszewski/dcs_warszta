@@ -3,19 +3,19 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
 
-import { mockMachinesData } from "src/data/mock/mockMachines";
+import { mockUsersData } from "src/data/mock/mockUsers";
 import { Edit, RemoveCircle } from "@mui/icons-material";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
 
-function Machines() {
-  console.log("Machines");
+function Persons() {
+  console.log("Persons");
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
 
   useEffect(
     () =>
       setTitleText({
-        title: "Machines",
-        subtitle: "Machines table",
+        title: "Persons",
+        subtitle: "Persons table",
       }),
     []
   );
@@ -24,8 +24,16 @@ function Machines() {
   const colors = tokens(theme.palette.mode);
   const columns = [
     { field: "id", headerName: "ID", flex: 0.3 },
-    { field: "Area", headerName: "Obszar", flex: 1 },
-    { field: "MachineName", headerName: "Nazwa maszyny", flex: 3 },
+    { field: "Name", headerName: "Imię", flex: 1 },
+    { field: "Surname", headerName: "Nazwisko", flex: 1 },
+    { field: "Login", headerName: "Login", flex: 1 },
+    { field: "Password", headerName: "Hasło", flex: 1 },
+    {
+      field: "Role.Name",
+      headerName: "Uprawnienia",
+      flex: 1,
+      valueGetter: (params) => params.row?.Role?.Name,
+    },
     {
       field: "Actions",
       headerName: "Akcje",
@@ -65,6 +73,7 @@ function Machines() {
   function RemoveHandle(rowId) {
     console.log("REMOVE: " + rowId);
   }
+
   return (
     <Box
       m="10px 0 0 0"
@@ -100,7 +109,7 @@ function Machines() {
       }}
     >
       <DataGrid
-        rows={mockMachinesData}
+        rows={mockUsersData}
         columns={columns}
         components={{ Toolbar: GridToolbar }}
       />
@@ -108,4 +117,4 @@ function Machines() {
   );
 }
 
-export default Machines;
+export default Persons;
