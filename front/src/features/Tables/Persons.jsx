@@ -1,5 +1,5 @@
 import { Box, Button, useTheme } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, plPL } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
 
@@ -23,7 +23,7 @@ function Persons() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.3 },
+    { field: "id", headerName: "ID", width: 50, minWidth: 50 },
     { field: "Name", headerName: "Imię", flex: 1 },
     { field: "Surname", headerName: "Nazwisko", flex: 1 },
     { field: "Login", headerName: "Login", flex: 1 },
@@ -112,6 +112,7 @@ function Persons() {
         rows={mockUsersData}
         columns={columns}
         components={{ Toolbar: GridToolbar }}
+        localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
       />
     </Box>
   );

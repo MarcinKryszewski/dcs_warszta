@@ -6,3 +6,6 @@ export * from "./Tables/Machines";
 
 export { default as Persons } from "./Tables/Persons";
 export * from "./Tables/Persons";
+
+export { default as Tasks } from "./Tables/Tasks";
+export * from "./Tables/Tasks";

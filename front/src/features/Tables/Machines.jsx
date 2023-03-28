@@ -1,5 +1,5 @@
 import { Box, Button, useTheme } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar, plPL } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
 
@@ -23,7 +23,7 @@ function Machines() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.3 },
+    { field: "id", headerName: "ID", width: 50, minWidth: 50 },
     { field: "Area", headerName: "Obszar", flex: 1 },
     { field: "MachineName", headerName: "Nazwa maszyny", flex: 3 },
     {
@@ -103,6 +103,7 @@ function Machines() {
         rows={mockMachinesData}
         columns={columns}
         components={{ Toolbar: GridToolbar }}
+        localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
       />
     </Box>
   );
