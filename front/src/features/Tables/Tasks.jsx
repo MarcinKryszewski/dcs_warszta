@@ -26,11 +26,9 @@ function Tasks() {
       param1,
       param2
     );
-
     if (lineComparatorResult !== 0) {
       return lineComparatorResult;
     }
-
     return gridStringOrNumberComparator(v1.machine, v2.machine, param1, param2);
   };
 
@@ -41,13 +39,24 @@ function Tasks() {
       param1,
       param2
     );
-
     if (nameComparatorResult !== 0) {
       return nameComparatorResult;
     }
-
     return gridStringOrNumberComparator(v1.Surname, v2.Surname, param1, param2);
   };
+
+  function PartStatusColor(status) {
+    if (status == "SPECYFIKOWANIE") return theme.palette.info.main;
+    if (status == "ZAMÓWIONE") return theme.palette.warning.main;
+    if (status == "DOSTĘPNE") return theme.palette.success.main;
+  }
+
+  function TaskStatusColor(status) {
+    if (status == "W TRAKCIE") return theme.palette.info.main;
+    if (status == "WYKONANE") return theme.palette.warning.main;
+    if (status == "ZATWIERDZONE") return theme.palette.success.main;
+    if (status == "SPÓŹNIONE") return theme.palette.error.main;
+  }
 
   const columns = [
     { field: "id", headerName: "ID", width: 50, minWidth: 50 },
@@ -61,7 +70,10 @@ function Tasks() {
         </Box>
       ),
       flex: 0.6,
-
+      valueGetter: (params) => ({
+        line: params.row.Machines.Area,
+        machine: params.row.Machines.MachineName,
+      }),
       renderCell: (params) => (
         <Box>
           <Typography>{params.row?.Machines?.Area}</Typography>
@@ -74,14 +86,38 @@ function Tasks() {
     },
     { field: "Description", headerName: "Opis", flex: 1 },
     { field: "Type", headerName: "Rodzaj działania", flex: 0.3 },
-    { field: "Category", headerName: "Kategoria", flex: 0.2 },
+    {
+      field: "Category",
+      headerName: "Kategoria",
+      flex: 0.2,
+      renderCell: ({ row: { Category } }) => {
+        return (
+          <Box
+            width="40%"
+            m="0"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={
+              Category == "A"
+                ? theme.palette.error.main
+                : Category == "B"
+                ? theme.palette.warning.main
+                : theme.palette.info.main
+            }
+            borderRadius="15px"
+          >
+            <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>
+              {Category}
+            </Typography>
+          </Box>
+        );
+      },
+    },
     {
       field: "Responsible",
       headerName: "Odpowiedzialny",
       flex: 0.2,
-      //valueGetter: (params) =>
-      //params.row?.Responsible?.Name + " " + params.row?.Responsible?.Surname,
-
       renderCell: (params) => (
         <Box>
           <Typography>{params.row?.Responsible?.Name}</Typography>
@@ -95,12 +131,54 @@ function Tasks() {
       headerName: "Status części",
       flex: 0.3,
       valueGetter: (params) => params.row?.PartsStatus?.Status,
+      renderCell: ({
+        row: {
+          PartsStatus: { Status },
+        },
+      }) => {
+        return (
+          <Box
+            width="90%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={() => PartStatusColor(Status)}
+            borderRadius="4px"
+          >
+            <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>
+              {Status}
+            </Typography>
+          </Box>
+        );
+      },
     },
     {
       field: "TaskStatus",
       headerName: "Status zadania",
       flex: 0.3,
       valueGetter: (params) => params.row?.TaskStatus?.Status,
+      renderCell: ({
+        row: {
+          TaskStatus: { Status },
+        },
+      }) => {
+        return (
+          <Box
+            width="90%"
+            m="0 auto"
+            p="5px"
+            display="flex"
+            justifyContent="center"
+            backgroundColor={() => TaskStatusColor(Status)}
+            borderRadius="4px"
+          >
+            <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>
+              {Status}
+            </Typography>
+          </Box>
+        );
+      },
     },
     {
       field: "Actions",
@@ -111,7 +189,7 @@ function Tasks() {
           <Box
             sx={{
               "& .MuiSvgIcon-root": {
-                color: colors.greenAccent[400],
+                color: colors.greenAccent[500],
               },
               "& .MuiButtonBase-root:hover": {
                 bgcolor: colors.greenAccent[300],
