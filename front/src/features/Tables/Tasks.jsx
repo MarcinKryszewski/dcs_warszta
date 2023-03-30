@@ -19,32 +19,6 @@ function Tasks() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  const lineMachineSortComparator = (v1, v2, param1, param2) => {
-    const lineComparatorResult = gridStringOrNumberComparator(
-      v1.line,
-      v2.line,
-      param1,
-      param2
-    );
-    if (lineComparatorResult !== 0) {
-      return lineComparatorResult;
-    }
-    return gridStringOrNumberComparator(v1.machine, v2.machine, param1, param2);
-  };
-
-  const personSortComparator = (v1, v2, param1, param2) => {
-    const nameComparatorResult = gridStringOrNumberComparator(
-      v1.Name,
-      v2.Name,
-      param1,
-      param2
-    );
-    if (nameComparatorResult !== 0) {
-      return nameComparatorResult;
-    }
-    return gridStringOrNumberComparator(v1.Surname, v2.Surname, param1, param2);
-  };
-
   function PartStatusColor(status) {
     if (status == "SPECYFIKOWANIE") return theme.palette.info.main;
     if (status == "ZAMÓWIONE") return theme.palette.warning.main;
@@ -63,6 +37,7 @@ function Tasks() {
     {
       field: "LineMachine",
       headerName: "Linia Maszyna",
+      filterable: false,
       renderHeader: (params) => (
         <Box>
           <Typography>Linia</Typography>
@@ -70,10 +45,8 @@ function Tasks() {
         </Box>
       ),
       flex: 0.6,
-      valueGetter: (params) => ({
-        line: params.row.Machines.Area,
-        machine: params.row.Machines.MachineName,
-      }),
+      valueGetter: (params) =>
+        params.row.Machines.Area + " " + params.row.Machines.MachineName,
       renderCell: (params) => (
         <Box>
           <Typography>{params.row?.Machines?.Area}</Typography>
@@ -82,7 +55,17 @@ function Tasks() {
           </Typography>
         </Box>
       ),
-      sortComparator: lineMachineSortComparator,
+    },
+    {
+      field: "Area",
+      headerName: "Obszar",
+      valueGetter: (params) => params.row.Machines.Area,
+      hide: true,
+    },
+    {
+      field: "Machine",
+      headerName: "Maszyna",
+      valueGetter: (params) => params.row.Machines.MachineName,
     },
     { field: "Description", headerName: "Opis", flex: 1 },
     { field: "Type", headerName: "Rodzaj działania", flex: 0.3 },
@@ -124,7 +107,8 @@ function Tasks() {
           <Typography>{params.row?.Responsible?.Surname}</Typography>{" "}
         </Box>
       ),
-      sortComparator: personSortComparator,
+      valueGetter: (params) =>
+        params.row?.Responsible?.Name + " " + params.row?.Responsible?.Surname,
     },
     {
       field: "PartsStatus",
@@ -268,6 +252,10 @@ function Tasks() {
         columns={columns}
         components={{ Toolbar: GridToolbar }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
+        columnVisibilityModel={{
+          Area: false,
+          Machine: false,
+        }}
       />
     </Box>
   );
