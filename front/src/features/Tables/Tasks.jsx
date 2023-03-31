@@ -197,6 +197,15 @@ function Tasks() {
     },
   ];
 
+  function TableToolbar() {
+    return(
+<DataGridToolbarContainer>
+  <GridToolbarFilterButton />
+  <GridToolbarFilterButton />
+</DataGridToolbarContainer>
+    )
+  }
+
   useEffect(
     () =>
       setTitleText({
@@ -250,7 +259,7 @@ function Tasks() {
       <DataGrid
         rows={mockTasksData}
         columns={columns}
-        components={{ Toolbar: GridToolbar }}
+        components={{ Toolbar: TableToolbar }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
         columnVisibilityModel={{
           Area: false,
