@@ -2,7 +2,7 @@ import { Box, Button, useTheme } from "@mui/material";
 import { DataGrid, GridToolbar, plPL } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
-
+import { DefaultTableToolbar } from "src/components/_components";
 import { mockMachinesData } from "src/data/mock/mockMachines";
 import { Edit, RemoveCircle } from "@mui/icons-material";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
@@ -102,7 +102,7 @@ function Machines() {
       <DataGrid
         rows={mockMachinesData}
         columns={columns}
-        components={{ Toolbar: GridToolbar }}
+        components={{ Toolbar: DefaultTableToolbar }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
       />
     </Box>

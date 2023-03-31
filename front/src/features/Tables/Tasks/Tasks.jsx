@@ -9,7 +9,7 @@ import { tokens } from "src/assets/themes/theme";
 import React, { lazy, useContext, useEffect } from "react";
 import { Edit, RemoveCircle } from "@mui/icons-material";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
-import {DefaultTableToolbar} from "src/components";
+import { DefaultTableToolbar } from "src/components/_components";
 import { mockTasksData } from "src/data/mock/mockTasks";
 
 function Tasks() {
@@ -197,15 +197,6 @@ function Tasks() {
     },
   ];
 
-  /*function TableToolbar() {
-    return(
-<DataGridToolbarContainer>
-  <GridToolbarFilterButton />
-  <GridToolbarFilterButton />
-</DataGridToolbarContainer>
-    )
-  }*/
-
   useEffect(
     () =>
       setTitleText({
@@ -252,7 +243,7 @@ function Tasks() {
           color: `${colors.greenAccent[200]} !important`,
         },
         "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-          color: `${colors.grey[100]} !important`,
+          color: `${colors.grey[100]}`,
         },
       }}
     >

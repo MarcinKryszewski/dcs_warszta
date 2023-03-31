@@ -4,9 +4,14 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
 
 const Dashboard = lazy(() => import("src/features/Dashboard/Dashboard"));
-const Machines = lazy(() => import("src/features/Tables/Machines"));
-const Persons = lazy(() => import("src/features/Tables/Persons"));
-const Tasks = lazy(() => import("src/features/Tables/Tasks"));
+const Machines = lazy(() => import("src/features/Tables/Machines/Machines"));
+const NewMachine = lazy(() =>
+  import("src/features/Tables/Machines/NewMachine")
+);
+const Persons = lazy(() => import("src/features/Tables/Persons/Persons"));
+const NewPerson = lazy(() => import("src/features/Tables/Persons/NewPerson"));
+const Tasks = lazy(() => import("src/features/Tables/Tasks/Tasks"));
+const NewTask = lazy(() => import("src/features/Tables/Tasks/NewTask"));
 
 function Admin() {
   return (
@@ -24,8 +29,11 @@ function Admin() {
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/tables/machines" element={<Machines />} />
+            <Route path="/tables/machines/new" element={<NewMachine />} />
             <Route path="/tables/persons" element={<Persons />} />
+            <Route path="/tables/persons/new" element={<NewPerson />} />
             <Route path="/tables/tasks" element={<Tasks />} />
+            <Route path="/tables/tasks/new" element={<NewTask />} />
             <Route path="/*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>
