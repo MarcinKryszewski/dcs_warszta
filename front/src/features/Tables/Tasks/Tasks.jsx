@@ -1,11 +1,7 @@
 import { Box, Button, Typography, useTheme } from "@mui/material";
-import {
-  gridStringOrNumberComparator,
-  GridToolbar,
-  plPL,
-} from "@mui/x-data-grid";
+import { plPL } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
-import React, { lazy, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Edit, RemoveCircle } from "@mui/icons-material";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
 import { DefaultTableToolbar, DataGrid } from "src/components/_components";

@@ -9,6 +9,8 @@ import { HeaderTitleContext } from "src/context/HeaderTitleContext";
 
 function Machines() {
   console.log("Machines");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
 
   useEffect(
@@ -20,8 +22,6 @@ function Machines() {
     []
   );
 
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const columns = [
     { field: "id", headerName: "ID", width: 50, minWidth: 50 },
     { field: "Area", headerName: "Obszar", flex: 1 },
