@@ -124,7 +124,6 @@ export const tokens = (mode) => ({
 // mui theme settings
 export const themeSettings = (mode) => {
   const colors = tokens(mode);
-  const scrollbarStyle = ScrollbarStyle;
   return {
     palette: {
       mode: mode,
@@ -132,14 +131,24 @@ export const themeSettings = (mode) => {
         ? {
             // palette values for dark mode
             primary: {
+              mainDarker: colors.primary[400],
               main: colors.primary[500],
             },
             secondary: {
+              dark: colors.greenAccent[700],
               main: colors.greenAccent[500],
+              light: colors.greenAccent[300],
+            },
+            tertiary: {
+              dark: colors.blueAccent[700],
+              main: colors.blueAccent[500],
+              light: colors.blueAccent[300],
             },
             neutral: {
+              darker: colors.grey[800],
               dark: colors.grey[700],
               main: colors.grey[500],
+              mainLighter: colors.grey[400],
               light: colors.grey[100],
             },
             background: {
@@ -149,14 +158,24 @@ export const themeSettings = (mode) => {
         : {
             // palette values for light mode
             primary: {
+              mainDarker: colors.primary[400],
               main: colors.primary[100],
             },
             secondary: {
+              dark: colors.greenAccent[700],
               main: colors.greenAccent[500],
+              light: colors.greenAccent[300],
+            },
+            tertiary: {
+              dark: colors.blueAccent[700],
+              main: colors.blueAccent[500],
+              light: colors.blueAccent[300],
             },
             neutral: {
+              darker: colors.grey[800],
               dark: colors.grey[700],
               main: colors.grey[500],
+              mainLighter: colors.grey[400],
               light: colors.grey[100],
             },
             background: {
@@ -192,7 +211,6 @@ export const themeSettings = (mode) => {
         fontSize: 14,
       },
     },
-    scrollbarStyle,
   };
 };
 
@@ -214,44 +232,4 @@ export const useMode = () => {
 
   const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
   return [theme, colorMode];
-};
-
-const ScrollbarStyle = () => {
-  const colors = tokens(mode);
-  console.log("srtle");
-  return {
-    components: {
-      MuiCssBaseline: {
-        styleOverrides: {
-          body: {
-            scrollbarColor: colors.grey[400] + " " + colors.grey[800],
-            "&::-webkit-scrollbar, & *::-webkit-scrollbar": {
-              backgroundColor: colors.grey[800],
-            },
-            "&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb": {
-              borderRadius: 8,
-              backgroundColor: colors.grey[400],
-              minHeight: 24,
-              border: "3px solid " + colors.grey[800],
-            },
-            "&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus":
-              {
-                backgroundColor: colors.grey[300],
-              },
-            "&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active":
-              {
-                backgroundColor: colors.grey[300],
-              },
-            "&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover":
-              {
-                backgroundColor: colors.grey[300],
-              },
-            "&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner": {
-              backgroundColor: colors.grey[800],
-            },
-          },
-        },
-      },
-    },
-  };
 };

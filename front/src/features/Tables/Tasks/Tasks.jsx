@@ -1,6 +1,5 @@
 import { Box, Button, Typography, useTheme } from "@mui/material";
 import {
-  DataGrid,
   gridStringOrNumberComparator,
   GridToolbar,
   plPL,
@@ -9,7 +8,7 @@ import { tokens } from "src/assets/themes/theme";
 import React, { lazy, useContext, useEffect } from "react";
 import { Edit, RemoveCircle } from "@mui/icons-material";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
-import { DefaultTableToolbar } from "src/components/_components";
+import { DefaultTableToolbar, DataGrid } from "src/components/_components";
 import { mockTasksData } from "src/data/mock/mockTasks";
 
 function Tasks() {
@@ -221,29 +220,6 @@ function Tasks() {
       sx={{
         "& .MuiDataGrid-root": {
           border: "none",
-        },
-        "& .MuiDataGrid-cell": {
-          borderBottom: "none",
-        },
-        "& .name-column--cell": {
-          color: colors.greenAccent[300],
-        },
-        "& .MuiDataGrid-columnHeaders": {
-          backgroundColor: colors.blueAccent[700],
-          borderBottom: "none",
-        },
-        "& .MuiDataGrid-virtualScroller": {
-          backgroundColor: colors.primary[400],
-        },
-        "& .MuiDataGrid-footerContainer": {
-          borderTop: "none",
-          backgroundColor: colors.blueAccent[700],
-        },
-        "& .MuiCheckbox-root": {
-          color: `${colors.greenAccent[200]} !important`,
-        },
-        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-          color: `${colors.grey[100]}`,
         },
       }}
     >
