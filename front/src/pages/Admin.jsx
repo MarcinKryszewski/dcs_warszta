@@ -2,12 +2,14 @@ import React, { lazy, Suspense } from "react";
 import { PageContainer, Sidebar } from "src/layouts/_layouts";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
-import EditMachine from "src/features/Tables/Machines/EditMachine";
 
 const Dashboard = lazy(() => import("src/features/Dashboard/Dashboard"));
 const Machines = lazy(() => import("src/features/Tables/Machines/Machines"));
 const NewMachine = lazy(() =>
   import("src/features/Tables/Machines/NewMachine")
+);
+const EditMachine = lazy(() =>
+  import("src/features/Tables/Machines/EditMachine")
 );
 const Persons = lazy(() => import("src/features/Tables/Persons/Persons"));
 const NewPerson = lazy(() => import("src/features/Tables/Persons/NewPerson"));

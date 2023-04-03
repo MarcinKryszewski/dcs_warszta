@@ -15,11 +15,11 @@ import { HeaderTitleContext } from "src/context/HeaderTitleContext";
 import { mockMachinesData } from "src/data/mock/mockMachines";
 import UniqueValuesFromJson from "src/utils/uniqueValuesFromJson";
 
-function EditMachine() {
+function NewMachine() {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [value, setValue] = useState({ id: 0, Area: "", MachineName: "" });
+  const [value, setValue] = useState({ Area: "", MachineName: "" });
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
 
@@ -134,4 +134,4 @@ function EditMachine() {
   );
 }
 
-export default EditMachine;
+export default NewMachine;

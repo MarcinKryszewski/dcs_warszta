@@ -23,8 +23,8 @@ function Machines() {
   useEffect(
     () =>
       setTitleText({
-        title: "Machines",
-        subtitle: "Machines table",
+        title: "Maszyny",
+        subtitle: "Lista maszyn",
       }),
     []
   );
