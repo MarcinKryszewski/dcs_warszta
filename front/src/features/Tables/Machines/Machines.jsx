@@ -1,17 +1,24 @@
 import { Box, Button, useTheme } from "@mui/material";
 import { plPL } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DefaultTableToolbar, DataGrid } from "src/components/_components";
 import { mockMachinesData } from "src/data/mock/mockMachines";
 import { Edit, RemoveCircle } from "@mui/icons-material";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
+import { useNavigate, useLocation } from "react-router-dom";
+import DeleteMachine from "./DeleteMachine";
 
 function Machines() {
   console.log("Machines");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [machine, setMachine] = useState({ id: 0, Area: "", MachineName: "" });
 
   useEffect(
     () =>
@@ -21,6 +28,16 @@ function Machines() {
       }),
     []
   );
+
+  function EditHandle(row) {
+    console.log(location.pathname);
+    navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
+  }
+
+  function RemoveHandle(row) {
+    setMachine(row);
+    setOpen(true);
+  }
 
   const columns = [
     { field: "id", headerName: "ID", width: 50, minWidth: 50 },
@@ -47,10 +64,10 @@ function Machines() {
               "& .MuiButtonBase-root": { minWidth: 30, maxWidth: 30, p: 1 },
             }}
           >
-            <Button onClick={() => EditHandle(params.row.id)}>
+            <Button onClick={() => EditHandle(params.row)}>
               <Edit />
             </Button>
-            <Button onClick={() => RemoveHandle(params.row.id)}>
+            <Button onClick={() => RemoveHandle(params.row)}>
               <RemoveCircle />
             </Button>
           </Box>
@@ -59,12 +76,6 @@ function Machines() {
     },
   ];
 
-  function EditHandle(rowId) {
-    console.log("EDIT: " + rowId);
-  }
-  function RemoveHandle(rowId) {
-    console.log("REMOVE: " + rowId);
-  }
   return (
     <Box
       m="10px 0 0 0"
@@ -82,6 +93,7 @@ function Machines() {
         components={{ Toolbar: DefaultTableToolbar }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
       />
+      <DeleteMachine state={{ open, setOpen }} machine={{ machine }} />
     </Box>
   );
 }

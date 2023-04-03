@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { PageContainer, Sidebar } from "src/layouts/_layouts";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
+import EditMachine from "src/features/Tables/Machines/EditMachine";
 
 const Dashboard = lazy(() => import("src/features/Dashboard/Dashboard"));
 const Machines = lazy(() => import("src/features/Tables/Machines/Machines"));
@@ -30,6 +31,7 @@ function Admin() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/tables/machines" element={<Machines />} />
             <Route path="/tables/machines/new" element={<NewMachine />} />
+            <Route path="/tables/machines/edit/:id" element={<EditMachine />} />
             <Route path="/tables/persons" element={<Persons />} />
             <Route path="/tables/persons/new" element={<NewPerson />} />
             <Route path="/tables/tasks" element={<Tasks />} />
