@@ -13,6 +13,7 @@ const EditMachine = lazy(() =>
 );
 const Persons = lazy(() => import("src/features/Tables/Persons/Persons"));
 const NewPerson = lazy(() => import("src/features/Tables/Persons/NewPerson"));
+const EditPerson = lazy(() => import("src/features/Tables/Persons/EditPerson"));
 const Tasks = lazy(() => import("src/features/Tables/Tasks/Tasks"));
 const NewTask = lazy(() => import("src/features/Tables/Tasks/NewTask"));
 
@@ -36,6 +37,7 @@ function Admin() {
             <Route path="/tables/machines/edit/:id" element={<EditMachine />} />
             <Route path="/tables/persons" element={<Persons />} />
             <Route path="/tables/persons/new" element={<NewPerson />} />
+            <Route path="/tables/persons/edit/:id" element={<EditPerson />} />
             <Route path="/tables/tasks" element={<Tasks />} />
             <Route path="/tables/tasks/new" element={<NewTask />} />
             <Route path="/*" element={<Navigate to="/dashboard" replace />} />

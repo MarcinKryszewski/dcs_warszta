@@ -30,7 +30,6 @@ function Machines() {
   );
 
   function EditHandle(row) {
-    console.log(location.pathname);
     navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
   }
 

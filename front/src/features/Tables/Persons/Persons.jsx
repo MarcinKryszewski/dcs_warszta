@@ -1,4 +1,4 @@
-import { Box, Button, useTheme } from "@mui/material";
+import { Box, Button, useTheme, useThemeProps } from "@mui/material";
 import { plPL } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
@@ -6,10 +6,16 @@ import { DefaultTableToolbar, DataGrid } from "src/components/_components";
 import { mockUsersData } from "src/data/mock/mockUsers";
 import { Edit, RemoveCircle } from "@mui/icons-material";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Persons() {
   console.log("Persons");
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(
     () =>
@@ -20,8 +26,6 @@ function Persons() {
     []
   );
 
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const columns = [
     { field: "id", headerName: "ID", width: 50, minWidth: 50 },
     { field: "Name", headerName: "Imię", flex: 1 },
@@ -55,10 +59,10 @@ function Persons() {
               "& .MuiButtonBase-root": { minWidth: 30, maxWidth: 30, p: 1 },
             }}
           >
-            <Button onClick={() => EditHandle(params.row.id)}>
+            <Button onClick={() => EditHandle(params.row)}>
               <Edit />
             </Button>
-            <Button onClick={() => RemoveHandle(params.row.id)}>
+            <Button onClick={() => RemoveHandle(params.row)}>
               <RemoveCircle />
             </Button>
           </Box>
@@ -67,8 +71,8 @@ function Persons() {
     },
   ];
 
-  function EditHandle(rowId) {
-    console.log("EDIT: " + rowId);
+  function EditHandle(row) {
+    navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
   }
   function RemoveHandle(rowId) {
     console.log("REMOVE: " + rowId);

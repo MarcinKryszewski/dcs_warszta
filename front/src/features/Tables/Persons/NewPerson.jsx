@@ -158,20 +158,21 @@ function NewPerson() {
         </Stack>
         <Box height="20px" />
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
           value={value.Role.Name}
-          label="Age"
-          onChange={(event) => {
+          onChange={(event, key) => {
             setValue({
               ...value,
-              Role: { ...value.Role, Name: event.target.value },
+              Role: { RoleId: key.key.slice(2), Name: event.target.value },
             });
           }}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {UniqueValuesFromJson(mockUsersData, "Role").map(
+            ({ RoleId, Name }) => (
+              <MenuItem key={RoleId} value={Name}>
+                {Name}
+              </MenuItem>
+            )
+          )}
         </Select>
         <Box height="20px" />
         <Stack direction="row" spacing={5} justifyContent="center">

@@ -2,7 +2,7 @@ import { Box, Button, Typography, useTheme } from "@mui/material";
 import { plPL } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
-import { Edit, RemoveCircle } from "@mui/icons-material";
+import { Edit, Info, RemoveCircle } from "@mui/icons-material";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
 import { DefaultTableToolbar, DataGrid } from "src/components/_components";
 import { mockTasksData } from "src/data/mock/mockTasks";
@@ -162,7 +162,7 @@ function Tasks() {
     {
       field: "Actions",
       headerName: "Akcje",
-      width: 100,
+      width: 110,
       renderCell: (params) => {
         return (
           <Box
@@ -186,6 +186,9 @@ function Tasks() {
             <Button onClick={() => RemoveHandle(params.row.id)}>
               <RemoveCircle />
             </Button>
+            <Button onClick={() => DetailsHandle(params.row.id)}>
+              <Info />
+            </Button>
           </Box>
         );
       },
@@ -206,6 +209,9 @@ function Tasks() {
   }
   function RemoveHandle(rowId) {
     console.log("REMOVE: " + rowId);
+  }
+  function DetailsHandle(rowId) {
+    console.log("DETAILS: " + rowId);
   }
 
   return (
