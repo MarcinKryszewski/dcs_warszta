@@ -1,12 +1,13 @@
 import { Box, Button, useTheme, useThemeProps } from "@mui/material";
 import { plPL } from "@mui/x-data-grid";
 import { tokens } from "src/assets/themes/theme";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { DefaultTableToolbar, DataGrid } from "src/components/_components";
 import { mockUsersData } from "src/data/mock/mockUsers";
 import { Edit, RemoveCircle } from "@mui/icons-material";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import DeletePerson from "./DeletePerson";
 
 function Persons() {
   console.log("Persons");
@@ -16,6 +17,8 @@ function Persons() {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [person, setPerson] = useState({ id: 0, Name: "", Surname: "" });
 
   useEffect(
     () =>
@@ -25,6 +28,14 @@ function Persons() {
       }),
     []
   );
+
+  function EditHandle(row) {
+    navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
+  }
+  function RemoveHandle(row) {
+    setPerson(row);
+    setOpen(true);
+  }
 
   const columns = [
     { field: "id", headerName: "ID", width: 50, minWidth: 50 },
@@ -71,13 +82,6 @@ function Persons() {
     },
   ];
 
-  function EditHandle(row) {
-    navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
-  }
-  function RemoveHandle(rowId) {
-    console.log("REMOVE: " + rowId);
-  }
-
   return (
     <Box
       m="10px 0 0 0"
@@ -95,6 +99,7 @@ function Persons() {
         components={{ Toolbar: DefaultTableToolbar }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
       />
+      <DeletePerson state={{ open, setOpen }} person={{ person }} />
     </Box>
   );
 }

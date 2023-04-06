@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { tokens } from "src/assets/themes/theme";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
 
