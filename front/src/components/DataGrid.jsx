@@ -1,7 +1,5 @@
-import { useTheme } from "@mui/material";
-import { alpha, styled } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import { DataGrid as MuiDataGrid } from "@mui/x-data-grid";
-import { tokens } from "src/assets/themes/theme";
 
 const DataGrid = styled(MuiDataGrid)(({ theme }) => ({
   "& .MuiDataGrid-virtualScroller::-webkit-scrollbar": {

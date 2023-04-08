@@ -1,13 +1,13 @@
-import { Box, Button, useTheme, useThemeProps } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import { plPL } from "@mui/x-data-grid";
-import { tokens } from "src/assets/themes/theme";
+import { tokens } from "@/assets/themes/theme";
 import React, { useContext, useEffect, useState } from "react";
-import { DefaultTableToolbar, DataGrid } from "src/components/_components";
-import { mockUsersData } from "src/data/mock/mockUsers";
+import { DefaultTableToolbar, DataGrid } from "@/components/_components";
+import { mockUsersData } from "@/data/mock/mockUsers";
 import { Edit, RemoveCircle } from "@mui/icons-material";
-import { HeaderTitleContext } from "src/context/HeaderTitleContext";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { useLocation, useNavigate } from "react-router-dom";
-import DeletePerson from "./DeletePerson";
+import { DeletePerson } from "@/features/Tables/Persons/DeletePerson";
 
 function Persons() {
   console.log("Persons");

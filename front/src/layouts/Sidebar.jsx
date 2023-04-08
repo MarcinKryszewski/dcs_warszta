@@ -7,8 +7,14 @@ import {
 } from "react-pro-sidebar";
 import { Box, Typography, useTheme, Divider } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
-import { tokens } from "src/assets/themes/theme";
+import { tokens } from "@/assets/themes/theme";
 import ConstructionIcon from "@mui/icons-material/Construction";
+import {
+  Dashboard,
+  FormatListNumbered,
+  Person,
+  PrecisionManufacturing,
+} from "@mui/icons-material";
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
@@ -110,7 +116,7 @@ function Sidebar() {
             <Item
               title="Dashboard"
               to="/admin/dashboard"
-              //icon={<HomeOutlinedIcon />}
+              icon={<Dashboard />}
               selected={selected}
               setSelected={setSelected}
             />
@@ -119,29 +125,29 @@ function Sidebar() {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 25px" }}
             >
-              TABLES
+              LISTY :
             </Typography>
 
             <Item
-              title="Tasks"
+              title="Zadania"
               to="/admin/tables/tasks"
-              //icon={<HomeOutlinedIcon />}
+              icon={<FormatListNumbered />}
               selected={selected}
               setSelected={setSelected}
             />
 
             <Item
-              title="Machines"
+              title="Maszyny"
               to="/admin/tables/machines"
-              //icon={<HomeOutlinedIcon />}
+              icon={<PrecisionManufacturing />}
               selected={selected}
               setSelected={setSelected}
             />
 
             <Item
-              title="Persons"
+              title="Osoby"
               to="/admin/tables/persons"
-              //icon={<HomeOutlinedIcon />}
+              icon={<Person />}
               selected={selected}
               setSelected={setSelected}
             />

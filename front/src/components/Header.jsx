@@ -1,7 +1,7 @@
 import { Typography, Box, useTheme } from "@mui/material";
-import { HeaderTitleContext } from "src/context/HeaderTitleContext";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { useContext } from "react";
-import { tokens } from "src/assets/themes/theme";
+import { tokens } from "@/assets/themes/theme";
 
 const Header = ({ title, subtitle }) => {
   const theme = useTheme();

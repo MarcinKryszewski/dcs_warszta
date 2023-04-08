@@ -9,10 +9,10 @@ import {
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { tokens } from "src/assets/themes/theme";
-import { HeaderTitleContext } from "src/context/HeaderTitleContext";
-import { mockMachinesData } from "src/data/mock/mockMachines";
-import UniqueValuesFromJson from "src/utils/uniqueValuesFromJson";
+import { tokens } from "@/assets/themes/theme";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
+import { mockMachinesData } from "@/data/mock/mockMachines";
+import UniqueValuesFromJson from "@/utils/uniqueValuesFromJson";
 
 function EditMachine() {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);

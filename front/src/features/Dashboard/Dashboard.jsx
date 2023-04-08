@@ -1,11 +1,10 @@
 import { Box, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "src/assets/themes/theme";
+import { tokens } from "@/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
-import { HeaderTitleContext } from "src/context/HeaderTitleContext";
-//import { HeaderTitle } from "src/layouts/PageContainer";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
+//import { HeaderTitle } from "layouts/PageContainer";
 
-function Dashboard() {
+export default function Dashboard() {
   console.log("Dashboard");
 
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
@@ -21,8 +20,5 @@ function Dashboard() {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const columns = [];
   return <Box>Dashboard</Box>;
 }
-
-export default Dashboard;

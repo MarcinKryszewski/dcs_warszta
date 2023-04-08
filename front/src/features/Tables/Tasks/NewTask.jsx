@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { HeaderTitleContext } from "src/context/HeaderTitleContext";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 
 function NewTask() {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);

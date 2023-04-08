@@ -9,7 +9,7 @@ import {
 } from "@mui/x-data-grid";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import { tokens } from "src/assets/themes/theme";
+import { tokens } from "@/assets/themes/theme";
 
 function DefaultTableToolbar() {
   const location = useLocation();

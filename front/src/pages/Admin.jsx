@@ -1,21 +1,19 @@
 import React, { lazy, Suspense } from "react";
-import { PageContainer, Sidebar } from "src/layouts/_layouts";
+import { PageContainer, Sidebar } from "@/layouts/_layouts";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
 
-const Dashboard = lazy(() => import("src/features/Dashboard/Dashboard"));
-const Machines = lazy(() => import("src/features/Tables/Machines/Machines"));
-const NewMachine = lazy(() =>
-  import("src/features/Tables/Machines/NewMachine")
-);
+const Dashboard = lazy(() => import("@/features/Dashboard/Dashboard"));
+const Machines = lazy(() => import("@/features/Tables/Machines/Machines"));
+const NewMachine = lazy(() => import("@/features/Tables/Machines/NewMachine"));
 const EditMachine = lazy(() =>
-  import("src/features/Tables/Machines/EditMachine")
+  import("@/features/Tables/Machines/EditMachine")
 );
-const Persons = lazy(() => import("src/features/Tables/Persons/Persons"));
-const NewPerson = lazy(() => import("src/features/Tables/Persons/NewPerson"));
-const EditPerson = lazy(() => import("src/features/Tables/Persons/EditPerson"));
-const Tasks = lazy(() => import("src/features/Tables/Tasks/Tasks"));
-const NewTask = lazy(() => import("src/features/Tables/Tasks/NewTask"));
+const Persons = lazy(() => import("@/features/Tables/Persons/Persons"));
+const NewPerson = lazy(() => import("@/features/Tables/Persons/NewPerson"));
+const EditPerson = lazy(() => import("@/features/Tables/Persons/EditPerson"));
+const Tasks = lazy(() => import("@/features/Tables/Tasks/Tasks"));
+const NewTask = lazy(() => import("@/features/Tables/Tasks/NewTask"));
 
 function Admin() {
   return (

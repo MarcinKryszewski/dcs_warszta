@@ -1,13 +1,13 @@
 import { Box, Button, useTheme } from "@mui/material";
 import { plPL } from "@mui/x-data-grid";
-import { tokens } from "src/assets/themes/theme";
+import { tokens } from "@/assets/themes/theme";
 import React, { useContext, useEffect, useState } from "react";
-import { DefaultTableToolbar, DataGrid } from "src/components/_components";
-import { mockMachinesData } from "src/data/mock/mockMachines";
+import { DefaultTableToolbar, DataGrid } from "@/components/_components";
+import { mockMachinesData } from "@/data/mock/mockMachines";
 import { Edit, RemoveCircle } from "@mui/icons-material";
-import { HeaderTitleContext } from "src/context/HeaderTitleContext";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { useNavigate, useLocation } from "react-router-dom";
-import DeleteMachine from "./DeleteMachine";
+import DeleteMachine from "@/features/Tables/Machines/DeleteMachine";
 
 function Machines() {
   console.log("Machines");

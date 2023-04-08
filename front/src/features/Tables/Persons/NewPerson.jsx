@@ -1,4 +1,3 @@
-import { useTheme } from "@emotion/react";
 import {
   Autocomplete,
   Box,
@@ -10,14 +9,15 @@ import {
   Stack,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { tokens } from "src/assets/themes/theme";
-import { HeaderTitleContext } from "src/context/HeaderTitleContext";
+import { useNavigate } from "react-router-dom";
+import { tokens } from "@/assets/themes/theme";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 
-import { mockUsersData } from "src/data/mock/mockUsers";
-import UniqueValuesFromJson from "src/utils/uniqueValuesFromJson";
+import { mockUsersData } from "@/data/mock/mockUsers";
+import UniqueValuesFromJson from "@/utils/uniqueValuesFromJson";
 
 function NewPerson() {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);

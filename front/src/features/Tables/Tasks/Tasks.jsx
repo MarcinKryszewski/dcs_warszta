@@ -1,18 +1,33 @@
 import { Box, Button, Typography, useTheme } from "@mui/material";
 import { plPL } from "@mui/x-data-grid";
-import { tokens } from "src/assets/themes/theme";
-import React, { useContext, useEffect } from "react";
+import { tokens } from "@/assets/themes/theme";
+import React, { useContext, useEffect, useState } from "react";
 import { Edit, Info, RemoveCircle } from "@mui/icons-material";
-import { HeaderTitleContext } from "src/context/HeaderTitleContext";
-import { DefaultTableToolbar, DataGrid } from "src/components/_components";
-import { mockTasksData } from "src/data/mock/mockTasks";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
+import { DefaultTableToolbar, DataGrid } from "@/components/_components";
+import { mockTasksData } from "@/data/mock/mockTasks";
+import { DeleteTask } from "@/features/Tables/Tasks/DeleteTask";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Tasks() {
   console.log("Tasks");
-  const { titleText, setTitleText } = useContext(HeaderTitleContext);
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const { titleText, setTitleText } = useContext(HeaderTitleContext);
+  const gridData = mockTasksData;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const [task, setTask] = useState({
+    id: 0,
+    Machines: { id: 0, Area: "", MachineName: "" },
+    Description: "",
+    Type: "",
+    Category: "",
+    Responsible: { id: 0, Name: "", Surname: "" },
+    PartsStatus: { Status: "" },
+    TaskStatus: { Status: "" },
+  });
 
   function PartStatusColor(status) {
     if (status == "SPECYFIKOWANIE") return theme.palette.info.main;
@@ -25,6 +40,26 @@ function Tasks() {
     if (status == "WYKONANE") return theme.palette.warning.main;
     if (status == "ZATWIERDZONE") return theme.palette.success.main;
     if (status == "SPÓŹNIONE") return theme.palette.error.main;
+  }
+
+  useEffect(
+    () =>
+      setTitleText({
+        title: "Tasks",
+        subtitle: "Tasks table",
+      }),
+    []
+  );
+
+  function EditHandle(row) {
+    console.log("EDIT: " + row);
+  }
+  function RemoveHandle(row) {
+    setTask(row);
+    setOpen(true);
+  }
+  function DetailsHandle(row) {
+    console.log("DETAILS: " + row);
   }
 
   const columns = [
@@ -98,18 +133,18 @@ function Tasks() {
       flex: 0.2,
       renderCell: (params) => (
         <Box>
-          <Typography>{params.row?.Responsible?.Name}</Typography>
-          <Typography>{params.row?.Responsible?.Surname}</Typography>{" "}
+          <Typography>{params.row.Responsible.Name}</Typography>
+          <Typography>{params.row.Responsible.Surname}</Typography>{" "}
         </Box>
       ),
       valueGetter: (params) =>
-        params.row?.Responsible?.Name + " " + params.row?.Responsible?.Surname,
+        params.row.Responsible.Name + " " + params.row.Responsible.Surname,
     },
     {
       field: "PartsStatus",
       headerName: "Status części",
       flex: 0.3,
-      valueGetter: (params) => params.row?.PartsStatus?.Status,
+      valueGetter: (params) => params.row.PartsStatus.Status,
       renderCell: ({
         row: {
           PartsStatus: { Status },
@@ -180,13 +215,13 @@ function Tasks() {
               "& .MuiButtonBase-root": { minWidth: 30, maxWidth: 30, p: 1 },
             }}
           >
-            <Button onClick={() => EditHandle(params.row.id)}>
+            <Button onClick={() => EditHandle(params.row)}>
               <Edit />
             </Button>
-            <Button onClick={() => RemoveHandle(params.row.id)}>
+            <Button onClick={() => RemoveHandle(params.row)}>
               <RemoveCircle />
             </Button>
-            <Button onClick={() => DetailsHandle(params.row.id)}>
+            <Button onClick={() => DetailsHandle(params.row)}>
               <Info />
             </Button>
           </Box>
@@ -194,25 +229,6 @@ function Tasks() {
       },
     },
   ];
-
-  useEffect(
-    () =>
-      setTitleText({
-        title: "Tasks",
-        subtitle: "Tasks table",
-      }),
-    []
-  );
-
-  function EditHandle(rowId) {
-    console.log("EDIT: " + rowId);
-  }
-  function RemoveHandle(rowId) {
-    console.log("REMOVE: " + rowId);
-  }
-  function DetailsHandle(rowId) {
-    console.log("DETAILS: " + rowId);
-  }
 
   return (
     <Box
@@ -226,7 +242,7 @@ function Tasks() {
       }}
     >
       <DataGrid
-        rows={mockTasksData}
+        rows={gridData}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
@@ -235,6 +251,7 @@ function Tasks() {
           Machine: false,
         }}
       />
+      <DeleteTask state={{ open, setOpen }} task={{ task }} />
     </Box>
   );
 }

@@ -9,12 +9,12 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 
-export function DeletePerson(props) {
+export function DeleteTask(props) {
   const [open, setOpen] = useState(false);
-  const person = props.person.person;
+  const task = props.task.task;
 
   const handleDelete = () => {
-    console.log(person);
+    console.log(task);
     props.state.setOpen(false);
   };
   const handleClose = () => {
@@ -26,10 +26,13 @@ export function DeletePerson(props) {
   return (
     <Box>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{"Czy chcesz usunąć tą osobę?"}</DialogTitle>
+        <DialogTitle>{"Czy chcesz usunąć to działanie?"}</DialogTitle>
         <DialogContent>
-          <Typography variant="h5">Imię: {person.Name}</Typography>
-          <Typography variant="h5">Nazwisko: {person.Surname}</Typography>
+          <Typography variant="h5">Linia: {task.Machines.Area}</Typography>
+          <Typography variant="h5">
+            Maszyna: {task.Machines.MachineName}
+          </Typography>
+          <Typography variant="h5">Opis: {task.Description}</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="error" variant="outlined">
