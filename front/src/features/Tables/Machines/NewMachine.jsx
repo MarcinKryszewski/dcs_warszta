@@ -11,7 +11,6 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tokens } from "src/assets/themes/theme";
 import { HeaderTitleContext } from "src/context/HeaderTitleContext";
-
 import { mockMachinesData } from "src/data/mock/mockMachines";
 import UniqueValuesFromJson from "src/utils/uniqueValuesFromJson";
 
@@ -19,15 +18,21 @@ function NewMachine() {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [value, setValue] = useState({ Area: "", MachineName: "" });
+  const [machine, setMachine] = useState({ Area: "", MachineName: "" });
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
 
-  function MachineManipulator() {
-    if (!value.Area) return setErrorText("Wpisz obszar!");
-    if (value.MachineName == "") return setErrorText("Wpisz maszynę!");
+  const uniqueAreas = UniqueValuesFromJson(mockMachinesData, "Area");
+  const uniqueMachineNames = UniqueValuesFromJson(
+    mockMachinesData,
+    "MachineName"
+  );
+
+  function CreateMachine() {
+    if (!machine.Area) return setErrorText("Wpisz obszar!");
+    if (machine.MachineName == "") return setErrorText("Wpisz maszynę!");
     setErrorText(null);
-    console.log(value);
+    console.log(machine);
   }
 
   useEffect(() => {
@@ -38,80 +43,68 @@ function NewMachine() {
   }, []);
 
   return (
-    <Box width={"20%"} ml={2} mt={4}>
-      <Stack alignItems="center">
+    <Box width={"30%"} ml={2} mt={4}>
+      <Stack alignItems="center" spacing={3}>
         <Autocomplete
-          value={value.Area}
-          onChange={(event, values) => {
-            setValue({ ...value, Area: values });
+          freeSolo
+          value={machine.Area}
+          options={uniqueAreas}
+          onChange={(event, value) => {
+            setMachine({ ...machine, Area: value });
           }}
-          options={UniqueValuesFromJson(mockMachinesData, "Area")}
           onInputChange={(event, newInputValue, reason) => {
-            if (reason === "clear") return setValue({ ...value, Area: "" });
+            if (reason === "clear") return setMachine({ ...machine, Area: "" });
+            setMachine({ ...machine, Area: newInputValue });
           }}
           sx={{
-            width: 300,
+            width: "100%",
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: colors.greenAccent[400],
+              },
+            },
           }}
           renderInput={(params) => (
             <TextField
               {...params}
-              value={value.Area}
-              onChange={(event) => {
-                setValue({ ...value, Area: event.target.value });
-              }}
-              error={!value.Area ? true : false}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: colors.greenAccent[400],
-                  },
-                },
-              }}
+              error={!machine.Area ? true : false}
               label="Obszar"
             />
           )}
-          freeSolo
         />
-        <Box height="20px" />
         <Autocomplete
-          value={value.MachineName}
+          freeSolo
+          value={machine.MachineName}
+          options={uniqueMachineNames}
           onChange={(event, values) => {
-            setValue({ ...value, MachineName: values });
+            setMachine({ ...machine, MachineName: values });
           }}
-          options={UniqueValuesFromJson(mockMachinesData, "MachineName")}
           onInputChange={(event, newInputValue, reason) => {
             if (reason === "clear")
-              return setValue({ ...value, MachineName: "" });
+              return setMachine({ ...machine, MachineName: "" });
+            setMachine({ ...machine, MachineName: newInputValue });
           }}
-          sx={{ width: 300 }}
+          sx={{
+            width: "100%",
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: colors.greenAccent[400],
+              },
+            },
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
-              value={value.MachineName}
-              onChange={(event) => {
-                setValue({ ...value, MachineName: event.target.value });
-              }}
-              error={!value.MachineName ? true : false}
-              color="secondary"
+              error={!machine.MachineName ? true : false}
               label="Maszyna"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: colors.greenAccent[400],
-                  },
-                },
-              }}
             />
           )}
-          freeSolo
-          disablePortal
         />
-        <Box height="30px" />
         <Stack direction="row" spacing={5} justifyContent="center">
           <Button
             variant="contained"
             color="success"
-            onClick={() => MachineManipulator()}
+            onClick={() => CreateMachine()}
             sx={{ boxShadow: `0 0 10px 1px ${colors.greenAccent[400]};` }}
           >
             <Typography>ZAPISZ</Typography>
@@ -125,7 +118,6 @@ function NewMachine() {
             <Typography>WYJDŹ</Typography>
           </Button>
         </Stack>
-        <Box height="20px" />
         <Typography sx={{ fontWeight: 600 }} color="error" variant="h4">
           {errorText}
         </Typography>

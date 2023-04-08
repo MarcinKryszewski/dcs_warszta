@@ -14,6 +14,7 @@ function Machines() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
+  const gridData = mockMachinesData;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ function Machines() {
       }}
     >
       <DataGrid
-        rows={mockMachinesData}
+        rows={gridData}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}

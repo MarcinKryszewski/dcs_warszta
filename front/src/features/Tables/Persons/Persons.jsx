@@ -14,7 +14,7 @@ function Persons() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
-
+  const gridData = mockUsersData;
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -47,7 +47,7 @@ function Persons() {
       field: "Role.Name",
       headerName: "Uprawnienia",
       flex: 1,
-      valueGetter: (params) => params.row?.Role?.Name,
+      valueGetter: (params) => params.row.Role.Name,
     },
     {
       field: "Actions",
@@ -94,7 +94,7 @@ function Persons() {
       }}
     >
       <DataGrid
-        rows={mockUsersData}
+        rows={gridData}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}

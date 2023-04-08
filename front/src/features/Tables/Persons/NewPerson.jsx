@@ -3,6 +3,8 @@ import {
   Autocomplete,
   Box,
   Button,
+  FormControl,
+  InputLabel,
   MenuItem,
   Select,
   Stack,
@@ -21,7 +23,7 @@ function NewPerson() {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [value, setValue] = useState({
+  const [person, setPerson] = useState({
     Name: "",
     Surname: "",
     Login: "",
@@ -31,15 +33,22 @@ function NewPerson() {
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
 
-  function MachineManipulator() {
-    //if (!value.Area) return setErrorText("Wpisz obszar!");
-    //if (value.MachineName == "") return setErrorText("Wpisz maszynę!");
+  const uniqueNames = UniqueValuesFromJson(mockUsersData, "Name");
+  const uniqueSurnames = UniqueValuesFromJson(mockUsersData, "Surname");
+  const uniqueRoles = UniqueValuesFromJson(mockUsersData, "Role");
+
+  function CreatePerson() {
+    if (!person.Name) return setErrorText("Podaj imię!");
+    if (!person.Surname) return setErrorText("Podaj nazwisko!");
+    if (!person.Login) return setErrorText("Podaj login!");
+    if (!person.Password) return setErrorText("Podaj hasło!");
+    if (!person.Role.Name) return setErrorText("Podaj uprawnienia!");
     setErrorText(null);
-    console.log(value);
+    console.log(person);
   }
 
   const roleHandle = (event) => {
-    setValue(event.target.value);
+    setPerson(event.target.value);
   };
 
   useEffect(() => {
@@ -50,84 +59,77 @@ function NewPerson() {
   }, []);
 
   return (
-    <Box width={"38%"} ml={2} mt={4}>
-      <Stack>
-        <Stack direction="row" spacing={3}>
+    <Box width={"40%"} ml={2} mt={4}>
+      <Stack alignItems="center" spacing={3}>
+        <Stack direction="row" spacing={3} width={"100%"}>
           <Autocomplete
-            value={value.Name}
+            freeSolo
+            value={person.Name}
+            options={uniqueNames}
             onChange={(event, values) => {
-              setValue({ ...value, Name: values });
+              setPerson({ ...person, Name: values });
             }}
-            options={UniqueValuesFromJson(mockUsersData, "Name")}
             onInputChange={(event, newInputValue, reason) => {
-              if (reason === "clear") return setValue({ ...value, Name: "" });
+              if (reason === "clear") return setPerson({ ...person, Name: "" });
+              setPerson({ ...person, Name: newInputValue });
             }}
             sx={{
-              width: 300,
+              width: "100%",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: colors.greenAccent[400],
+                },
+              },
             }}
             renderInput={(params) => (
               <TextField
                 {...params}
-                value={value.Name}
-                onChange={(event) => {
-                  setValue({ ...value, Name: event.target.value });
-                }}
-                error={!value.Name ? true : false}
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: colors.greenAccent[400],
-                    },
-                  },
-                }}
+                error={!person.Name ? true : false}
                 label="Imię"
               />
             )}
-            freeSolo
           />
           <Autocomplete
-            value={value.Surname}
+            freeSolo
+            value={person.Surname}
+            options={uniqueSurnames}
             onChange={(event, values) => {
-              setValue({ ...value, Surname: values });
+              setPerson({ ...person, Surname: values });
             }}
-            options={UniqueValuesFromJson(mockUsersData, "Surname")}
             onInputChange={(event, newInputValue, reason) => {
               if (reason === "clear")
-                return setValue({ ...value, Surname: "" });
+                return setPerson({ ...person, Surname: "" });
+              setPerson({ ...person, Surname: newInputValue });
             }}
-            sx={{ width: 300 }}
+            sx={{
+              width: "100%",
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: colors.greenAccent[400],
+                },
+              },
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
-                value={value.Surname}
-                onChange={(event) => {
-                  setValue({ ...value, Surname: event.target.value });
-                }}
-                error={!value.Surname ? true : false}
-                color="secondary"
+                error={!person.Surname ? true : false}
                 label="Nazwisko"
-                sx={{
-                  "& .MuiOutlinedInput-root": {
-                    "& fieldset": {
-                      borderColor: colors.greenAccent[400],
-                    },
-                  },
-                }}
               />
             )}
-            freeSolo
-            disablePortal
           />
         </Stack>
-        <Box height="20px" />
-        <Stack direction="row" justifyContent="center" spacing={3}>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          spacing={3}
+          width={"100%"}
+        >
           <TextField
-            value={value.Login}
+            value={person.Login}
             onChange={(event) => {
-              setValue({ ...value, Login: event.target.value });
+              setPerson({ ...person, Login: event.target.value });
             }}
-            error={!value.Login ? true : false}
-            color="secondary"
+            error={!person.Login ? true : false}
             label="Login"
             sx={{
               "& .MuiOutlinedInput-root": {
@@ -139,12 +141,11 @@ function NewPerson() {
             }}
           />
           <TextField
-            value={value.Password}
+            value={person.Password}
             onChange={(event) => {
-              setValue({ ...value, Password: event.target.value });
+              setPerson({ ...person, Password: event.target.value });
             }}
-            error={!value.Password ? true : false}
-            color="secondary"
+            error={!person.Password ? true : false}
             label="Hasło"
             sx={{
               "& .MuiOutlinedInput-root": {
@@ -156,30 +157,47 @@ function NewPerson() {
             }}
           />
         </Stack>
-        <Box height="20px" />
-        <Select
-          value={value.Role.Name}
-          onChange={(event, key) => {
-            setValue({
-              ...value,
-              Role: { RoleId: key.key.slice(2), Name: event.target.value },
-            });
-          }}
-        >
-          {UniqueValuesFromJson(mockUsersData, "Role").map(
-            ({ RoleId, Name }) => (
+        <FormControl sx={{ width: "100%" }}>
+          <InputLabel
+            sx={{
+              color:
+                person.Role.Name == ""
+                  ? theme.palette.error.main
+                  : colors.greenAccent[400],
+            }}
+          >
+            Uprawnienia
+          </InputLabel>
+          <Select
+            value={person.Role.Name}
+            onChange={(event, key) => {
+              setPerson({
+                ...person,
+                Role: { RoleId: key.key.slice(2), Name: event.target.value },
+              });
+            }}
+            label="Uprawnienia"
+            sx={{
+              "& fieldset": {
+                borderColor:
+                  person.Role.Name == ""
+                    ? theme.palette.error.main
+                    : colors.greenAccent[400],
+              },
+            }}
+          >
+            {uniqueRoles.map(({ RoleId, Name }) => (
               <MenuItem key={RoleId} value={Name}>
                 {Name}
               </MenuItem>
-            )
-          )}
-        </Select>
-        <Box height="20px" />
+            ))}
+          </Select>
+        </FormControl>
         <Stack direction="row" spacing={5} justifyContent="center">
           <Button
             variant="contained"
             color="success"
-            onClick={() => MachineManipulator()}
+            onClick={() => CreatePerson()}
             sx={{ boxShadow: `0 0 10px 1px ${colors.greenAccent[400]};` }}
           >
             <Typography>ZAPISZ</Typography>
@@ -193,7 +211,6 @@ function NewPerson() {
             <Typography>WYJDŹ</Typography>
           </Button>
         </Stack>
-        <Box height="20px" />
         <Typography sx={{ fontWeight: 600 }} color="error" variant="h4">
           {errorText}
         </Typography>
