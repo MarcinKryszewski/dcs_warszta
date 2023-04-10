@@ -29,6 +29,12 @@ function Tasks() {
     TaskStatus: { Status: "" },
   });
 
+  function PartStatusColor(category) {
+    if (category == "A") return theme.palette.error.main;
+    if (category == "B") return theme.palette.warning.main;
+    if (category == "C") return theme.palette.info.main;
+  }
+
   function PartStatusColor(status) {
     if (status == "SPECYFIKOWANIE") return theme.palette.info.main;
     if (status == "ZAMÓWIONE") return theme.palette.warning.main;
@@ -52,7 +58,7 @@ function Tasks() {
   );
 
   function EditHandle(row) {
-    console.log("EDIT: " + row);
+    navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
   }
   function RemoveHandle(row) {
     setTask(row);
@@ -111,13 +117,7 @@ function Tasks() {
             p="5px"
             display="flex"
             justifyContent="center"
-            backgroundColor={
-              Category == "A"
-                ? theme.palette.error.main
-                : Category == "B"
-                ? theme.palette.warning.main
-                : theme.palette.info.main
-            }
+            backgroundColor={() => PartStatusColor(Category)}
             borderRadius="15px"
           >
             <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>

@@ -14,6 +14,7 @@ const NewPerson = lazy(() => import("@/features/Tables/Persons/NewPerson"));
 const EditPerson = lazy(() => import("@/features/Tables/Persons/EditPerson"));
 const Tasks = lazy(() => import("@/features/Tables/Tasks/Tasks"));
 const NewTask = lazy(() => import("@/features/Tables/Tasks/NewTask"));
+const EditTask = lazy(() => import("@/features/Tables/Tasks/EditTask"));
 
 function Admin() {
   return (
@@ -38,6 +39,7 @@ function Admin() {
             <Route path="/tables/persons/edit/:id" element={<EditPerson />} />
             <Route path="/tables/tasks" element={<Tasks />} />
             <Route path="/tables/tasks/new" element={<NewTask />} />
+            <Route path="/tables/tasks/edit/:id" element={<EditTask />} />
             <Route path="/*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>

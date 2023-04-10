@@ -1,8 +1,8 @@
 export const mockUsersData = [
   {
     id: 1,
-    Name: "Baily",
-    Surname: "Wrassell",
+    Name: "Drusie",
+    Surname: "Weedon",
     Login: "bwrassell0",
     Role: {
       RoleId: "1",

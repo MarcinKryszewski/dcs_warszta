@@ -15,7 +15,6 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tokens } from "@/assets/themes/theme";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
-
 import { mockUsersData } from "@/data/mock/mockUsers";
 import UniqueValuesFromJson from "@/utils/uniqueValuesFromJson";
 
@@ -47,10 +46,6 @@ function NewPerson() {
     console.log(person);
   }
 
-  const roleHandle = (event) => {
-    setPerson(event.target.value);
-  };
-
   useEffect(() => {
     setTitleText({
       title: "Osoby",
@@ -64,6 +59,7 @@ function NewPerson() {
         <Stack direction="row" spacing={3} width={"100%"}>
           <Autocomplete
             freeSolo
+            openOnFocus
             value={person.Name}
             options={uniqueNames}
             onChange={(event, values) => {
@@ -75,7 +71,20 @@ function NewPerson() {
             }}
             sx={{
               width: "100%",
+              "& .MuiInputLabel-shrink": {
+                color: `${colors.greenAccent[400]} !important;`,
+              },
+              "& .Mui-focused": {
+                "& fieldset": {
+                  borderColor: `${colors.greenAccent[400]} !important;`,
+                },
+              },
               "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: colors.greenAccent[400],
+                },
+              },
+              "& .MuiOutlinedInput-root:hover": {
                 "& fieldset": {
                   borderColor: colors.greenAccent[400],
                 },
@@ -91,6 +100,7 @@ function NewPerson() {
           />
           <Autocomplete
             freeSolo
+            openOnFocus
             value={person.Surname}
             options={uniqueSurnames}
             onChange={(event, values) => {
@@ -103,7 +113,20 @@ function NewPerson() {
             }}
             sx={{
               width: "100%",
+              "& .MuiInputLabel-shrink": {
+                color: `${colors.greenAccent[400]} !important;`,
+              },
+              "& .Mui-focused": {
+                "& fieldset": {
+                  borderColor: `${colors.greenAccent[400]} !important;`,
+                },
+              },
               "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: colors.greenAccent[400],
+                },
+              },
+              "& .MuiOutlinedInput-root:hover": {
                 "& fieldset": {
                   borderColor: colors.greenAccent[400],
                 },
@@ -132,12 +155,25 @@ function NewPerson() {
             error={!person.Login ? true : false}
             label="Login"
             sx={{
+              width: "100%",
+              "& .MuiInputLabel-shrink": {
+                color: `${colors.greenAccent[400]} !important;`,
+              },
+              "& .Mui-focused": {
+                "& fieldset": {
+                  borderColor: `${colors.greenAccent[400]} !important;`,
+                },
+              },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: colors.greenAccent[400],
                 },
               },
-              width: "100%",
+              "& .MuiOutlinedInput-root:hover": {
+                "& fieldset": {
+                  borderColor: colors.greenAccent[400],
+                },
+              },
             }}
           />
           <TextField
@@ -148,12 +184,25 @@ function NewPerson() {
             error={!person.Password ? true : false}
             label="Hasło"
             sx={{
+              width: "100%",
+              "& .MuiInputLabel-shrink": {
+                color: `${colors.greenAccent[400]} !important;`,
+              },
+              "& .Mui-focused": {
+                "& fieldset": {
+                  borderColor: `${colors.greenAccent[400]} !important;`,
+                },
+              },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
                   borderColor: colors.greenAccent[400],
                 },
               },
-              width: "100%",
+              "& .MuiOutlinedInput-root:hover": {
+                "& fieldset": {
+                  borderColor: colors.greenAccent[400],
+                },
+              },
             }}
           />
         </Stack>
@@ -164,6 +213,9 @@ function NewPerson() {
                 person.Role.Name == ""
                   ? theme.palette.error.main
                   : colors.greenAccent[400],
+              "&.Mui-focused": {
+                color: `${colors.greenAccent[400]} !important`,
+              },
             }}
           >
             Uprawnienia
@@ -177,6 +229,7 @@ function NewPerson() {
               });
             }}
             label="Uprawnienia"
+            color="secondary"
             sx={{
               "& fieldset": {
                 borderColor:

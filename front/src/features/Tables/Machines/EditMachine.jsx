@@ -49,6 +49,7 @@ function EditMachine() {
     <Box width={"30%"} ml={2} mt={4}>
       <Stack alignItems="center" spacing={3}>
         <Autocomplete
+          openOnFocus
           freeSolo
           value={machine.Area}
           options={uniqueAreas}
@@ -76,6 +77,7 @@ function EditMachine() {
           )}
         />
         <Autocomplete
+          openOnFocus
           freeSolo
           value={machine.MachineName}
           options={uniqueMachineNames}

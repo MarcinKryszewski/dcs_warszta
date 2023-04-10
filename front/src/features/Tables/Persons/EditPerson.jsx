@@ -61,6 +61,7 @@ function EditPerson() {
       <Stack alignItems="center" spacing={3}>
         <Stack direction="row" spacing={3} width={"100%"}>
           <Autocomplete
+            openOnFocus
             freeSolo
             value={person.Name}
             options={uniqueNames}
@@ -88,6 +89,7 @@ function EditPerson() {
             )}
           />
           <Autocomplete
+            openOnFocus
             freeSolo
             value={person.Surname}
             options={uniqueSurnames}
