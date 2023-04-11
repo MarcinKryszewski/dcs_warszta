@@ -1,9 +1,9 @@
 import { Box, Button, Typography, useTheme } from "@mui/material";
-import { tokens } from "src/assets/themes/theme";
+import { tokens } from "@/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
-import { HeaderTitleContext } from "src/context/HeaderTitleContext";
-import { mockTasksData } from "src/data/mock/mockTasks";
-import { StatBox } from "src/components/StatBox";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
+import { mockTasksData } from "@/data/mock/mockTasks";
+import { StatBox } from "@/components/StatBox";
 import {
   ChangeCircle,
   CheckCircle,
