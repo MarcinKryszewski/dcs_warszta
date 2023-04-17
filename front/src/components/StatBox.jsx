@@ -1,4 +1,8 @@
-import { Box, Stack, Typography, useTheme } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import useTheme from "@mui/material/styles/useTheme";
+import Stack from "@mui/material/Stack";
+
 import { tokens } from "@/assets/themes/theme";
 import ProgressCircle from "./ProgressCircle";
 

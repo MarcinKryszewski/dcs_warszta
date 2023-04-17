@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { PageContainer, Sidebar } from "@/layouts/_layouts";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 
 const Dashboard = lazy(() => import("@/features/Dashboard/Dashboard"));
 const Machines = lazy(() => import("@/features/Tables/Machines/Machines"));

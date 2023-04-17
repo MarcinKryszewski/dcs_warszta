@@ -1,4 +1,6 @@
-import { Box, useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
+import useTheme from "@mui/material/styles/useTheme";
+
 import { tokens } from "@/assets/themes/theme";
 
 const ProgressCircle = ({ progress = "0.75", size = "40" }) => {

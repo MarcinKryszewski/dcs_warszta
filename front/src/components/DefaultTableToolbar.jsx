@@ -1,6 +1,8 @@
 import { useTheme } from "@emotion/react";
-import { PlaylistAdd } from "@mui/icons-material";
-import { Button, Typography } from "@mui/material";
+import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 import {
   GridToolbarContainer,
   GridToolbarDensitySelector,
@@ -9,6 +11,7 @@ import {
 } from "@mui/x-data-grid";
 
 import { useLocation, useNavigate } from "react-router-dom";
+
 import { tokens } from "@/assets/themes/theme";
 
 function DefaultTableToolbar() {

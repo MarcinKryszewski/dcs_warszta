@@ -1,4 +1,7 @@
-import { Typography, Box, useTheme } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import useTheme from "@mui/material/styles/useTheme";
+
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { useContext } from "react";
 import { tokens } from "@/assets/themes/theme";

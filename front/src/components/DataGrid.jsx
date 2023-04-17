@@ -49,29 +49,3 @@ const DataGrid = styled(MuiDataGrid)(({ theme }) => ({
 }));
 
 export default DataGrid;
-
-/*
-"& .MuiDataGrid-root": {
-          border: "none",
-        },
-        "& .MuiDataGrid-cell": {
-          borderBottom: "none",
-        },
-        "& .name-column--cell": {
-          color: theme.palette.secondary.light,
-        },
-        "& .MuiDataGrid-columnHeaders": {
-          backgroundColor: theme.palette.tertiary.dark,
-          borderBottom: "none",
-        },
-        "& .MuiDataGrid-footerContainer": {
-          borderTop: "none",
-          backgroundColor: theme.tertiary.dark,
-        },
-        "& .MuiCheckbox-root": {
-          color: `${theme.secondary.light} !important`,
-        },
-        "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-          color: `${theme.palette.neutral.light} !important`,
-        },
-  */

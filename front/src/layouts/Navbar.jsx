@@ -1,4 +1,7 @@
-import { Box, IconButton, useTheme } from "@mui/material";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import useTheme from "@mui/material/styles/useTheme";
+
 import { useContext } from "react";
 import { ColorModeContext, tokens } from "@/assets/themes/theme";
 

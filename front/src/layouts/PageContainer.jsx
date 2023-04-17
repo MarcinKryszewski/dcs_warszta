@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { Header } from "@/components/_components";
 import React, { useState } from "react";
 import { Footer, Navbar } from "@/layouts/_layouts";

@@ -5,16 +5,22 @@ import {
   MenuItem,
   SubMenu,
 } from "react-pro-sidebar";
-import { Box, Typography, useTheme, Divider } from "@mui/material";
+
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import useTheme from '@mui/material/styles/useTheme'
+import Divider from '@mui/material/Divider'
+
+
+
+
 import { Link, useLocation } from "react-router-dom";
 import { tokens } from "@/assets/themes/theme";
 import ConstructionIcon from "@mui/icons-material/Construction";
-import {
-  Dashboard,
-  FormatListNumbered,
-  Person,
-  PrecisionManufacturing,
-} from "@mui/icons-material";
+import Dashboard from "@mui/icons-material/Dashboard";
+import FormatListNumbered from "@mui/icons-material/FormatListNumbered";
+import Person from "@mui/icons-material/Person";
+import PrecisionManufacturing from "@mui/icons-material/PrecisionManufacturing";
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);

@@ -1,10 +1,17 @@
-import { Box, Button, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+
 import { plPL } from "@mui/x-data-grid";
 import { tokens } from "@/assets/themes/theme";
 import React, { useContext, useEffect, useState } from "react";
 import { DefaultTableToolbar, DataGrid } from "@/components/_components";
+
+
+
 import { mockUsersData } from "@/data/mock/mockUsers";
-import { Edit, RemoveCircle } from "@mui/icons-material";
+import Edit from "@mui/icons-material/Edit";
+import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DeletePerson } from "@/features/Tables/Persons/DeletePerson";
