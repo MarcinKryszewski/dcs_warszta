@@ -18,6 +18,9 @@ export default function Dashboard() {
   console.log("Dashboard");
 
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+
   const dashboardData = mockTasksData;
   const tasksStatus = {
     late: dashboardData.filter((task) => task.TaskStatus.Status == "SPÓŹNIONE")
@@ -41,9 +44,6 @@ export default function Dashboard() {
       }),
     []
   );
-
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
 
   return (
     <Box>

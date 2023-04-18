@@ -17,6 +17,10 @@ const Navbar = () => {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
+  function LoginHandle() {
+    return console.log("LOGIN");
+  }
+
   return (
     <Box display="flex" justifyContent="flex-end" p={0} width={"100%"}>
       <Box display="flex">
@@ -33,7 +37,7 @@ const Navbar = () => {
         <IconButton>
           <SettingsOutlinedIcon />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={LoginHandle}>
           <PersonOutlinedIcon />
         </IconButton>
       </Box>

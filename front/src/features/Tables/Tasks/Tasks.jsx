@@ -45,7 +45,6 @@ function Tasks() {
   }
 
   function PartStatusColor(status) {
-    console.log(status);
     if (status == "SPECYFIKOWANIE") return theme.palette.info.main;
     if (status == "ZAMÓWIONE") return theme.palette.warning.main;
     if (status == "DOSTĘPNE") return theme.palette.success.main;
