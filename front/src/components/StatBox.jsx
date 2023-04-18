@@ -4,7 +4,7 @@ import useTheme from "@mui/material/styles/useTheme";
 import Stack from "@mui/material/Stack";
 
 import { tokens } from "@/assets/themes/theme";
-import ProgressCircle from "./ProgressCircle";
+//import ProgressCircle from "./ProgressCircle";
 
 export const StatBox = ({ title, subtitle, icon }) => {
   const theme = useTheme();

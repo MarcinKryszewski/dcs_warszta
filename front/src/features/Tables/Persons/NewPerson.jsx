@@ -1,3 +1,6 @@
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import useTheme from "@mui/material/styles/useTheme";
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
@@ -10,9 +13,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
-
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { tokens } from "@/assets/themes/theme";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { mockUsersData } from "@/data/mock/mockUsers";

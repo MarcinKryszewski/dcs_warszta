@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { ColorModeContext, useMode } from "@/assets/themes/theme";
-
-
 
 import CssBaseline from "@mui/material/CssBaseline";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
-//################TEMP###############
-
+import { ColorModeContext, useMode } from "@/assets/themes/theme";
 import Admin from "./pages/Admin";
-
-//###################################
 
 function App() {
   const [theme, colorMode] = useMode();

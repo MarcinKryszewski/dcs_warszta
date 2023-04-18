@@ -1,5 +1,7 @@
-import { useTheme } from "@emotion/react";
+import useTheme from "@mui/material/styles/useTheme";
+
 import PlaylistAdd from "@mui/icons-material/PlaylistAdd";
+
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 

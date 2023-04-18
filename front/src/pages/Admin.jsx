@@ -1,7 +1,9 @@
 import React, { lazy, Suspense } from "react";
-import { PageContainer, Sidebar } from "@/layouts/_layouts";
 import { Navigate, Route, Routes } from "react-router-dom";
+
 import Box from "@mui/material/Box";
+
+import { PageContainer, Sidebar } from "@/layouts/_layouts";
 
 const Dashboard = lazy(() => import("@/features/Dashboard/Dashboard"));
 const Machines = lazy(() => import("@/features/Tables/Machines/Machines"));
@@ -31,15 +33,15 @@ function Admin() {
         <Suspense fallback={<h1>Loading...</h1>}>
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/tables/machines" element={<Machines />} />
-            <Route path="/tables/machines/new" element={<NewMachine />} />
-            <Route path="/tables/machines/edit/:id" element={<EditMachine />} />
-            <Route path="/tables/persons" element={<Persons />} />
-            <Route path="/tables/persons/new" element={<NewPerson />} />
-            <Route path="/tables/persons/edit/:id" element={<EditPerson />} />
-            <Route path="/tables/tasks" element={<Tasks />} />
-            <Route path="/tables/tasks/new" element={<NewTask />} />
-            <Route path="/tables/tasks/edit/:id" element={<EditTask />} />
+            <Route path="/machines" element={<Machines />} />
+            <Route path="/machines/new" element={<NewMachine />} />
+            <Route path="/machines/edit/:id" element={<EditMachine />} />
+            <Route path="/persons" element={<Persons />} />
+            <Route path="/persons/new" element={<NewPerson />} />
+            <Route path="/persons/edit/:id" element={<EditPerson />} />
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/tasks/new" element={<NewTask />} />
+            <Route path="/tasks/edit/:id" element={<EditTask />} />
             <Route path="/*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>

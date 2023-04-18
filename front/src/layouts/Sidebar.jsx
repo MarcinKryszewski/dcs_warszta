@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+
 import {
   Sidebar as ProSidebar,
   Menu,
@@ -6,21 +8,20 @@ import {
   SubMenu,
 } from "react-pro-sidebar";
 
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import useTheme from '@mui/material/styles/useTheme'
-import Divider from '@mui/material/Divider'
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
+import Divider from "@mui/material/Divider";
 
-
-
-
-import { Link, useLocation } from "react-router-dom";
-import { tokens } from "@/assets/themes/theme";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import Dashboard from "@mui/icons-material/Dashboard";
 import FormatListNumbered from "@mui/icons-material/FormatListNumbered";
 import Person from "@mui/icons-material/Person";
 import PrecisionManufacturing from "@mui/icons-material/PrecisionManufacturing";
+import AddCard from "@mui/icons-material/AddCard";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
+
+import { tokens } from "@/assets/themes/theme";
 
 function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
@@ -126,37 +127,47 @@ function Sidebar() {
               selected={selected}
               setSelected={setSelected}
             />
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 25px" }}
-            >
-              LISTY :
-            </Typography>
 
             <Item
-              title="Zadania"
-              to="/admin/tables/tasks"
-              icon={<FormatListNumbered />}
+              title="Nowe zadanie"
+              to="/admin/tasks/new"
+              icon={<AddCard />}
               selected={selected}
               setSelected={setSelected}
             />
 
             <Item
-              title="Maszyny"
-              to="/admin/tables/machines"
-              icon={<PrecisionManufacturing />}
+              title="Moje zadania"
+              to="/admin/dashboard"
+              icon={<FormatListNumberedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
+            <SubMenu label="LISTY">
+              <Item
+                title="Zadania"
+                to="/admin/tasks"
+                icon={<FormatListNumbered />}
+                selected={selected}
+                setSelected={setSelected}
+              />
 
-            <Item
-              title="Osoby"
-              to="/admin/tables/persons"
-              icon={<Person />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+              <Item
+                title="Maszyny"
+                to="/admin/machines"
+                icon={<PrecisionManufacturing />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+
+              <Item
+                title="Osoby"
+                to="/admin/persons"
+                icon={<Person />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </SubMenu>
           </SubMenu>
         </Menu>
       </ProSidebar>

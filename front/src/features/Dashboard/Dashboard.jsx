@@ -1,19 +1,18 @@
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import useTheme from '@mui/material/styles/useTheme'
-
-import { tokens } from "@/assets/themes/theme";
 import React, { useContext, useEffect } from "react";
-import { HeaderTitleContext } from "@/context/HeaderTitleContext";
-import { mockTasksData } from "@/data/mock/mockTasks";
-import { StatBox } from "@/components/StatBox";
+
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
 
 import ChangeCircle from "@mui/icons-material/ChangeCircle";
 import CheckCircle from "@mui/icons-material/CheckCircle";
 import Report from "@mui/icons-material/Report";
 import ThumbUpAlt from "@mui/icons-material/ThumbUpAlt";
 
-//import { HeaderTitle } from "src/layouts/PageContainer";
+import { tokens } from "@/assets/themes/theme";
+import { HeaderTitleContext } from "@/context/HeaderTitleContext";
+import { mockTasksData } from "@/data/mock/mockTasks";
+import { StatBox } from "@/components/StatBox";
 
 export default function Dashboard() {
   console.log("Dashboard");
@@ -34,13 +33,11 @@ export default function Dashboard() {
   };
   const allTasks = tasksStatus.done + tasksStatus.late + tasksStatus.ongoing;
 
-  console.log(allTasks);
-
   useEffect(
     () =>
       setTitleText({
         title: "Dashboard",
-        subtitle: "Awesome dashboard",
+        subtitle: "Dashboard DCS",
       }),
     []
   );
@@ -51,7 +48,7 @@ export default function Dashboard() {
   return (
     <Box>
       <Typography variant="h2" my={2}>
-        STATUS ZADAŃ
+        ZADANIA DCS
       </Typography>
       <Box
         display="grid"
@@ -145,7 +142,7 @@ export default function Dashboard() {
       </Box>
 
       <Typography variant="h2" my={2}>
-        STATUS ZADAŃ
+        MOJE ZADANIA
       </Typography>
       <Box
         display="grid"

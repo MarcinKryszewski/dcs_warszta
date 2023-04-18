@@ -1,21 +1,22 @@
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import useTheme from "@mui/material/styles/useTheme";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 import { plPL } from "@mui/x-data-grid";
-import { tokens } from "@/assets/themes/theme";
-import React, { useContext, useEffect, useState } from "react";
 
 import Edit from "@mui/icons-material/Edit";
 import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import Info from "@mui/icons-material/Info";
 
+import { tokens } from "@/assets/themes/theme";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { DefaultTableToolbar, DataGrid } from "@/components/_components";
 import { mockTasksData } from "@/data/mock/mockTasks";
 import { DeleteTask } from "@/features/Tables/Tasks/DeleteTask";
-import { useLocation, useNavigate } from "react-router-dom";
 
 function Tasks() {
   console.log("Tasks");
@@ -37,13 +38,14 @@ function Tasks() {
     TaskStatus: { Status: "" },
   });
 
-  function PartStatusColor(category) {
+  function TaskCategoryColor(category) {
     if (category == "A") return theme.palette.error.main;
     if (category == "B") return theme.palette.warning.main;
     if (category == "C") return theme.palette.info.main;
   }
 
   function PartStatusColor(status) {
+    console.log(status);
     if (status == "SPECYFIKOWANIE") return theme.palette.info.main;
     if (status == "ZAMÓWIONE") return theme.palette.warning.main;
     if (status == "DOSTĘPNE") return theme.palette.success.main;
@@ -59,8 +61,8 @@ function Tasks() {
   useEffect(
     () =>
       setTitleText({
-        title: "Tasks",
-        subtitle: "Tasks table",
+        title: "Działania",
+        subtitle: "Lista działań",
       }),
     []
   );
@@ -125,7 +127,7 @@ function Tasks() {
             p="5px"
             display="flex"
             justifyContent="center"
-            backgroundColor={() => PartStatusColor(Category)}
+            backgroundColor={() => TaskCategoryColor(Category)}
             borderRadius="15px"
           >
             <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>

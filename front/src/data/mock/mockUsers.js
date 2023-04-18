@@ -1,25 +1,25 @@
 export const mockUsersData = [
   {
     id: 1,
-    Name: "Drusie",
-    Surname: "Weedon",
-    Login: "bwrassell0",
+    Name: "ADMIN",
+    Surname: "ADMIN",
+    Login: "@dm1n",
     Role: {
       RoleId: "1",
-      Name: "Junior Executive",
+      Name: "ADMIN"
     },
-    Password: "YoDymPJkphot",
+    Password: "YoDymPJkphot"
   },
   {
     id: 2,
-    Name: "Isacco",
-    Surname: "Hubbins",
-    Login: "ihubbins1",
+    Name: "admin",
+    Surname: "admin",
+    Login: "admin",
     Role: {
-      RoleId: "2",
-      Name: "Administrative Officer",
+      RoleId: "4",
+      Name: "FAKEADMIN"
     },
-    Password: "GGqWEEzG",
+    Password: "GGqWEEzG"
   },
   {
     id: 3,
@@ -28,9 +28,9 @@ export const mockUsersData = [
     Login: "bwelford2",
     Role: {
       RoleId: "3",
-      Name: "Recruiting Manager",
+      Name: "MANAGER"
     },
-    Password: "JfwOha67TLM",
+    Password: "JfwOha67TLM"
   },
   {
     id: 4,
@@ -38,10 +38,10 @@ export const mockUsersData = [
     Surname: "Everly",
     Login: "feverly3",
     Role: {
-      RoleId: "4",
-      Name: "Research Associate",
+      RoleId: "5",
+      Name: "ACCOUNTANT"
     },
-    Password: "36tiU6IRw",
+    Password: "36tiU6IRw"
   },
   {
     id: 5,
@@ -49,10 +49,10 @@ export const mockUsersData = [
     Surname: "MacMakin",
     Login: "hmacmakin4",
     Role: {
-      RoleId: "5",
-      Name: "Environmental Specialist",
+      RoleId: "2",
+      Name: "USER"
     },
-    Password: "TiFfo7dB0wXJ",
+    Password: "TiFfo7dB0wXJ"
   },
   {
     id: 6,
@@ -60,10 +60,10 @@ export const mockUsersData = [
     Surname: "Pauel",
     Login: "rpauel5",
     Role: {
-      RoleId: "6",
-      Name: "Assistant Professor",
+      RoleId: "2",
+      Name: "USER"
     },
-    Password: "h0iFwBdy4i0",
+    Password: "h0iFwBdy4i0"
   },
   {
     id: 7,
@@ -71,10 +71,10 @@ export const mockUsersData = [
     Surname: "Cluer",
     Login: "ccluer6",
     Role: {
-      RoleId: "7",
-      Name: "Operator",
+      RoleId: "2",
+      Name: "USER"
     },
-    Password: "lUhpHnguF",
+    Password: "lUhpHnguF"
   },
   {
     id: 8,
@@ -82,10 +82,10 @@ export const mockUsersData = [
     Surname: "Fenn",
     Login: "afenn7",
     Role: {
-      RoleId: "8",
-      Name: "Senior Quality Engineer",
+      RoleId: "2",
+      Name: "USER"
     },
-    Password: "tzmYqS",
+    Password: "tzmYqS"
   },
   {
     id: 9,
@@ -93,10 +93,10 @@ export const mockUsersData = [
     Surname: "Maccari",
     Login: "jmaccari8",
     Role: {
-      RoleId: "9",
-      Name: "Software Engineer II",
+      RoleId: "2",
+      Name: "USER"
     },
-    Password: "GKFV33",
+    Password: "GKFV33"
   },
   {
     id: 10,
@@ -104,10 +104,10 @@ export const mockUsersData = [
     Surname: "Canadas",
     Login: "rcanadas9",
     Role: {
-      RoleId: "10",
-      Name: "Junior Executive",
+      RoleId: "2",
+      Name: "USER"
     },
-    Password: "QxL2T03i",
+    Password: "QxL2T03i"
   },
   {
     id: 11,
@@ -115,218 +115,9 @@ export const mockUsersData = [
     Surname: "Rouge",
     Login: "grougea",
     Role: {
-      RoleId: "11",
-      Name: "Recruiter",
+      RoleId: "2",
+      Name: "USER"
     },
-    Password: "HvVfEeXMQ",
-  },
-  {
-    id: 12,
-    Name: "Jenny",
-    Surname: "Tichelaar",
-    Login: "jtichelaarb",
-    Role: {
-      RoleId: "12",
-      Name: "Quality Control Specialist",
-    },
-    Password: "GTi6hwKtAh",
-  },
-  {
-    id: 13,
-    Name: "Gayelord",
-    Surname: "Skayman",
-    Login: "gskaymanc",
-    Role: {
-      RoleId: "13",
-      Name: "Administrative Officer",
-    },
-    Password: "qG8z9gkz",
-  },
-  {
-    id: 14,
-    Name: "Earl",
-    Surname: "Rosterne",
-    Login: "erosterned",
-    Role: {
-      RoleId: "14",
-      Name: "Electrical Engineer",
-    },
-    Password: "EQVE8fZ",
-  },
-  {
-    id: 15,
-    Name: "Darbie",
-    Surname: "Cowling",
-    Login: "dcowlinge",
-    Role: {
-      RoleId: "15",
-      Name: "VP Product Management",
-    },
-    Password: "TPL5JKmy",
-  },
-  {
-    id: 16,
-    Name: "Prue",
-    Surname: "de la Valette Parisot",
-    Login: "pdelavaletteparisotf",
-    Role: {
-      RoleId: "16",
-      Name: "Automation Specialist IV",
-    },
-    Password: "OIfib5rN",
-  },
-  {
-    id: 17,
-    Name: "Britteny",
-    Surname: "Swatheridge",
-    Login: "bswatheridgeg",
-    Role: {
-      RoleId: "17",
-      Name: "Systems Administrator II",
-    },
-    Password: "HCJ8WBb",
-  },
-  {
-    id: 18,
-    Name: "Jena",
-    Surname: "Nelligan",
-    Login: "jnelliganh",
-    Role: {
-      RoleId: "18",
-      Name: "Biostatistician II",
-    },
-    Password: "kqgDWcJ",
-  },
-  {
-    id: 19,
-    Name: "Robby",
-    Surname: "Zelley",
-    Login: "rzelleyi",
-    Role: {
-      RoleId: "19",
-      Name: "Director of Sales",
-    },
-    Password: "FkPsGKx6dmk",
-  },
-  {
-    id: 20,
-    Name: "Nicky",
-    Surname: "Manktelow",
-    Login: "nmanktelowj",
-    Role: {
-      RoleId: "20",
-      Name: "Systems Administrator I",
-    },
-    Password: "rKPY3xyLIiK",
-  },
-  {
-    id: 21,
-    Name: "Law",
-    Surname: "Henrot",
-    Login: "lhenrotk",
-    Role: {
-      RoleId: "21",
-      Name: "VP Marketing",
-    },
-    Password: "5kMT91Xzb7RJ",
-  },
-  {
-    id: 22,
-    Name: "Manolo",
-    Surname: "Powder",
-    Login: "mpowderl",
-    Role: {
-      RoleId: "22",
-      Name: "Senior Quality Engineer",
-    },
-    Password: "ugMagIBp",
-  },
-  {
-    id: 23,
-    Name: "Rochell",
-    Surname: "Joist",
-    Login: "rjoistm",
-    Role: {
-      RoleId: "23",
-      Name: "Human Resources Manager",
-    },
-    Password: "FOnFd2J9a",
-  },
-  {
-    id: 24,
-    Name: "Carl",
-    Surname: "Donaho",
-    Login: "cdonahon",
-    Role: {
-      RoleId: "24",
-      Name: "Staff Scientist",
-    },
-    Password: "RXVN3ZqZog",
-  },
-  {
-    id: 25,
-    Name: "Enos",
-    Surname: "Mersey",
-    Login: "emerseyo",
-    Role: {
-      RoleId: "25",
-      Name: "Administrative Assistant IV",
-    },
-    Password: "QntNqq9TV",
-  },
-  {
-    id: 26,
-    Name: "Tammi",
-    Surname: "Franzonello",
-    Login: "tfranzonellop",
-    Role: {
-      RoleId: "26",
-      Name: "Assistant Professor",
-    },
-    Password: "5wJ6AzLTj3",
-  },
-  {
-    id: 27,
-    Name: "Chrisy",
-    Surname: "Twine",
-    Login: "ctwineq",
-    Role: {
-      RoleId: "27",
-      Name: "Sales Associate",
-    },
-    Password: "91EOvq0YdRzk",
-  },
-  {
-    id: 28,
-    Name: "Felicity",
-    Surname: "Scarce",
-    Login: "fscarcer",
-    Role: {
-      RoleId: "28",
-      Name: "Assistant Media Planner",
-    },
-    Password: "sjjGDkdE4",
-  },
-  {
-    id: 29,
-    Name: "Shayne",
-    Surname: "Eggerton",
-    Login: "seggertons",
-    Role: {
-      RoleId: "29",
-      Name: "Physical Therapy Assistant",
-    },
-    Password: "OBKDtsJP0B",
-  },
-  {
-    id: 30,
-    Name: "Alphard",
-    Surname: "Ruddock",
-    Login: "aruddockt",
-    Role: {
-      RoleId: "30",
-      Name: "Speech Pathologist",
-    },
-    Password: "dLkMg8D8nj6",
-  },
-];
+    Password: "HvVfEeXMQ"
+  }
+]

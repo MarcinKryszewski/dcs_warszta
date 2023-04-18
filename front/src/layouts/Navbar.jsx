@@ -1,15 +1,16 @@
+import { useContext } from "react";
+
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import useTheme from "@mui/material/styles/useTheme";
-
-import { useContext } from "react";
-import { ColorModeContext, tokens } from "@/assets/themes/theme";
 
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
+
+import { ColorModeContext, tokens } from "@/assets/themes/theme";
 
 const Navbar = () => {
   const theme = useTheme();

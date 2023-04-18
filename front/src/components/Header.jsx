@@ -1,9 +1,10 @@
+import { useContext } from "react";
+
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import useTheme from "@mui/material/styles/useTheme";
 
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
-import { useContext } from "react";
 import { tokens } from "@/assets/themes/theme";
 
 const Header = ({ title, subtitle }) => {

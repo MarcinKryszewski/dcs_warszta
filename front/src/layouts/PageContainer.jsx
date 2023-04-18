@@ -1,6 +1,8 @@
-import Box from "@mui/material/Box";
-import { Header } from "@/components/_components";
 import React, { useState } from "react";
+
+import Box from "@mui/material/Box";
+
+import { Header } from "@/components/_components";
 import { Footer, Navbar } from "@/layouts/_layouts";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 
