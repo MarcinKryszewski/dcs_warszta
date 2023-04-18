@@ -17,7 +17,6 @@ const EditPerson = lazy(() => import("@/features/Tables/Persons/EditPerson"));
 const Tasks = lazy(() => import("@/features/Tables/Tasks/Tasks"));
 const NewTask = lazy(() => import("@/features/Tables/Tasks/NewTask"));
 const EditTask = lazy(() => import("@/features/Tables/Tasks/EditTask"));
-const Login = lazy(() => import("@/features/Login/Login"));
 
 function Admin() {
   return (
@@ -33,7 +32,6 @@ function Admin() {
       <PageContainer>
         <Suspense fallback={<h1>Loading...</h1>}>
           <Routes>
-            <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/machines" element={<Machines />} />
             <Route path="/machines/new" element={<NewMachine />} />
