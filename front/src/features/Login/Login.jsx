@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
@@ -12,6 +12,7 @@ import Stack from "@mui/material/Stack";
 import LockOutlined from "@mui/icons-material/LockOutlined";
 
 import { tokens } from "@/assets/themes/theme";
+import { UserContext } from "@/context/UserContext";
 
 export default function Login() {
   console.log("Login");
@@ -20,26 +21,37 @@ export default function Login() {
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({ Login: "", Password: "" });
-  //const { user, setUser } = useContext(User);
-  const [userError, setUserError] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [password, setPassword] = useState(null);
   const [passwordError, setPasswordError] = useState(false);
   const [errorText, setErrorText] = useState(undefined);
+  const [user, setUser, isAuth, setIsAuth] = useContext(UserContext);
 
   function handleSubmit() {
     if (!user.Login)
       return (
         setErrorText("Nazwa użytkownika nie może być pusta!"),
-        setUserError(true)
+        setUsernameError(true),
+        setIsAuth(false)
       );
-    if (!user.Password)
+    if (!password)
       return (
-        setErrorText("Pole hasła nie może być puste!"), setPasswordError(true)
+        setErrorText("Pole hasła nie może być puste!"),
+        setPasswordError(true),
+        setIsAuth(false)
       );
 
-    setUserError(false);
+    setUser({
+      ...user,
+      Login: user.Login,
+      Name: "Damian",
+      Surname: "Nowak",
+    });
+    setUsernameError(false);
     setPasswordError(false);
     setErrorText(null);
+    setIsAuth(true);
+    navigate(-1);
   }
 
   return (
@@ -57,7 +69,7 @@ export default function Login() {
         justifyContent="center"
         alignItems="center"
         spacing={3}
-        width={"15%"}
+        width={"20%"}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlined />
@@ -72,7 +84,7 @@ export default function Login() {
           fullWidth
           label="Login"
           autoFocus
-          error={userError}
+          error={usernameError}
           sx={{
             "& .MuiOutlinedInput-root": {
               "&:hover fieldset": {
@@ -90,10 +102,8 @@ export default function Login() {
         />
         <TextField
           required
-          value={user.password}
-          onChange={(event) =>
-            setUser({ ...user, Password: event.target.value })
-          }
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
           fullWidth
           label="Hasło"
           type="password"

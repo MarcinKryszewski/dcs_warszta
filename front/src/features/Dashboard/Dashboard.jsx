@@ -13,6 +13,7 @@ import { tokens } from "@/assets/themes/theme";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { mockTasksData } from "@/data/mock/mockTasks";
 import { StatBox } from "@/components/StatBox";
+import { UserContext } from "@/context/UserContext";
 
 export default function Dashboard() {
   console.log("Dashboard");

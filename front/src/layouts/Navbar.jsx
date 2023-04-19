@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
@@ -17,8 +18,10 @@ const Navbar = () => {
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
 
+  const navigate = useNavigate();
+
   function LoginHandle() {
-    return console.log("LOGIN");
+    return navigate("/login");
   }
 
   return (

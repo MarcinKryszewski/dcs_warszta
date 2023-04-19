@@ -13,7 +13,6 @@ const Login = lazy(() => import("@/features/Login/Login"));
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  const [user, setUser] = useState({ Login: "", Name: "", Surname: "" });
 
   return (
     <ColorModeContext.Provider value={colorMode}>
