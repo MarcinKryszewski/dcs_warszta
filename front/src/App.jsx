@@ -14,6 +14,8 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
 
+  console.log("TRYB: " + import.meta.env.VITE_DATA);
+
   return (
     <ColorModeContext.Provider value={colorMode}>
       <UserContextProvider>
