@@ -18,12 +18,13 @@ import { DefaultTableToolbar, DataGrid } from "@/components/_components";
 import { mockTasksData } from "@/data/mock/mockTasks";
 import { DeleteTask } from "@/features/Tables/Tasks/DeleteTask";
 
-function Tasks() {
+function Tasks(tasksData) {
   console.log("Tasks");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
-  const gridData = mockTasksData;
+  const gridData = import.meta.env.VITE_MOCK_DATA ? mockTasksData : tasksData;
+
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);

@@ -41,8 +41,20 @@ export default function NewTask() {
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
 
-  const uniqueAreas = UniqueValuesFromJson(mockMachinesData, "Area");
-  const uniqueTypes = UniqueValuesFromJson(mockTasksData, "Type");
+  const usersDataRetriever = import.meta.env.VITE_MOCK_DATA
+    ? mockUsersData
+    : usersData;
+
+  const machinesDataRetriever = import.meta.env.VITE_MOCK_DATA
+    ? mockMachinesData
+    : machinesData;
+
+  const tasksTypesDataRetriever = import.meta.env.VITE_MOCK_DATA
+    ? mockTasksData
+    : tasksTypesData;
+
+  const uniqueAreas = UniqueValuesFromJson(machinesDataRetriever, "Area");
+  const uniqueTypes = UniqueValuesFromJson(tasksTypesDataRetriever, "Type");
 
   function CreateTask() {
     //if (!person.Name) return setErrorText("Podaj imię!");
@@ -218,7 +230,7 @@ export default function NewTask() {
               autoHighlight
               openOnFocus
               value={person == "" ? null : person}
-              options={mockUsersData}
+              options={usersDataRetriever}
               getOptionLabel={(persons) => `${persons.Name} ${persons.Surname}`}
               onChange={(event, value, reason) => {
                 if (reason === "clear") return setPerson("");

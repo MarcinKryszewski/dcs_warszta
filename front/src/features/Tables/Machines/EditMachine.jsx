@@ -24,9 +24,13 @@ function EditMachine() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const uniqueAreas = UniqueValuesFromJson(mockMachinesData, "Area");
+  const machinesDataRetriever = import.meta.env.VITE_MOCK_DATA
+    ? mockMachinesData
+    : machinesData;
+
+  const uniqueAreas = UniqueValuesFromJson(machinesDataRetriever, "Area");
   const uniqueMachineNames = UniqueValuesFromJson(
-    mockMachinesData,
+    machinesDataRetriever,
     "MachineName"
   );
 

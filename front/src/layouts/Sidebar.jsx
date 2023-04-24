@@ -138,7 +138,7 @@ function Sidebar() {
 
             <Item
               title="Moje zadania"
-              to="/admin/dashboard"
+              to="/admin/mytask"
               icon={<FormatListNumberedIcon />}
               selected={selected}
               setSelected={setSelected}

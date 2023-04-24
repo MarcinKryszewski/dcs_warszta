@@ -16,9 +16,10 @@ import RadioGroup from "@mui/material/RadioGroup";
 
 import { tokens } from "@/assets/themes/theme";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
+import UniqueValuesFromJson from "@/utils/uniqueValuesFromJson";
+
 import { mockUsersData } from "@/data/mock/mockUsers";
 import { mockMachinesData } from "@/data/mock/mockMachines";
-import UniqueValuesFromJson from "@/utils/uniqueValuesFromJson";
 import { mockTasksData } from "@/data/mock/mockTasks";
 
 export default function EditTask() {
@@ -43,8 +44,20 @@ export default function EditTask() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const uniqueAreas = UniqueValuesFromJson(mockMachinesData, "Area");
-  const uniqueTypes = UniqueValuesFromJson(mockTasksData, "Type");
+  const usersDataRetriever = import.meta.env.VITE_MOCK_DATA
+    ? mockUsersData
+    : usersData;
+
+  const machinesDataRetriever = import.meta.env.VITE_MOCK_DATA
+    ? mockMachinesData
+    : machinesData;
+
+  const tasksTypesDataRetriever = import.meta.env.VITE_MOCK_DATA
+    ? mockTasksData
+    : tasksTypesData;
+
+  const uniqueAreas = UniqueValuesFromJson(machinesDataRetriever, "Area");
+  const uniqueTypes = UniqueValuesFromJson(tasksTypesDataRetriever, "Type");
 
   function CreateTask() {
     //if (!person.Name) return setErrorText("Podaj imię!");
@@ -58,7 +71,6 @@ export default function EditTask() {
       title: "Działania",
       subtitle: "Dodaj nowe działanie",
     });
-    console.log(state.row);
     setTask({
       Id: state.row.id,
       MachineId: state.row.Machines.id,
@@ -235,7 +247,7 @@ export default function EditTask() {
               autoHighlight
               openOnFocus
               value={person == "" ? null : person}
-              options={mockUsersData}
+              options={usersDataRetriever}
               getOptionLabel={(persons) => `${persons.Name} ${persons.Surname}`}
               onChange={(event, value, reason) => {
                 if (reason === "clear") return setPerson("");

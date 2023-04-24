@@ -9,18 +9,20 @@ import { plPL } from "@mui/x-data-grid";
 
 import { tokens } from "@/assets/themes/theme";
 import { DefaultTableToolbar, DataGrid } from "@/components/_components";
-import { mockUsersData } from "@/data/mock/mockUsers";
 import Edit from "@mui/icons-material/Edit";
 import RemoveCircle from "@mui/icons-material/RemoveCircle";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { DeletePerson } from "@/features/Tables/Persons/DeletePerson";
 
-function Persons() {
+import { mockUsersData } from "@/data/mock/mockUsers";
+
+function Persons(usersData) {
   console.log("Persons");
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
-  const gridData = mockUsersData;
+  const gridData = import.meta.env.VITE_MOCK_DATA ? mockUsersData : usersData;
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);

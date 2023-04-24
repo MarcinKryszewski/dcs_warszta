@@ -21,9 +21,13 @@ function NewMachine() {
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
 
-  const uniqueAreas = UniqueValuesFromJson(mockMachinesData, "Area");
+  const machinesDataRetriever = import.meta.env.VITE_MOCK_DATA
+    ? mockMachinesData
+    : machinesData;
+
+  const uniqueAreas = UniqueValuesFromJson(machinesDataRetriever, "Area");
   const uniqueMachineNames = UniqueValuesFromJson(
-    mockMachinesData,
+    machinesDataRetriever,
     "MachineName"
   );
 

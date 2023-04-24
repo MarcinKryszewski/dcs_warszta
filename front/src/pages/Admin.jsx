@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import { PageContainer, Sidebar } from "@/layouts/_layouts";
 
 const Dashboard = lazy(() => import("@/features/Dashboard/Dashboard"));
+const MyTask = lazy(() => import("@/features/Dashboard/MyTasks"));
 const Machines = lazy(() => import("@/features/Tables/Machines/Machines"));
 const NewMachine = lazy(() => import("@/features/Tables/Machines/NewMachine"));
 const EditMachine = lazy(() =>
@@ -33,6 +34,7 @@ function Admin() {
         <Suspense fallback={<h1>Loading...</h1>}>
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/mytask" element={<MyTask />} />
             <Route path="/machines" element={<Machines />} />
             <Route path="/machines/new" element={<NewMachine />} />
             <Route path="/machines/edit/:id" element={<EditMachine />} />

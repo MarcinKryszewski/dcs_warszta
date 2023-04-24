@@ -32,9 +32,13 @@ function NewPerson() {
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
 
-  const uniqueNames = UniqueValuesFromJson(mockUsersData, "Name");
-  const uniqueSurnames = UniqueValuesFromJson(mockUsersData, "Surname");
-  const uniqueRoles = UniqueValuesFromJson(mockUsersData, "Role");
+  const usersDataRetriever = import.meta.env.VITE_MOCK_DATA
+    ? mockUsersData
+    : usersData;
+
+  const uniqueNames = UniqueValuesFromJson(usersDataRetriever, "Name");
+  const uniqueSurnames = UniqueValuesFromJson(usersDataRetriever, "Surname");
+  const uniqueRoles = UniqueValuesFromJson(usersDataRetriever, "Role");
 
   function CreatePerson() {
     if (!person.Name) return setErrorText("Podaj imię!");

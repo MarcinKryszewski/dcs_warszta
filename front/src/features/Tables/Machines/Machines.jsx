@@ -16,12 +16,15 @@ import { mockMachinesData } from "@/data/mock/mockMachines";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import DeleteMachine from "@/features/Tables/Machines/DeleteMachine";
 
-function Machines() {
+function Machines(machinesData) {
   console.log("Machines");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
-  const gridData = mockMachinesData;
+
+  const gridData = import.meta.env.VITE_MOCK_DATA
+    ? mockMachinesData
+    : machinesData;
 
   const location = useLocation();
   const navigate = useNavigate();
