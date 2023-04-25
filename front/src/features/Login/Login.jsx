@@ -14,6 +14,8 @@ import LockOutlined from "@mui/icons-material/LockOutlined";
 import { tokens } from "@/assets/themes/theme";
 import { UserContext } from "@/context/UserContext";
 
+import { Authorization } from "@/services/authorization"
+
 export default function Login() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -25,16 +27,6 @@ export default function Login() {
   const [passwordError, setPasswordError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [user, userHandler, isAuth, authHandler] = useContext(UserContext);
-
-  /*useEffect(() => {
-    authHandler(true);
-  }, [user]);*/
-
-  useEffect(() => {
-    if (sessionStorage.getItem("apitoken") == "true") {
-      userHandler(JSON.stringify(sessionStorage.getItem("user")));
-    }
-  });
 
   function handleSubmit() {
     if (!userName)
@@ -49,12 +41,15 @@ export default function Login() {
         setPasswordError(true),
         authHandler(false)
       );
-    userHandler({
+    /*userHandler({
       Login: userName,
       Name: "Humfrid",
       Surname: "MacMakin",
     });
-    authHandler(true);
+    authHandler(true);*/
+
+    Authorization(userName, false, "aaaa");
+
     navigate(-1);
   }
 

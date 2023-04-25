@@ -16,12 +16,15 @@ import { StatBox } from "@/components/StatBox";
 import { UserContext } from "@/context/UserContext";
 import { mockTasksData } from "@/data/mock/mockTasks";
 
+
+
 export default function Dashboard() {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   //console.log(sessionStorage.getItem("user"));
+  //Authorization()
 
   const [user, setUser, isAuth, setIsAuth] = useContext(UserContext);
   const dashboardData = mockTasksData;
