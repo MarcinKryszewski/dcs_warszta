@@ -18,13 +18,11 @@ import { DefaultTableToolbar, DataGrid } from "@/components/_components";
 import { mockTasksData } from "@/data/mock/mockTasks";
 import { DeleteTask } from "@/features/Tables/Tasks/DeleteTask";
 
-function Tasks(tasksData) {
-  console.log("Tasks");
+function Tasks(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
-  const gridData = import.meta.env.VITE_MOCK_DATA ? mockTasksData : tasksData;
-
+  const gridData = TasksDataRetriever();
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -38,6 +36,12 @@ function Tasks(tasksData) {
     PartsStatus: { Status: "" },
     TaskStatus: { Status: "" },
   });
+
+  function TasksDataRetriever() {
+    if (props.tasksData) return props.tasksData;
+    if (import.meta.env.VITE_MOCK_DATA) return mockTasksData;
+    return props.tasksData;
+  }
 
   function TaskCategoryColor(category) {
     if (category == "A") return theme.palette.error.main;
@@ -252,7 +256,7 @@ function Tasks(tasksData) {
       }}
     >
       <DataGrid
-        rows={gridData}
+        rows={TasksDataRetriever()}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}

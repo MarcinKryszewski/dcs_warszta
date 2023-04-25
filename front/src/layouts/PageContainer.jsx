@@ -7,7 +7,6 @@ import { Footer, Navbar } from "@/layouts/_layouts";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 
 const PageContainer = ({ children }) => {
-  console.log("PageContainer");
   const [titleText, setTitleText] = useState([]);
 
   return (

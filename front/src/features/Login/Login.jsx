@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
@@ -15,42 +15,46 @@ import { tokens } from "@/assets/themes/theme";
 import { UserContext } from "@/context/UserContext";
 
 export default function Login() {
-  console.log("Login");
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
 
+  const [userName, setUserName] = useState("");
   const [usernameError, setUsernameError] = useState(false);
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [errorText, setErrorText] = useState(undefined);
-  const [user, setUser, isAuth, setIsAuth] = useContext(UserContext);
+  const [errorText, setErrorText] = useState("");
+  const [user, userHandler, isAuth, authHandler] = useContext(UserContext);
+
+  /*useEffect(() => {
+    authHandler(true);
+  }, [user]);*/
+
+  useEffect(() => {
+    if (sessionStorage.getItem("apitoken") == "true") {
+      userHandler(JSON.stringify(sessionStorage.getItem("user")));
+    }
+  });
 
   function handleSubmit() {
-    if (!user.Login)
+    if (!userName)
       return (
         setErrorText("Nazwa użytkownika nie może być pusta!"),
         setUsernameError(true),
-        setIsAuth(false)
+        authHandler(false)
       );
     if (!password)
       return (
         setErrorText("Pole hasła nie może być puste!"),
         setPasswordError(true),
-        setIsAuth(false)
+        authHandler(false)
       );
-
-    setUser({
-      ...user,
-      Login: user.Login,
-      Name: "Damian",
-      Surname: "Nowak",
+    userHandler({
+      Login: userName,
+      Name: "Humfrid",
+      Surname: "MacMakin",
     });
-    setUsernameError(false);
-    setPasswordError(false);
-    setErrorText(null);
-    setIsAuth(true);
+    authHandler(true);
     navigate(-1);
   }
 
@@ -79,8 +83,8 @@ export default function Login() {
         </Typography>
         <TextField
           required
-          value={user.login}
-          onChange={(event) => setUser({ ...user, Login: event.target.value })}
+          value={userName}
+          onChange={(event) => setUserName(event.target.value)}
           fullWidth
           label="Login"
           autoFocus

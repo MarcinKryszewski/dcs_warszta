@@ -28,8 +28,6 @@ function capitalizeFirstLetter(string) {
 }
 
 function Sidebar() {
-  console.log("SIDEBAR");
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);

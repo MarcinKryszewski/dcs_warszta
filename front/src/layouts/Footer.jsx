@@ -3,7 +3,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 
 function Footer() {
-  console.log("Footer");
   return (
     <Box
       display="flex"

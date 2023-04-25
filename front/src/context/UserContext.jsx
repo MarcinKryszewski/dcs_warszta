@@ -2,7 +2,7 @@ import React, { createContext, useState } from "react";
 
 export const UserContext = createContext(null);
 
-export const UserContextProvider = ({ children }) => {
+export function UserContextProvider({ children }) {
   const [user, setUser] = useState({ Login: "", Name: "", Surname: "" });
   const [isAuth, setIsAuth] = useState(false);
 
@@ -13,10 +13,20 @@ export const UserContextProvider = ({ children }) => {
     setIsAuth,
   };
 
+  function userHandler(userData) {
+    setUser(userData);
+  }
+
+  function authHandler(value, userData) {
+    setIsAuth(value);
+    sessionStorage.setItem("apitoken", value);
+    if (value == true) sessionStorage.setItem("user", JSON.stringify(user));
+    if (value == false) sessionStorage.setItem("user", "");
+  }
+
   return (
-    <UserContext.Provider value={[user, setUser, isAuth, setIsAuth]}>
-      {" "}
-      {children}{" "}
+    <UserContext.Provider value={[user, userHandler, isAuth, authHandler]}>
+      {children}
     </UserContext.Provider>
   );
-};
+}

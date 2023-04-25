@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -11,17 +12,18 @@ import ThumbUpAlt from "@mui/icons-material/ThumbUpAlt";
 
 import { tokens } from "@/assets/themes/theme";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
-import { mockTasksData } from "@/data/mock/mockTasks";
 import { StatBox } from "@/components/StatBox";
 import { UserContext } from "@/context/UserContext";
+import { mockTasksData } from "@/data/mock/mockTasks";
 
 export default function Dashboard() {
-  console.log("Dashboard");
-
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
+  //console.log(sessionStorage.getItem("user"));
+
+  const [user, setUser, isAuth, setIsAuth] = useContext(UserContext);
   const dashboardData = mockTasksData;
   const tasksStatus = {
     late: dashboardData.filter((task) => task.TaskStatus.Status == "SPÓŹNIONE")
@@ -32,6 +34,24 @@ export default function Dashboard() {
       (task) => task.TaskStatus.Status == "W TRAKCIE"
     ).length,
     confirmed: dashboardData.filter(
+      (task) => task.TaskStatus.Status == "ZATWIERDZONE"
+    ).length,
+  };
+
+  const personalTasks = dashboardData.filter(
+    (task) =>
+      `${task.Responsible.Name} ${task.Responsible.Surname}` ==
+      `${user.Name} ${user.Surname}`
+  );
+  const personalTasksStatus = {
+    late: personalTasks.filter((task) => task.TaskStatus.Status == "SPÓŹNIONE")
+      .length,
+    done: personalTasks.filter((task) => task.TaskStatus.Status == "WYKONANE")
+      .length,
+    ongoing: personalTasks.filter(
+      (task) => task.TaskStatus.Status == "W TRAKCIE"
+    ).length,
+    confirmed: personalTasks.filter(
       (task) => task.TaskStatus.Status == "ZATWIERDZONE"
     ).length,
   };
@@ -142,99 +162,105 @@ export default function Dashboard() {
         </Box>
       </Box>
 
-      <Typography variant="h2" my={2}>
-        MOJE ZADANIA
-      </Typography>
-      <Box
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        gridAutoRows="140px"
-        gap="20px"
-        sx={{
-          "& .MuiBox-root:hover": {
-            cursor: "pointer",
-          },
-          "& [aria-label=buttonBox]:hover": {
-            outline: `thick solid ${colors.greenAccent[400]}`,
-          },
-        }}
-      >
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          aria-label="buttonBox"
-          onClick={(event) => {
-            console.log("1");
-          }}
-        >
-          <StatBox
-            title={tasksStatus.late}
-            subtitle="SPÓŹNIONE"
-            icon={
-              <Report
-                sx={{ color: theme.palette.error.main, fontSize: "5rem" }}
+      {isAuth ? (
+        <Box>
+          <Typography variant="h2" my={2}>
+            MOJE ZADANIA
+          </Typography>
+          <Box
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            gridAutoRows="140px"
+            gap="20px"
+            sx={{
+              "& .MuiBox-root:hover": {
+                cursor: "pointer",
+              },
+              "& [aria-label=buttonBox]:hover": {
+                outline: `thick solid ${colors.greenAccent[400]}`,
+              },
+            }}
+          >
+            <Box
+              gridColumn="span 3"
+              backgroundColor={colors.primary[400]}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              aria-label="buttonBox"
+              onClick={(event) => {
+                console.log("1");
+              }}
+            >
+              <StatBox
+                title={personalTasksStatus.late}
+                subtitle="SPÓŹNIONE"
+                icon={
+                  <Report
+                    sx={{ color: theme.palette.error.main, fontSize: "5rem" }}
+                  />
+                }
+              ></StatBox>
+            </Box>
+            <Box
+              gridColumn="span 3"
+              backgroundColor={colors.primary[400]}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              aria-label="buttonBox"
+            >
+              <StatBox
+                title={personalTasksStatus.done}
+                subtitle="GOTOWE DO ZATWIERDZENIA"
+                icon={
+                  <ThumbUpAlt
+                    sx={{ color: theme.palette.warning.main, fontSize: "5rem" }}
+                  />
+                }
               />
-            }
-          ></StatBox>
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          aria-label="buttonBox"
-        >
-          <StatBox
-            title={tasksStatus.done}
-            subtitle="GOTOWE DO ZATWIERDZENIA"
-            icon={
-              <ThumbUpAlt
-                sx={{ color: theme.palette.warning.main, fontSize: "5rem" }}
+            </Box>
+            <Box
+              gridColumn="span 3"
+              backgroundColor={colors.primary[400]}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              aria-label="buttonBox"
+            >
+              <StatBox
+                title={personalTasksStatus.ongoing}
+                subtitle="W TRAKCIE"
+                icon={
+                  <ChangeCircle
+                    sx={{ color: theme.palette.info.main, fontSize: "5rem" }}
+                  />
+                }
               />
-            }
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          aria-label="buttonBox"
-        >
-          <StatBox
-            title={tasksStatus.ongoing}
-            subtitle="W TRAKCIE"
-            icon={
-              <ChangeCircle
-                sx={{ color: theme.palette.info.main, fontSize: "5rem" }}
+            </Box>
+            <Box
+              gridColumn="span 3"
+              backgroundColor={colors.primary[400]}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              aria-label="buttonBox"
+            >
+              <StatBox
+                title={personalTasksStatus.confirmed}
+                subtitle="WYKONANE"
+                icon={
+                  <CheckCircle
+                    sx={{ color: theme.palette.success.main, fontSize: "5rem" }}
+                  />
+                }
               />
-            }
-          />
+            </Box>
+          </Box>
         </Box>
-        <Box
-          gridColumn="span 3"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          aria-label="buttonBox"
-        >
-          <StatBox
-            title={tasksStatus.confirmed}
-            subtitle="WYKONANE"
-            icon={
-              <CheckCircle
-                sx={{ color: theme.palette.success.main, fontSize: "5rem" }}
-              />
-            }
-          />
-        </Box>
-      </Box>
+      ) : (
+        <Box></Box>
+      )}
     </Box>
   );
 }
