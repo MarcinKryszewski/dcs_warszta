@@ -19,7 +19,7 @@ const Navbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
-  const [user, setUser, isAuth, setIsAuth] = useContext(UserContext);
+  const [user, setUser] = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <Box display="flex" justifyContent="flex-end" p={0} width={"100%"}>
       <Box display="flex" alignItems="center">
-        {isAuth && (
+        {user.AccessLevel > 0 && (
           <Typography
             mr={1}
             variant={"h5"}

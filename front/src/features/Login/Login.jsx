@@ -32,11 +32,10 @@ export default function Login() {
 
   useEffect(() => {
     authorizationHandler();
-    //console.log(authorized);
     if (authorized == true) navigate(-1);
   }, [authorized]);
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!userName)
       return (
         setErrorText("Nazwa użytkownika nie może być pusta!"),
@@ -49,7 +48,7 @@ export default function Login() {
         //authHandler(false)
       );
 
-    authorizationHandler({ Login: userName, Password: password });
+    await authorizationHandler({ Login: userName, Password: password });
     //authorizationHandler();
     /*userHandler({
       Login: userName,
@@ -60,7 +59,7 @@ export default function Login() {
 
     //Authorization(userName, false, "aaaa");
 
-    navigate(-1);
+    //navigate(-1);
   }
 
   return (

@@ -9,46 +9,43 @@ export default function useAuth() {
   //const [accessToken, setAccessToken] = useState({ value: "", expire: "" });
   //const [refreshToken, setRefreshToken] = useState({ value: "", expire: "" });
 
-  const [accessToken, setAccessToken] = useState(retrieveAccessToken());
-  const [refreshToken, setRefreshToken] = useState(retrieveRefreshoken());
+  const [accessToken, setAccessToken] = useState(retrieveAccessTokenStorage());
+  const [refreshToken, setRefreshToken] = useState(
+    retrieveRefreshTokenStorage()
+  );
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   function authorizationHandler(credentials) {
     if (credentials) return passwordHandler(credentials);
     if (accessToken.value != "") return accessTokenHandler();
+    if (refreshToken.value != "") return refreshTokenHandler();
     setAuthorized(false);
   }
 
   function passwordHandler(credentials) {
-    console.log("PASSWORD HANDLER");
-    //console.log(credentials);
-
-    localStorage.setItem(
-      "API_REFRESH",
-      JSON.stringify({ value: "sdfsdfsd", expire: Date.now() + 604800000 })
-    ); //from API
+    console.log();
+    retrieveAccessTokenAPI();
     sessionStorage.setItem(
       "API_ACCESS",
       JSON.stringify({ value: "fdgdfgdf", expire: Date.now() + 3600000 })
     ); //from API
-
-    //console.log(accessToken);
-    //console.log(refreshToken);
+    getUser();
+    setAuthorized(true);
   }
 
   function accessTokenHandler() {
-    console.log("ACCESS TOKEN HANDLER");
-    console.log(Date.now());
-    if (accessToken.expire > Date.now()) return console.log("EXPIRED");
-    console.log("NOT EXPIRED");
+    if (accessToken.expire < Date.now()) return refreshTokenHandler();
+    getUser();
+    setAuthorized(true);
   }
 
   function refreshTokenHandler() {
-    console.log("REFRESH TOKEN HANDLER");
+    if (refreshToken.expire < Date.now()) return console.log("EXPIRED");
+    retrieveAccessTokenAPI();
   }
 
-  function retrieveAccessToken() {
+  function retrieveAccessTokenStorage() {
     if (sessionStorage.getItem("API_ACCESS")) {
       //setAccessToken(JSON.parse(sessionStorage.getItem("API_ACCESS")));
       return JSON.parse(sessionStorage.getItem("API_ACCESS"));
@@ -56,7 +53,7 @@ export default function useAuth() {
     return { value: "", expire: "" };
   }
 
-  function retrieveRefreshoken() {
+  function retrieveRefreshTokenStorage() {
     if (localStorage.getItem("API_REFRESH")) {
       //setRefreshToken(JSON.parse(localStorage.getItem("API_REFRESH")));
       return JSON.parse(localStorage.getItem("API_REFRESH"));
@@ -64,76 +61,24 @@ export default function useAuth() {
     return { value: "", expire: "" };
   }
 
-  useEffect(() => {
-    console.log(`%cACCESS ${TempConverter(accessToken.expire)}`, "color: red");
-    console.log(
-      `%cREFRESH ${TempConverter(refreshToken.expire)}`,
-      "color: yellow"
-    );
-    console.log(accessToken.expire - Date.now());
-  }, []);
-
-  function TempConverter(value) {
-    const date = new Date(value);
-    return date.toDateString();
-  }
-
-  /*
-  function authorizationHandler(credentials) {
-    console.log(accessToken);
-    console.log(refreshToken);
-
-    if (!credentials) {
-      if (accessToken.expire) console.log("first");
-      tokenHandler();
-      return;
-    }
-
-    if (credentials.Password) {
-      setAuthorized(true);
-      getUser();
-      localStorage.setItem(
-        "API_REFRESH",
-        JSON.stringify({ value: "sdfsdfsd", expire: Date.now() + 604800000 })
-      ); //from API
-      sessionStorage.setItem(
-        "API_ACCESS",
-        JSON.stringify({ value: "fdgdfgdf", expire: Date.now() + 3600000 })
-      ); //from API
-      return;
-    }
-  }
-
-  function tokenHandler() {
-    if (accessToken.expire > Date.now()) {
-      refreshTokenHandler();
-    }
-    setAuthorized(true);
-    getUser();
-    return;
-  }
-
-  function refreshTokenHandler() {
-    console.log("TOKEN_REFRESH");
-    if (refreshToken.expire > Date.now()) {
-      return navigate("/login");
-    }
-
-    setAccessToken({ value: "sdfsdfsd", expire: Date.now() + 3600000 });
-    localStorage.setItem(
+  function retrieveAccessTokenAPI() {
+    console.log("retrieveAccessTokenAPI");
+    sessionStorage.setItem(
       "API_ACCESS",
-      JSON.stringify({ value: "sdfsdfsd", expire: Date.now() + 604800000 })
+      JSON.stringify({ value: "fdgdfgdf", expire: Date.now() + 3600000 })
     );
   }
 
-  function getUser() {
-    setUser({
+  function retrieveRefreshTokenAPI() {}
+
+  async function getUser() {
+    await setUser({
       Login: "fgtft",
       Name: "Humfrid",
       Surname: "MacMakin",
       AccessLevel: 1,
     });
-  }*/
+  }
 
   return [authorized, authorizationHandler];
 }
