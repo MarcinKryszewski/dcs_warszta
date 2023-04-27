@@ -3,18 +3,20 @@ import React, { createContext, useState } from "react";
 export const UserContext = createContext(null);
 
 export function UserContextProvider({ children }) {
-  const [user, setUser] = useState({ Login: "", Name: "", Surname: "", Token: "" });
-  const [isAuth, setIsAuth] = useState(false);
+  const [user, setUser] = useState({
+    Login: "",
+    Name: "",
+    Surname: "",
+    AccessLevel: 0,
+  });
 
   const value = {
     user,
     setUser,
-    isAuth,
-    setIsAuth,
   };
 
   return (
-    <UserContext.Provider value={[user, setUser, isAuth, setIsAuth]}>
+    <UserContext.Provider value={[user, setUser]}>
       {children}
     </UserContext.Provider>
   );

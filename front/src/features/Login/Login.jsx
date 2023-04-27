@@ -14,7 +14,8 @@ import LockOutlined from "@mui/icons-material/LockOutlined";
 import { tokens } from "@/assets/themes/theme";
 import { UserContext } from "@/context/UserContext";
 
-import { Authorization } from "@/services/authorization"
+//import { Authorization } from "@/services/authorization";
+import useAuth from "@/hooks/useAuth";
 
 export default function Login() {
   const theme = useTheme();
@@ -26,21 +27,30 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [user, userHandler, isAuth, authHandler] = useContext(UserContext);
+  const [user, userHandler] = useContext(UserContext);
+  const [authorized, authorizationHandler] = useAuth();
+
+  useEffect(() => {
+    authorizationHandler();
+    //console.log(authorized);
+    if (authorized == true) navigate(-1);
+  }, [authorized]);
 
   function handleSubmit() {
     if (!userName)
       return (
         setErrorText("Nazwa użytkownika nie może być pusta!"),
-        setUsernameError(true),
-        authHandler(false)
+        setUsernameError(true)
+        //authHandler(false)
       );
     if (!password)
       return (
-        setErrorText("Pole hasła nie może być puste!"),
-        setPasswordError(true),
-        authHandler(false)
+        setErrorText("Pole hasła nie może być puste!"), setPasswordError(true)
+        //authHandler(false)
       );
+
+    authorizationHandler({ Login: userName, Password: password });
+    //authorizationHandler();
     /*userHandler({
       Login: userName,
       Name: "Humfrid",
@@ -48,7 +58,7 @@ export default function Login() {
     });
     authHandler(true);*/
 
-    Authorization(userName, false, "aaaa");
+    //Authorization(userName, false, "aaaa");
 
     navigate(-1);
   }
