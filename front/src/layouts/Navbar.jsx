@@ -13,18 +13,22 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 
 import { ColorModeContext, tokens } from "@/assets/themes/theme";
-import { UserContext } from "@/context/UserContext";
+import UserContext from "@/context/UserContext";
+import AuthContext from "@/context/AuthContext";
 
 const Navbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
-  const [user, setUser] = useContext(UserContext);
+
+  const { user, setUser } = useContext(UserContext);
+  const { auth, setAuth } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   function LoginHandle() {
-    return navigate("/login");
+    if (auth == false) return navigate("/login");
+    if (auth == true) return console.log("LOGOUT");
   }
 
   return (

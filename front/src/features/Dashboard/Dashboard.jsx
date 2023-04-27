@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,10 +13,10 @@ import ThumbUpAlt from "@mui/icons-material/ThumbUpAlt";
 import { tokens } from "@/assets/themes/theme";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { StatBox } from "@/components/StatBox";
-import { UserContext } from "@/context/UserContext";
+import UserContext from "@/context/UserContext";
 import { mockTasksData } from "@/data/mock/mockTasks";
-
-
+import AuthContext from "@/context/AuthContext";
+import useAuth from "@/hooks/useAuth";
 
 export default function Dashboard() {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
@@ -26,7 +26,9 @@ export default function Dashboard() {
   //console.log(sessionStorage.getItem("user"));
   //Authorization()
 
-  const [user, setUser, isAuth, setIsAuth] = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const { auth, setAuth } = useContext(AuthContext);
+
   const dashboardData = mockTasksData;
   const tasksStatus = {
     late: dashboardData.filter((task) => task.TaskStatus.Status == "SPÓŹNIONE")
@@ -68,6 +70,16 @@ export default function Dashboard() {
       }),
     []
   );
+
+  const [authorized, authorizationHandler] = useAuth();
+  const navigate = useNavigate();
+  useEffect(() => {
+    async function autoLogin() {
+      await authorizationHandler();
+      //if (auth == true) navigate(-1);
+    }
+    autoLogin();
+  }, [auth]);
 
   return (
     <Box>
@@ -165,7 +177,7 @@ export default function Dashboard() {
         </Box>
       </Box>
 
-      {isAuth ? (
+      {auth ? (
         <Box>
           <Typography variant="h2" my={2}>
             MOJE ZADANIA

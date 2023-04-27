@@ -12,10 +12,12 @@ import Stack from "@mui/material/Stack";
 import LockOutlined from "@mui/icons-material/LockOutlined";
 
 import { tokens } from "@/assets/themes/theme";
-import { UserContext } from "@/context/UserContext";
 
 //import { Authorization } from "@/services/authorization";
 import useAuth from "@/hooks/useAuth";
+
+import UserContext from "@/context/UserContext";
+import AuthContext from "@/context/AuthContext";
 
 export default function Login() {
   const theme = useTheme();
@@ -27,13 +29,21 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [errorText, setErrorText] = useState("");
-  const [user, userHandler] = useContext(UserContext);
+
+  //const { user, userHandler } = useContext(UserContext);
+  const { auth, setAuth } = useContext(AuthContext);
+
   const [authorized, authorizationHandler] = useAuth();
 
+  //console.log(auth);
+
   useEffect(() => {
-    authorizationHandler();
-    if (authorized == true) navigate(-1);
-  }, [authorized]);
+    async function autoLogin() {
+      await authorizationHandler();
+      if (auth == true) navigate(-1);
+    }
+    autoLogin();
+  }, [auth]);
 
   async function handleSubmit() {
     if (!userName)

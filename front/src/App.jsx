@@ -6,7 +6,9 @@ import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 import { ColorModeContext, useMode } from "@/assets/themes/theme";
 import Admin from "@/pages/Admin";
-import { UserContextProvider } from "@/context/UserContext";
+import { AppContextProvider } from "@/context/AppContextProvider";
+//import { UserContextProvider } from "@/context/UserContext";
+//import { AuthContextProvider } from "@/context/AuthContext";
 
 const Login = lazy(() => import("@/features/Login/Login"));
 
@@ -16,7 +18,7 @@ function App() {
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <UserContextProvider>
+      <AppContextProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <div className="app">
@@ -32,7 +34,7 @@ function App() {
             </Suspense>
           </div>
         </ThemeProvider>
-      </UserContextProvider>
+      </AppContextProvider>
     </ColorModeContext.Provider>
   );
 }
