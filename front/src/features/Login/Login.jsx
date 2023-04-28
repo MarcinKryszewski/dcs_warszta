@@ -40,7 +40,7 @@ export default function Login() {
   useEffect(() => {
     async function autoLogin() {
       await authorizationHandler();
-      if (auth == true) navigate(-1);
+      //if (auth == true) navigate(-1);
     }
     autoLogin();
   }, [auth]);

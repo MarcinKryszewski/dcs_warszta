@@ -18,6 +18,10 @@ export default function useAuth() {
 
   //const navigate = useNavigate();
 
+  /*useEffect(() => {
+    if (auth == true) navigate(-1);
+  }, [auth]);*/
+
   function authorizationHandler(credentials) {
     if (credentials) return passwordHandler(credentials);
     if (accessToken.value != "") return accessTokenHandler();

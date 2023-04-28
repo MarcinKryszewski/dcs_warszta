@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 import { PageContainer, Sidebar } from "@/layouts/_layouts";
+import RequiredAuth from "@/components/RequireAuth";
 
 const Dashboard = lazy(() => import("@/features/Dashboard/Dashboard"));
 const MyTask = lazy(() => import("@/features/Dashboard/MyTasks"));
@@ -33,8 +34,10 @@ function Admin() {
       <PageContainer>
         <Suspense fallback={<h1>Loading...</h1>}>
           <Routes>
+            {/* PUBLIC */}
+
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/mytask" element={<MyTask />} />
+
             <Route path="/machines" element={<Machines />} />
             <Route path="/machines/new" element={<NewMachine />} />
             <Route path="/machines/edit/:id" element={<EditMachine />} />
@@ -44,6 +47,13 @@ function Admin() {
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/tasks/new" element={<NewTask />} />
             <Route path="/tasks/edit/:id" element={<EditTask />} />
+
+            {/* PRIVATE */}
+            <Route element={<RequiredAuth />}>
+              <Route path="/mytask" element={<MyTask />} />
+            </Route>
+
+            {/* CATCH ALL */}
             <Route path="/*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>
