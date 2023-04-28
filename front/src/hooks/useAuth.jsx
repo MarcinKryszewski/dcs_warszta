@@ -87,5 +87,5 @@ export default function useAuth() {
     });
   }
 
-  return [authorized, authorizationHandler];
+  return [authorizationHandler];
 }

@@ -71,7 +71,7 @@ export default function Dashboard() {
     []
   );
 
-  const [authorized, authorizationHandler] = useAuth();
+  const [authorizationHandler] = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
     async function autoLogin() {

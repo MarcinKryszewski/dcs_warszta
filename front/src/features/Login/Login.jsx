@@ -33,7 +33,7 @@ export default function Login() {
   //const { user, userHandler } = useContext(UserContext);
   const { auth, setAuth } = useContext(AuthContext);
 
-  const [authorized, authorizationHandler] = useAuth();
+  const [authorizationHandler] = useAuth();
 
   //console.log(auth);
 
