@@ -72,6 +72,7 @@ function Tasks(props) {
   );
 
   function EditHandle(row) {
+    console.log(location);
     navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
   }
   function RemoveHandle(row) {
@@ -79,7 +80,7 @@ function Tasks(props) {
     setOpen(true);
   }
   function DetailsHandle(row) {
-    console.log("DETAILS: " + row);
+    console.log("DETAILS: " + JSON.stringify(row));
   }
 
   const columns = [

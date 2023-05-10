@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 import { PageContainer, Sidebar } from "@/layouts/_layouts";
-import RequiredAuth from "@/components/RequireAuth";
+import { RequireAuth } from "@/components/RequireAuth";
 
 const Dashboard = lazy(() => import("@/features/Dashboard/Dashboard"));
 const MyTask = lazy(() => import("@/features/Dashboard/MyTasks"));
@@ -19,6 +19,7 @@ const EditPerson = lazy(() => import("@/features/Tables/Persons/EditPerson"));
 const Tasks = lazy(() => import("@/features/Tables/Tasks/Tasks"));
 const NewTask = lazy(() => import("@/features/Tables/Tasks/NewTask"));
 const EditTask = lazy(() => import("@/features/Tables/Tasks/EditTask"));
+const DetailsTask = lazy(() => import("@/features/Tables/Tasks/DetailsTask"));
 
 function Admin() {
   return (
@@ -37,21 +38,23 @@ function Admin() {
             {/* PUBLIC */}
 
             <Route path="/dashboard" element={<Dashboard />} />
-
             <Route path="/machines" element={<Machines />} />
+            <Route path="/tasks" element={<Tasks />} />
+            <Route path="/tasks/new" element={<NewTask />} />
+
+            <Route path="/tasks/details/:id" element={<DetailsTask />} />
+
+            {/* PRIVATE */}
+
+            <Route path="/mytask" element={<MyTask />} />
+            <Route path="/mytask/edit/:id" element={<EditTask />} />
+            <Route path="/tasks/edit/:id" element={<EditTask />} />
             <Route path="/machines/new" element={<NewMachine />} />
             <Route path="/machines/edit/:id" element={<EditMachine />} />
             <Route path="/persons" element={<Persons />} />
             <Route path="/persons/new" element={<NewPerson />} />
             <Route path="/persons/edit/:id" element={<EditPerson />} />
-            <Route path="/tasks" element={<Tasks />} />
-            <Route path="/tasks/new" element={<NewTask />} />
-            <Route path="/tasks/edit/:id" element={<EditTask />} />
-
-            {/* PRIVATE */}
-            <Route element={<RequiredAuth />}>
-              <Route path="/mytask" element={<MyTask />} />
-            </Route>
+            <Route element={<RequireAuth />}></Route>
 
             {/* CATCH ALL */}
             <Route path="/*" element={<Navigate to="/dashboard" replace />} />

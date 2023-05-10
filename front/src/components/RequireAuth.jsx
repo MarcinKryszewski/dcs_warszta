@@ -4,7 +4,7 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 //import { useAuth } from "@/hooks/useAuth";
 import AuthContext from "@/context/AuthContext";
 
-function RequireAuth() {
+export function RequireAuth() {
   const { auth } = useContext(AuthContext);
   const location = useLocation();
 
