@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import useTheme from "@mui/material/styles/useTheme";
 import Box from "@mui/material/Box";
@@ -21,6 +22,7 @@ export default function DetailsTask(props) {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTitleText({

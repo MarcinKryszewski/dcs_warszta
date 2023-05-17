@@ -17,6 +17,9 @@ import RadioGroup from "@mui/material/RadioGroup";
 import { tokens } from "@/assets/themes/theme";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import UniqueValuesFromJson from "@/utils/uniqueValuesFromJson";
+import TaskStatus from "@/components/TaskStatus";
+import PartsStatus from "@/components/PartsStatus";
+import { DefaultTableToolbar, DataGrid } from "@/components/_components";
 
 import { mockUsersData } from "@/data/mock/mockUsers";
 import { mockMachinesData } from "@/data/mock/mockMachines";
@@ -69,7 +72,7 @@ export default function EditTask() {
   useEffect(() => {
     setTitleText({
       title: "Działania",
-      subtitle: "Dodaj nowe działanie",
+      subtitle: "Edytuj działanie",
     });
     setTask({
       Id: state.row.id,
@@ -88,143 +91,21 @@ export default function EditTask() {
   }, []);
 
   return (
-    <Box width={"40%"} ml={2} mt={4}>
-      <Stack alignItems="center" spacing={3}>
-        <Stack direction="row" spacing={3} width={"100%"}>
-          <Autocomplete
-            openOnFocus
-            value={machine.Area == "" ? null : machine.Area}
-            options={uniqueAreas}
-            onChange={(event, value) => {
-              setMachine({
-                id: 0,
-                Area: value,
-                MachineName: "",
-              });
-              setTask({ ...task, MachineId: 0 });
-            }}
-            sx={{
-              width: "100%",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: colors.greenAccent[400],
-                },
-              },
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                error={!machine.Area ? true : false}
-                label="Obszar"
-              />
-            )}
-          />
-          <Autocomplete
-            autoHighlight
-            openOnFocus
-            value={machine.MachineName == "" ? null : machine}
-            options={mockMachinesData.filter(
-              (machines) => machines.Area == machine.Area
-            )}
-            getOptionLabel={(machines) => machines.MachineName}
-            onChange={(event, value, reason) => {
-              if (reason === "clear")
-                return setMachine({ ...machine, MachineName: "" });
-              setMachine(value);
-              setTask({ ...task, MachineId: value.id });
-            }}
-            sx={{
-              width: "100%",
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: colors.greenAccent[400],
-                },
-              },
-            }}
-            renderOption={(props, option) => {
-              return (
-                <li {...props} key={option.id}>
-                  {option.MachineName}
-                </li>
-              );
-            }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                error={!machine.MachineName ? true : false}
-                label="Obszar"
-              />
-            )}
-          />
-        </Stack>
-
-        <Stack direction="row" spacing={3} width={"100%"}>
-          <FormControl sx={{ width: "100%" }}>
-            <FormLabel
-              color={"secondary"}
-              sx={{
-                color:
-                  task.Category == ""
-                    ? theme.palette.error.main
-                    : colors.greenAccent[400],
-              }}
-            >
-              Kategoria
-            </FormLabel>
-            <RadioGroup
-              value={task.Category}
-              onChange={(event) =>
-                setTask({ ...task, Category: event.target.value })
-              }
-            >
-              <FormControlLabel
-                value="A"
-                control={<Radio />}
-                label="A"
-                sx={{
-                  color: theme.palette.error.main,
-                  "& .MuiRadio-root": {
-                    "&.Mui-checked": {
-                      color: theme.palette.error.main,
-                    },
-                  },
-                }}
-              />
-              <FormControlLabel
-                value="B"
-                control={<Radio />}
-                label="B"
-                sx={{
-                  color: theme.palette.warning.main,
-                  "& .MuiRadio-root": {
-                    "&.Mui-checked": {
-                      color: theme.palette.warning.main,
-                    },
-                  },
-                }}
-              />
-              <FormControlLabel
-                value="C"
-                control={<Radio />}
-                label="C"
-                sx={{
-                  color: theme.palette.info.main,
-                  "& .MuiRadio-root": {
-                    "&.Mui-checked": {
-                      color: theme.palette.info.main,
-                    },
-                  },
-                }}
-              />
-            </RadioGroup>
-          </FormControl>
-          <Stack spacing={3} width={"100%"}>
+    <Box width={"100%"} ml={2} mt={4}>
+      <Stack direction="row" spacing={3} width={"100%"}>
+        <Stack alignItems="center" spacing={3} width={"80%"}>
+          <Stack direction="row" spacing={3} width={"100%"}>
             <Autocomplete
               openOnFocus
-              value={task.Type == "" ? null : task.Type}
-              options={uniqueTypes}
+              value={machine.Area == "" ? null : machine.Area}
+              options={uniqueAreas}
               onChange={(event, value) => {
-                setTask({ ...task, Type: value });
+                setMachine({
+                  id: 0,
+                  Area: value,
+                  MachineName: "",
+                });
+                setTask({ ...task, MachineId: 0 });
               }}
               sx={{
                 width: "100%",
@@ -237,22 +118,24 @@ export default function EditTask() {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  error={!task.Type ? true : false}
-                  label="Rodzaj"
+                  error={!machine.Area ? true : false}
+                  label="Obszar"
                 />
               )}
             />
-
             <Autocomplete
               autoHighlight
               openOnFocus
-              value={person == "" ? null : person}
-              options={usersDataRetriever}
-              getOptionLabel={(persons) => `${persons.Name} ${persons.Surname}`}
+              value={machine.MachineName == "" ? null : machine}
+              options={mockMachinesData.filter(
+                (machines) => machines.Area == machine.Area
+              )}
+              getOptionLabel={(machines) => machines.MachineName}
               onChange={(event, value, reason) => {
-                if (reason === "clear") return setPerson("");
-                setPerson(value);
-                setTask({ ...task, ResponsibleId: value.id });
+                if (reason === "clear")
+                  return setMachine({ ...machine, MachineName: "" });
+                setMachine(value);
+                setTask({ ...task, MachineId: value.id });
               }}
               sx={{
                 width: "100%",
@@ -265,61 +148,196 @@ export default function EditTask() {
               renderOption={(props, option) => {
                 return (
                   <li {...props} key={option.id}>
-                    {option.Name} {option.Surname}
+                    {option.MachineName}
                   </li>
                 );
               }}
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  error={!person ? true : false}
-                  label="Odpowiedzialny"
+                  error={!machine.MachineName ? true : false}
+                  label="Obszar"
                 />
               )}
             />
           </Stack>
+
+          <Stack direction="row" spacing={3} width={"100%"}>
+            <FormControl sx={{ width: "100%" }}>
+              <FormLabel
+                color={"secondary"}
+                sx={{
+                  color:
+                    task.Category == ""
+                      ? theme.palette.error.main
+                      : colors.greenAccent[400],
+                }}
+              >
+                Kategoria
+              </FormLabel>
+              <RadioGroup
+                value={task.Category}
+                onChange={(event) =>
+                  setTask({ ...task, Category: event.target.value })
+                }
+              >
+                <FormControlLabel
+                  value="A"
+                  control={<Radio />}
+                  label="A"
+                  sx={{
+                    color: theme.palette.error.main,
+                    "& .MuiRadio-root": {
+                      "&.Mui-checked": {
+                        color: theme.palette.error.main,
+                      },
+                    },
+                  }}
+                />
+                <FormControlLabel
+                  value="B"
+                  control={<Radio />}
+                  label="B"
+                  sx={{
+                    color: theme.palette.warning.main,
+                    "& .MuiRadio-root": {
+                      "&.Mui-checked": {
+                        color: theme.palette.warning.main,
+                      },
+                    },
+                  }}
+                />
+                <FormControlLabel
+                  value="C"
+                  control={<Radio />}
+                  label="C"
+                  sx={{
+                    color: theme.palette.info.main,
+                    "& .MuiRadio-root": {
+                      "&.Mui-checked": {
+                        color: theme.palette.info.main,
+                      },
+                    },
+                  }}
+                />
+              </RadioGroup>
+            </FormControl>
+            <Stack spacing={3} width={"100%"}>
+              <Autocomplete
+                openOnFocus
+                value={task.Type == "" ? null : task.Type}
+                options={uniqueTypes}
+                onChange={(event, value) => {
+                  setTask({ ...task, Type: value });
+                }}
+                sx={{
+                  width: "100%",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: colors.greenAccent[400],
+                    },
+                  },
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    error={!task.Type ? true : false}
+                    label="Rodzaj"
+                  />
+                )}
+              />
+
+              <Autocomplete
+                autoHighlight
+                openOnFocus
+                value={person == "" ? null : person}
+                options={usersDataRetriever}
+                getOptionLabel={(persons) =>
+                  `${persons.Name} ${persons.Surname}`
+                }
+                onChange={(event, value, reason) => {
+                  if (reason === "clear") return setPerson("");
+                  setPerson(value);
+                  setTask({ ...task, ResponsibleId: value.id });
+                }}
+                sx={{
+                  width: "100%",
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: colors.greenAccent[400],
+                    },
+                  },
+                }}
+                renderOption={(props, option) => {
+                  return (
+                    <li {...props} key={option.id}>
+                      {option.Name} {option.Surname}
+                    </li>
+                  );
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    error={!person ? true : false}
+                    label="Odpowiedzialny"
+                  />
+                )}
+              />
+            </Stack>
+          </Stack>
+          <TextField
+            label="OPIS"
+            multiline
+            minRows={3}
+            value={task.Description}
+            onChange={(event) =>
+              setTask({ ...task, Description: event.target.value })
+            }
+            error={!task.Description ? true : false}
+            color="secondary"
+            sx={{
+              "& fieldset": {
+                borderColor:
+                  task.Description == ""
+                    ? theme.palette.error.main
+                    : colors.greenAccent[400],
+              },
+              width: "100%",
+            }}
+          />
+          <Stack direction="row" spacing={5} justifyContent="center">
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => CreateTask()}
+              sx={{ boxShadow: `0 0 10px 1px ${colors.greenAccent[400]};` }}
+            >
+              <Typography>ZAPISZ</Typography>
+            </Button>
+            <Button
+              variant="outlined"
+              color="info"
+              onClick={() => navigate(-1)}
+              sx={{ boxShadow: `0 0 10px 1px ${colors.blueAccent[400]};` }}
+            >
+              <Typography>WYJDŹ</Typography>
+            </Button>
+          </Stack>
+          <Typography sx={{ fontWeight: 600 }} color="error" variant="h4">
+            {errorText}
+          </Typography>
         </Stack>
-        <TextField
-          label="OPIS"
-          multiline
-          minRows={3}
-          value={task.Description}
-          onChange={(event) =>
-            setTask({ ...task, Description: event.target.value })
-          }
-          error={!task.Description ? true : false}
-          color="secondary"
-          sx={{
-            "& fieldset": {
-              borderColor:
-                task.Description == ""
-                  ? theme.palette.error.main
-                  : colors.greenAccent[400],
-            },
-            width: "100%",
-          }}
-        />
-        <Stack direction="row" spacing={5} justifyContent="center">
-          <Button
-            variant="contained"
-            color="success"
-            onClick={() => CreateTask()}
-            sx={{ boxShadow: `0 0 10px 1px ${colors.greenAccent[400]};` }}
-          >
-            <Typography>ZAPISZ</Typography>
-          </Button>
-          <Button
-            variant="outlined"
-            color="info"
-            onClick={() => navigate(-1)}
-            sx={{ boxShadow: `0 0 10px 1px ${colors.blueAccent[400]};` }}
-          >
-            <Typography>WYJDŹ</Typography>
-          </Button>
+
+        <Stack direction={"column"} spacing={2} width={"100%"} mt={5}>
+          <Box height={"100%"}>
+            <Typography>Status zadania</Typography>
+            <TaskStatus />
+          </Box>
+          <Box height={"100%"}>
+            <Typography>Status części</Typography>
+            <PartsStatus components={{ Toolbar: DefaultTableToolbar }} />
+          </Box>
         </Stack>
-        <Typography sx={{ fontWeight: 600 }} color="error" variant="h4">
-          {errorText}
-        </Typography>
       </Stack>
     </Box>
   );

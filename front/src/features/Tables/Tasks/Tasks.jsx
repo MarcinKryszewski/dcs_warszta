@@ -81,6 +81,7 @@ function Tasks(props) {
   }
   function DetailsHandle(row) {
     console.log("DETAILS: " + JSON.stringify(row));
+    navigate(`${location.pathname}/details/${row.id}`, { state: { row: row } });
   }
 
   const columns = [
