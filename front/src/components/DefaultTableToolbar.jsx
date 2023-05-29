@@ -16,7 +16,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { tokens } from "@/assets/themes/theme";
 
-function DefaultTableToolbar() {
+export default function DefaultTableToolbar(props) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ function DefaultTableToolbar() {
   const colors = tokens(theme.palette.mode);
 
   function testButton() {
-    navigate(`${location.pathname}/new`);
+    navigate(`${location.pathname}${props[0]}`);
   }
 
   return (
@@ -53,5 +53,3 @@ function DefaultTableToolbar() {
     </GridToolbarContainer>
   );
 }
-
-export default DefaultTableToolbar;

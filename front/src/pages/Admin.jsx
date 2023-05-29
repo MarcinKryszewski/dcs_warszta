@@ -42,6 +42,7 @@ function Admin() {
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/tasks/new" element={<NewTask />} />
 
+            <Route path="/mytask/details/:id" element={<DetailsTask />} />
             <Route path="/tasks/details/:id" element={<DetailsTask />} />
 
             {/* PRIVATE */}

@@ -261,6 +261,7 @@ function Tasks(props) {
         rows={TasksDataRetriever()}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
+        componentsProps={{ toolbar: ["/new"] }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
         columnVisibilityModel={{
           Area: false,

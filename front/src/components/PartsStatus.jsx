@@ -16,7 +16,7 @@ import { plPL } from "@mui/x-data-grid";
 import { DefaultTableToolbar, DataGrid } from "@/components/_components";
 import { tokens } from "@/assets/themes/theme";
 
-export default function PartsStatus() {
+export default function PartsStatus(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -99,17 +99,31 @@ export default function PartsStatus() {
         },
       }}*/
     >
-      <DataGrid
-        rows={mockData}
-        columns={columns}
-        //components={{ Toolbar: DefaultTableToolbar }}
-        localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
-        columnVisibilityModel={{
-          Area: false,
-          Machine: false,
-        }}
-        hideFooter
-      />
+      {props.taskbar == true ? (
+        <DataGrid
+          rows={mockData}
+          columns={columns}
+          components={{ Toolbar: DefaultTableToolbar }}
+          componentsProps={{ toolbar: ["/partsStatus"] }}
+          localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
+          columnVisibilityModel={{
+            Area: false,
+            Machine: false,
+          }}
+          hideFooter
+        />
+      ) : (
+        <DataGrid
+          rows={mockData}
+          columns={columns}
+          localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
+          columnVisibilityModel={{
+            Area: false,
+            Machine: false,
+          }}
+          hideFooter
+        />
+      )}
     </Box>
   );
 }

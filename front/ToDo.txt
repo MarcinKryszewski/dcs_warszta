@@ -1,0 +1,5 @@
+1. PartsStatus add + edit
+2. TaskStatus add + edit
+3. Dashboard => TaskList
+4. Authorization
+5. Connect to Backend

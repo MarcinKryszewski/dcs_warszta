@@ -91,8 +91,8 @@ export default function EditTask() {
   }, []);
 
   return (
-    <Box width={"100%"} ml={2} mt={4}>
-      <Stack direction="row" spacing={3} width={"100%"}>
+    <Box width={"100%"} ml={2} mt={4} height={"100%"}>
+      <Stack direction="row" spacing={3} width={"100%"} height={"100%"}>
         <Stack alignItems="center" spacing={3} width={"80%"}>
           <Stack direction="row" spacing={3} width={"100%"}>
             <Autocomplete
@@ -328,14 +328,20 @@ export default function EditTask() {
           </Typography>
         </Stack>
 
-        <Stack direction={"column"} spacing={2} width={"100%"} mt={5}>
+        <Stack
+          direction={"column"}
+          spacing={2}
+          width={"100%"}
+          mt={5}
+          height={"100%"}
+        >
           <Box height={"100%"}>
             <Typography>Status zadania</Typography>
-            <TaskStatus />
+            <TaskStatus taskbar={true} />
           </Box>
           <Box height={"100%"}>
             <Typography>Status części</Typography>
-            <PartsStatus components={{ Toolbar: DefaultTableToolbar }} />
+            <PartsStatus taskbar={true} />
           </Box>
         </Stack>
       </Stack>
