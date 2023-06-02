@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import useTheme from "@mui/material/styles/useTheme";
 import Box from "@mui/material/Box";
@@ -13,12 +14,27 @@ import TextField from "@mui/material/TextField";
 import Avatar from "@mui/material/Avatar";
 import { plPL } from "@mui/x-data-grid";
 
+import Edit from "@mui/icons-material/Edit";
+import RemoveCircle from "@mui/icons-material/RemoveCircle";
+import Info from "@mui/icons-material/Info";
+
 import { DefaultTableToolbar, DataGrid } from "@/components/_components";
 import { tokens } from "@/assets/themes/theme";
 
 export default function PartsStatus(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  function EditHandle(row) {
+    navigate(`${location.pathname}/partsStatusEdit/${row.id}`, {
+      state: { row: row },
+    });
+  }
+
+  console.log("parts");
+  console.log(props);
 
   const mockData = [
     {
@@ -85,6 +101,34 @@ export default function PartsStatus(props) {
     { field: "person", headerName: "Osoba" },
     { field: "status", headerName: "Status" },
     { field: "comment", headerName: "Komentarz" },
+    {
+      field: "Actions",
+      headerName: "Akcje",
+      width: 110,
+      renderCell: (params) => {
+        return (
+          <Box
+            sx={{
+              "& .MuiSvgIcon-root": {
+                color: colors.greenAccent[500],
+              },
+              "& .MuiButtonBase-root:hover": {
+                bgcolor: colors.greenAccent[300],
+                "& .MuiSvgIcon-root": {
+                  color: colors.greenAccent[800],
+                },
+              },
+
+              "& .MuiButtonBase-root": { minWidth: 30, maxWidth: 30, p: 1 },
+            }}
+          >
+            <Button onClick={() => EditHandle(params.row)}>
+              <Edit />
+            </Button>
+          </Box>
+        );
+      },
+    },
   ];
 
   return (
@@ -104,7 +148,7 @@ export default function PartsStatus(props) {
           rows={mockData}
           columns={columns}
           components={{ Toolbar: DefaultTableToolbar }}
-          componentsProps={{ toolbar: ["/partsStatus"] }}
+          componentsProps={{ toolbar: ["/partsStatusAdd"] }}
           localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
           columnVisibilityModel={{
             Area: false,

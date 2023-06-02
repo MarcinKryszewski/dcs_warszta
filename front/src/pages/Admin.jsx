@@ -21,6 +21,19 @@ const NewTask = lazy(() => import("@/features/Tables/Tasks/NewTask"));
 const EditTask = lazy(() => import("@/features/Tables/Tasks/EditTask"));
 const DetailsTask = lazy(() => import("@/features/Tables/Tasks/DetailsTask"));
 
+const PartsStatusAdd = lazy(() =>
+  import("@/features/Tables/Tasks/Status/PartsStatusAdd")
+);
+const PartsStatusEdit = lazy(() =>
+  import("@/features/Tables/Tasks/Status/PartsStatusEdit")
+);
+const TaskStatusAdd = lazy(() =>
+  import("@/features/Tables/Tasks/Status/TaskStatusAdd")
+);
+const TaskStatusEdit = lazy(() =>
+  import("@/features/Tables/Tasks/Status/TaskStatusEdit")
+);
+
 function Admin() {
   return (
     <Box
@@ -55,10 +68,46 @@ function Admin() {
             <Route path="/persons" element={<Persons />} />
             <Route path="/persons/new" element={<NewPerson />} />
             <Route path="/persons/edit/:id" element={<EditPerson />} />
+
+            <Route
+              path="/tasks/edit/:id/partsStatusAdd"
+              element={<PartsStatusAdd />}
+            />
+            <Route
+              path="/mytask/edit/:id/partsStatusAdd"
+              element={<PartsStatusAdd />}
+            />
+
+            <Route
+              path="/tasks/edit/:taskid/partsStatusEdit/:statusid"
+              element={<PartsStatusEdit />}
+            />
+            <Route
+              path="/mytask/edit/:taskid/partsStatusEdit/:statusid"
+              element={<PartsStatusEdit />}
+            />
+
+            <Route
+              path="/tasks/edit/:id/taskStatusAdd"
+              element={<TaskStatusAdd />}
+            />
+            <Route
+              path="/mytask/edit/:id/taskStatusAdd"
+              element={<TaskStatusAdd />}
+            />
+
+            <Route
+              path="/tasks/edit/:taskid/taskStatusEdit/:statusid"
+              element={<TaskStatusEdit />}
+            />
+            <Route
+              path="/mytask/edit/:taskid/taskStatusEdit/:statusid"
+              element={<TaskStatusEdit />}
+            />
+
             <Route element={<RequireAuth />}></Route>
 
             {/* CATCH ALL */}
-            <Route path="/*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>
       </PageContainer>
@@ -66,3 +115,5 @@ function Admin() {
   );
 }
 export default Admin;
+
+//<Route path="/*" element={<Navigate to="/dashboard" replace />} />

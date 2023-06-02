@@ -26,10 +26,6 @@ function App() {
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/admin/*" element={<Admin />} />
-                <Route
-                  path="*"
-                  element={<Navigate to="/admin/dashboard" replace />}
-                />
               </Routes>
             </Suspense>
           </div>
@@ -40,3 +36,8 @@ function App() {
 }
 
 export default App;
+
+//<Route
+//                  path="*"
+//                 element={<Navigate to="/admin/dashboard" replace />}
+//              />

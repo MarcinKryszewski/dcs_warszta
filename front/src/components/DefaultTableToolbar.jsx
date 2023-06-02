@@ -23,7 +23,10 @@ export default function DefaultTableToolbar(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  function testButton() {
+  console.log;
+
+  function AddButton() {
+    //console.log(props[0]);
     navigate(`${location.pathname}${props[0]}`);
   }
 
@@ -40,7 +43,7 @@ export default function DefaultTableToolbar(props) {
             }}
           />
         }
-        onClick={testButton}
+        onClick={AddButton}
         sx={{ px: "5px", py: "4px" }}
       >
         <Typography
