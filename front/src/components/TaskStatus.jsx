@@ -1,22 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import useTheme from "@mui/material/styles/useTheme";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Avatar from "@mui/material/Avatar";
 import { plPL } from "@mui/x-data-grid";
 
 import Edit from "@mui/icons-material/Edit";
-import RemoveCircle from "@mui/icons-material/RemoveCircle";
-import Info from "@mui/icons-material/Info";
 
 import { DefaultTableToolbar, DataGrid } from "@/components/_components";
 import { tokens } from "@/assets/themes/theme";
@@ -38,7 +27,7 @@ export default function TaskStatus(props) {
       id: 1,
       date: "DATA",
       person: "OSOBA",
-      status: "STATUS",
+      status: "WYKONANE",
       comment: "KOMENTARZ",
     },
     {
@@ -52,21 +41,21 @@ export default function TaskStatus(props) {
       id: 3,
       date: "DATA",
       person: "OSOBA",
-      status: "STATUS",
+      status: "WYKONANE",
       comment: "KOMENTARZ",
     },
     {
       id: 4,
       date: "DATA",
       person: "OSOBA",
-      status: "STATUS",
+      status: "ZATWIERDZONE",
       comment: "KOMENTARZ",
     },
     {
       id: 5,
       date: "DATA",
       person: "OSOBA",
-      status: "STATUS",
+      status: "ZATWIERDZONE",
       comment: "KOMENTARZ",
     },
     {

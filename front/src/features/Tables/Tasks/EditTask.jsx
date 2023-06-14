@@ -19,7 +19,6 @@ import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import UniqueValuesFromJson from "@/utils/uniqueValuesFromJson";
 import TaskStatus from "@/components/TaskStatus";
 import PartsStatus from "@/components/PartsStatus";
-import { DefaultTableToolbar, DataGrid } from "@/components/_components";
 
 import { mockUsersData } from "@/data/mock/mockUsers";
 import { mockMachinesData } from "@/data/mock/mockMachines";
