@@ -108,6 +108,7 @@ function Admin() {
             <Route element={<RequireAuth />}></Route>
 
             {/* CATCH ALL */}
+            <Route path="/*" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         </Suspense>
       </PageContainer>

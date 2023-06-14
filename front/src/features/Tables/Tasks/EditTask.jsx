@@ -337,11 +337,11 @@ export default function EditTask() {
         >
           <Box height={"100%"}>
             <Typography>Status zadania</Typography>
-            <TaskStatus taskbar={true} />
+            <TaskStatus taskbar={true} editable={true} />
           </Box>
           <Box height={"100%"}>
             <Typography>Status części</Typography>
-            <PartsStatus taskbar={true} />
+            <PartsStatus taskbar={true} editable={true} />
           </Box>
         </Stack>
       </Stack>

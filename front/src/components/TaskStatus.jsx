@@ -28,7 +28,6 @@ export default function TaskStatus(props) {
   const location = useLocation();
 
   function EditHandle(row) {
-    //console.log(`${location.pathname}/taskStatusEdit/${row.id}`);
     navigate(`${location.pathname}/taskStatusEdit/${row.id}`, {
       state: { row: row },
     });
@@ -99,34 +98,42 @@ export default function TaskStatus(props) {
     { field: "person", headerName: "Osoba" },
     { field: "status", headerName: "Status" },
     { field: "comment", headerName: "Komentarz" },
-    {
-      field: "Actions",
-      headerName: "Akcje",
-      width: 110,
-      renderCell: (params) => {
-        return (
-          <Box
-            sx={{
-              "& .MuiSvgIcon-root": {
-                color: colors.greenAccent[500],
-              },
-              "& .MuiButtonBase-root:hover": {
-                bgcolor: colors.greenAccent[300],
-                "& .MuiSvgIcon-root": {
-                  color: colors.greenAccent[800],
-                },
-              },
+    ...(props.editable == true
+      ? [
+          {
+            field: "Actions",
+            headerName: "Akcje",
+            width: 110,
+            renderCell: (params) => {
+              return (
+                <Box
+                  sx={{
+                    "& .MuiSvgIcon-root": {
+                      color: colors.greenAccent[500],
+                    },
+                    "& .MuiButtonBase-root:hover": {
+                      bgcolor: colors.greenAccent[300],
+                      "& .MuiSvgIcon-root": {
+                        color: colors.greenAccent[800],
+                      },
+                    },
 
-              "& .MuiButtonBase-root": { minWidth: 30, maxWidth: 30, p: 1 },
-            }}
-          >
-            <Button onClick={() => EditHandle(params.row)}>
-              <Edit />
-            </Button>
-          </Box>
-        );
-      },
-    },
+                    "& .MuiButtonBase-root": {
+                      minWidth: 30,
+                      maxWidth: 30,
+                      p: 1,
+                    },
+                  }}
+                >
+                  <Button onClick={() => EditHandle(params.row)}>
+                    <Edit />
+                  </Button>
+                </Box>
+              );
+            },
+          },
+        ]
+      : []),
   ];
 
   return (
