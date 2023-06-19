@@ -39,12 +39,13 @@ export default function TaskStatusEdit() {
     });
     setTaskStatus({
       status: state.row.status,
-      comment: state.row.status.comment,
+      comment: state.row.comment,
     });
-    console.log(taskStatus);
   }, []);
 
-  console.log(state.row.status);
+  function EditTaskStatus() {
+    console.log(taskStatus);
+  }
 
   function TaskStatusColor(status) {
     if (status == "W TRAKCIE") return theme.palette.info.main;
@@ -96,27 +97,17 @@ export default function TaskStatusEdit() {
               height: "100%",
             }}
             value={taskStatus.comment}
-            /*onChange={(event) =>
-              setTask({ ...task, Description: event.target.value })
-            }*/
-            //error={!task.Description ? true : false}
+            onChange={(event) =>
+              setTaskStatus({ ...taskStatus, comment: event.target.value })
+            }
             color="secondary"
-            /*sx={{
-              "& fieldset": {
-                borderColor:
-                  task.Description == ""
-                    ? theme.palette.error.main
-                    : colors.greenAccent[400],
-              },
-              width: "100%",
-            }}*/
           />
         </Stack>
         <Stack direction="row" spacing={5} justifyContent="center">
           <Button
             variant="contained"
             color="success"
-            onClick={() => CreateTask()}
+            onClick={() => EditTaskStatus()}
             sx={{ boxShadow: `0 0 10px 1px ${colors.greenAccent[400]};` }}
           >
             <Typography>ZAPISZ</Typography>
