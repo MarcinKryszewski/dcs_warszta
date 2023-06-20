@@ -1,6 +1,6 @@
 module.exports = {
-
-    machines : "CREATE TABLE Machines ( \
+  machines:
+    "CREATE TABLE Machines ( \
         id INTEGER NOT NULL UNIQUE, \
         Area TEXT NOT NULL, \
         MachineName TEXT NOT NULL, \
@@ -8,8 +8,9 @@ module.exports = {
         DeleteDate TEXT, \
         PRIMARY KEY(Id AUTOINCREMENT) \
     )",
-    
-    partsStatuses : "CREATE TABLE PartsStatuses ( \
+
+  partsStatuses:
+    "CREATE TABLE PartsStatuses ( \
         id INTEGER NOT NULL UNIQUE, \
         Taskid INTEGER NOT NULL, \
         Status TEXT NOT NULL, \
@@ -19,8 +20,9 @@ module.exports = {
         FOREIGN KEY(PersonId) REFERENCES Persons(Id) \
         FOREIGN KEY(TaskId) REFERENCES Tasks(Id) \
     )",
-    
-    persons : "CREATE TABLE Persons ( \
+
+  persons:
+    "CREATE TABLE Persons ( \
         id INTEGER NOT NULL UNIQUE, \
         Name TEXT, \
         Surname TEXT, \
@@ -32,8 +34,9 @@ module.exports = {
         PRIMARY KEY(Id AUTOINCREMENT) \
         FOREIGN KEY(RoleId) REFERENCES Roles(Id) \
     )",
-    
-    tasks : "CREATE TABLE Tasks ( \
+
+  tasks:
+    "CREATE TABLE Tasks ( \
         id INTEGER UNIQUE, \
         Description TEXT NOT NULL, \
         Category TEXT NOT NULL, \
@@ -50,8 +53,9 @@ module.exports = {
         FOREIGN KEY(AuthorId) REFERENCES Persons(Id), \
         FOREIGN KEY(MachineId) REFERENCES Machines(Id) \
     )",
-    
-    taksConfirms : "CREATE TABLE TasksConfirms ( \
+
+  taksConfirms:
+    "CREATE TABLE TasksConfirms ( \
         id INTEGER NOT NULL UNIQUE, \
         Taskid INTEGER NOT NULL, \
         Status TEXT NOT NULL, \
@@ -62,10 +66,11 @@ module.exports = {
         PRIMARY KEY(Id AUTOINCREMENT) \
     )",
 
-    roles : "CREATE TABLE Roles ( \
+  roles:
+    "CREATE TABLE Roles ( \
         id INTEGER NOT NULL, \
         Name TEXT NOT NULL, \
+        RoleCode INTEGER NOT NULL, \
         PRIMARY KEY(Id AUTOINCREMENT) \
-    )"
-}
-
+    )",
+};

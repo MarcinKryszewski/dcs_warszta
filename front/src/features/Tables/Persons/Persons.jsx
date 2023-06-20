@@ -17,8 +17,6 @@ import { DeletePerson } from "@/features/Tables/Persons/DeletePerson";
 import { mockUsersData } from "@/data/mock/mockUsers";
 
 function Persons(usersData) {
-  console.log("Persons");
-
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
@@ -105,6 +103,7 @@ function Persons(usersData) {
         rows={gridData}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
+        componentsProps={{ toolbar: ["/new"] }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
       />
       <DeletePerson state={{ open, setOpen }} person={{ person }} />

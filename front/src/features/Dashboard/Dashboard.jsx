@@ -71,7 +71,7 @@ export default function Dashboard() {
     []
   );
 
-  const [authorizationHandler] = useAuth();
+  /*const [authorizationHandler] = useAuth();
   const navigate = useNavigate();
   useEffect(() => {
     async function autoLogin() {
@@ -79,7 +79,7 @@ export default function Dashboard() {
       //if (auth == true) navigate(-1);
     }
     autoLogin();
-  }, [auth]);
+  }, [auth]);*/
 
   return (
     <Box>

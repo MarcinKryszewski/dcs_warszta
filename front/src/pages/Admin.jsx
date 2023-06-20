@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 import { PageContainer, Sidebar } from "@/layouts/_layouts";
-import { RequireAuth } from "@/components/RequireAuth";
+import RequireAuth from "@/components/RequireAuth";
 
 const Dashboard = lazy(() => import("@/features/Dashboard/Dashboard"));
 const MyTask = lazy(() => import("@/features/Dashboard/MyTasks"));
@@ -34,6 +34,13 @@ const TaskStatusEdit = lazy(() =>
   import("@/features/Tables/Tasks/Status/TaskStatusEdit")
 );
 
+const ROLES = {
+  USER: 2001,
+  ADMIN: 5150,
+  MANAGER: 3241,
+  ACCOUNTANT: 8432,
+};
+
 function Admin() {
   return (
     <Box
@@ -54,58 +61,59 @@ function Admin() {
             <Route path="/machines" element={<Machines />} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/tasks/new" element={<NewTask />} />
-
             <Route path="/mytask/details/:id" element={<DetailsTask />} />
             <Route path="/tasks/details/:id" element={<DetailsTask />} />
 
             {/* PRIVATE */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.USER]} />}>
+              <Route path="/mytask" element={<MyTask />} />
+              <Route path="/mytask/edit/:id" element={<EditTask />} />
+              <Route path="/tasks/edit/:id" element={<EditTask />} />
 
-            <Route path="/mytask" element={<MyTask />} />
-            <Route path="/mytask/edit/:id" element={<EditTask />} />
-            <Route path="/tasks/edit/:id" element={<EditTask />} />
-            <Route path="/machines/new" element={<NewMachine />} />
-            <Route path="/machines/edit/:id" element={<EditMachine />} />
-            <Route path="/persons" element={<Persons />} />
-            <Route path="/persons/new" element={<NewPerson />} />
-            <Route path="/persons/edit/:id" element={<EditPerson />} />
+              <Route
+                path="/tasks/edit/:id/partsStatusAdd"
+                element={<PartsStatusAdd />}
+              />
+              <Route
+                path="/mytask/edit/:id/partsStatusAdd"
+                element={<PartsStatusAdd />}
+              />
 
-            <Route
-              path="/tasks/edit/:id/partsStatusAdd"
-              element={<PartsStatusAdd />}
-            />
-            <Route
-              path="/mytask/edit/:id/partsStatusAdd"
-              element={<PartsStatusAdd />}
-            />
+              <Route
+                path="/tasks/edit/:taskid/partsStatusEdit/:statusid"
+                element={<PartsStatusEdit />}
+              />
+              <Route
+                path="/mytask/edit/:taskid/partsStatusEdit/:statusid"
+                element={<PartsStatusEdit />}
+              />
 
-            <Route
-              path="/tasks/edit/:taskid/partsStatusEdit/:statusid"
-              element={<PartsStatusEdit />}
-            />
-            <Route
-              path="/mytask/edit/:taskid/partsStatusEdit/:statusid"
-              element={<PartsStatusEdit />}
-            />
+              <Route
+                path="/tasks/edit/:id/taskStatusAdd"
+                element={<TaskStatusAdd />}
+              />
+              <Route
+                path="/mytask/edit/:id/taskStatusAdd"
+                element={<TaskStatusAdd />}
+              />
 
-            <Route
-              path="/tasks/edit/:id/taskStatusAdd"
-              element={<TaskStatusAdd />}
-            />
-            <Route
-              path="/mytask/edit/:id/taskStatusAdd"
-              element={<TaskStatusAdd />}
-            />
+              <Route
+                path="/tasks/edit/:taskid/taskStatusEdit/:statusid"
+                element={<TaskStatusEdit />}
+              />
+              <Route
+                path="/mytask/edit/:taskid/taskStatusEdit/:statusid"
+                element={<TaskStatusEdit />}
+              />
+            </Route>
 
-            <Route
-              path="/tasks/edit/:taskid/taskStatusEdit/:statusid"
-              element={<TaskStatusEdit />}
-            />
-            <Route
-              path="/mytask/edit/:taskid/taskStatusEdit/:statusid"
-              element={<TaskStatusEdit />}
-            />
-
-            <Route element={<RequireAuth />}></Route>
+            <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
+              <Route path="/machines/new" element={<NewMachine />} />
+              <Route path="/machines/edit/:id" element={<EditMachine />} />
+              <Route path="/persons" element={<Persons />} />
+              <Route path="/persons/new" element={<NewPerson />} />
+              <Route path="/persons/edit/:id" element={<EditPerson />} />
+            </Route>
 
             {/* CATCH ALL */}
             <Route path="/*" element={<Navigate to="/dashboard" replace />} />

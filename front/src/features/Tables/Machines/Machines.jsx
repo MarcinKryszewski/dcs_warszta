@@ -101,6 +101,7 @@ function Machines(machinesData) {
         rows={gridData}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
+        componentsProps={{ toolbar: ["/new"] }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
       />
       <DeleteMachine state={{ open, setOpen }} machine={{ machine }} />

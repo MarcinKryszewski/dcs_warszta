@@ -1,5 +1,8 @@
-import { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState, useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
+import axios from "@/api/axios";
+const LOGIN_URL = "/auth";
 
 import Box from "@mui/material/Box";
 import useTheme from "@mui/material/styles/useTheme";
@@ -22,7 +25,13 @@ import AuthContext from "@/context/AuthContext";
 export default function Login() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+
+  //const { auth, setAuth } = useContext(AuthContext);
+  const { auth, setAuth } = useAuth();
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const [userName, setUserName] = useState("");
   const [usernameError, setUsernameError] = useState(false);
@@ -30,46 +39,48 @@ export default function Login() {
   const [passwordError, setPasswordError] = useState(false);
   const [errorText, setErrorText] = useState("");
 
-  //const { user, userHandler } = useContext(UserContext);
-  const { auth, setAuth } = useContext(AuthContext);
-
-  const [authorizationHandler] = useAuth();
-
-  //console.log(auth);
-
   useEffect(() => {
-    async function autoLogin() {
-      await authorizationHandler();
-      //if (auth == true) navigate(-1);
-    }
-    autoLogin();
-  }, [auth]);
+    setErrorText("");
+  }, [userName, password]);
 
   async function handleSubmit() {
     if (!userName)
       return (
         setErrorText("Nazwa użytkownika nie może być pusta!"),
         setUsernameError(true)
-        //authHandler(false)
       );
     if (!password)
       return (
         setErrorText("Pole hasła nie może być puste!"), setPasswordError(true)
-        //authHandler(false)
       );
 
-    await authorizationHandler({ Login: userName, Password: password });
-    //authorizationHandler();
-    /*userHandler({
-      Login: userName,
-      Name: "Humfrid",
-      Surname: "MacMakin",
-    });
-    authHandler(true);*/
-
-    //Authorization(userName, false, "aaaa");
-
-    //navigate(-1);
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ userName, password }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+      setAuth({ userName, password, roles, accessToken });
+      setUserName("");
+      setPassword("");
+      navigate(from, { replace: true });
+    } catch (err) {
+      if (!err?.response) {
+        setErrorText("Brak odpowiedzi od serwera");
+      } else if (err.response?.status === 400) {
+        setErrorText("Brakujące dane logowanie");
+      } else if (err.response?.status === 401) {
+        setErrorText("Błędny login lub hasło");
+      } else {
+        setErrorText("Nieudane logowanie");
+      }
+    }
   }
 
   return (
@@ -148,7 +159,7 @@ export default function Login() {
             onClick={handleSubmit}
             sx={{ boxShadow: `0 0 10px 1px ${colors.greenAccent[400]};` }}
           >
-            <Typography>ZAPISZ</Typography>
+            <Typography>ZALOGUJ SIĘ</Typography>
           </Button>
           <Button
             variant="outlined"
