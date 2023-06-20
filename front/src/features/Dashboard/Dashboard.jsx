@@ -24,9 +24,6 @@ export default function Dashboard() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  //console.log(sessionStorage.getItem("user"));
-  //Authorization()
-
   const { user, setUser } = useContext(UserContext);
   const { auth, setAuth } = useContext(AuthContext);
   const [dashboardData, setDashboardData] = useState({});
@@ -36,6 +33,8 @@ export default function Dashboard() {
     ongoing: 0,
     confirmed: 0,
   });
+
+  //console.log(auth.length);
 
   const [personalTasksStatus, setPersonalTasksStatus] = useState({
     late: 0,
@@ -47,49 +46,35 @@ export default function Dashboard() {
   //const dashboardData = axios.get("/dcs/task/all").data; //mockTasksData;
 
   async function dashboardDataAxios() {
-    //console.log("FETCHING DATA");
-    //console.log(await axios.get("/dcs/parts-status/last", 1).data);
     const res = await axios.get("/dcs/task/all");
-    console.log(res.data);
-    setDashboardData(res.data);
+    const data = res.data;
+    setDashboardData(data);
 
     setTasksStatus({
-      late: dashboardData.filter(
-        (task) => task.TaskStatus.LastStatus == "SPÓŹNIONE"
-      ).length,
-      done: dashboardData.filter(
-        (task) => task.TaskStatus.LastStatus == "WYKONANE"
-      ).length,
-      ongoing: dashboardData.filter(
-        (task) => task.TaskStatus.LastStatus == "W TRAKCIE"
-      ).length,
-      confirmed: dashboardData.filter(
-        (task) => task.TaskStatus.LastStatus == "ZATWIERDZONE"
-      ).length,
+      late: data.filter((task) => task.LastStatus == "SPÓŹNIONE").length,
+      done: data.filter((task) => task.LastStatus == "WYKONANE").length,
+      ongoing: data.filter((task) => task.LastStatus == "W TRAKCIE").length,
+      confirmed: data.filter((task) => task.LastStatus == "ZATWIERDZONE")
+        .length,
     });
 
-    const personalTasks = dashboardData.filter(
+    const personalTasks = data.filter(
       (task) =>
         `${task.Responsible.Name} ${task.Responsible.Surname}` ==
-        `${user.Name} ${user.Surname}`
+        `${auth.Name} ${auth.Surname}`
     );
 
     setPersonalTasksStatus({
-      late: personalTasks.filter(
-        (task) => task.TaskStatus.LastStatus == "SPÓŹNIONE"
-      ).length,
-      done: personalTasks.filter(
-        (task) => task.TaskStatus.LastStatus == "WYKONANE"
-      ).length,
-      ongoing: personalTasks.filter(
-        (task) => task.TaskStatus.LastStatus == "W TRAKCIE"
-      ).length,
+      late: personalTasks.filter((task) => task.LastStatus == "SPÓŹNIONE")
+        .length,
+      done: personalTasks.filter((task) => task.LastStatus == "WYKONANE")
+        .length,
+      ongoing: personalTasks.filter((task) => task.LastStatus == "W TRAKCIE")
+        .length,
       confirmed: personalTasks.filter(
-        (task) => task.TaskStatus.LastStatus == "ZATWIERDZONE"
+        (task) => task.LastStatus == "ZATWIERDZONE"
       ).length,
     });
-
-    console.log(dashboardData);
   }
 
   useEffect(() => {
@@ -243,7 +228,7 @@ export default function Dashboard() {
         </Box>
       </Box>
 
-      {auth ? (
+      {auth?.role > 0 ? (
         <Box>
           <Typography variant="h2" my={2}>
             MOJE ZADANIA

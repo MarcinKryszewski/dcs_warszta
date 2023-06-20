@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
 
 import useTheme from "@mui/material/styles/useTheme";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -19,7 +20,7 @@ import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { mockUsersData } from "@/data/mock/mockUsers";
 import { mockMachinesData } from "@/data/mock/mockMachines";
 import UniqueValuesFromJson from "@/utils/uniqueValuesFromJson";
-import { mockTasksData } from "@/data/mock/mockTasks";
+//import { mockUsersData } from "@/data/mock/mockUsers";
 
 export default function NewTask() {
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
@@ -28,9 +29,10 @@ export default function NewTask() {
   const [task, setTask] = useState({
     MachineId: 0,
     Description: "",
-    Type: "",
+    Category: "",
     Category: "",
     ResponsibleId: 0,
+    Priority: "",
   });
   const [person, setPerson] = useState("");
   const [machine, setMachine] = useState({
@@ -40,27 +42,70 @@ export default function NewTask() {
   });
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
+  const [users, setUsers] = useState([{ Id: 0, Name: "Name", Surname: "" }]);
+  //const [users, setUsers] = useState({ Id: 0, Name: "Name", Surname: "" });
 
-  const usersDataRetriever = import.meta.env.VITE_MOCK_DATA
-    ? mockUsersData
-    : usersData;
+  const [machines, setMachines] = useState([
+    {
+      Id: 0,
+      Area: "Area",
+      MachineName: "MachineName",
+    },
+  ]);
+  const [uniqueAreas, setUniqueAreas] = useState();
+  const [uniqueTypes, setUniqueTypes] = useState();
 
-  const machinesDataRetriever = import.meta.env.VITE_MOCK_DATA
-    ? mockMachinesData
-    : machinesData;
+  /*const usersDataRetriever = useState(
+    import.meta.env.VITE_MOCK_DATA ? mockUsersData : mockUsersData
+  );*/
 
-  const tasksTypesDataRetriever = import.meta.env.VITE_MOCK_DATA
-    ? mockTasksData
-    : tasksTypesData;
+  async function machinesDataRetriever() {
+    if (import.meta.env.VITE_MOCK_DATA) {
+      setMachines(mockMachinesData);
+      return;
+    }
+    const res = await axios.get("/dcs/machine/all");
+    const data = res.data;
+    setUniqueAreas(UniqueValuesFromJson(data, "Area"));
+    setMachines(data);
+  }
 
-  const uniqueAreas = UniqueValuesFromJson(machinesDataRetriever, "Area");
-  const uniqueTypes = UniqueValuesFromJson(tasksTypesDataRetriever, "Type");
+  async function taskTypesRetriever() {
+    if (import.meta.env.VITE_MOCK_DATA) {
+      setUniqueTypes(UniqueValuesFromJson(mockTasksData, "Type"));
+      return;
+    }
+    const res = await axios.post("/dcs/task/types");
+    const data = res.data;
+    console.log(res);
+    setUniqueTypes(data);
+  }
 
-  function CreateTask() {
-    //if (!person.Name) return setErrorText("Podaj imię!");
-    setErrorText(null);
+  async function usersDataRetriever() {
+    if (import.meta.env.VITE_MOCK_DATA) {
+      setUsers(mockUsersData);
+      return;
+    }
+    const res = await axios.get("/dcs/person/all");
+    const data = res.data;
+    console.log(res.data);
+    setUsers(data);
+  }
+
+  async function CreateTask() {
+    /*const newTask = {
+      Description: description,
+      Category: category,
+      Priority: priority,
+      CreationDate: creationDate,
+      FinishDate: finishDate,
+      AuthorId: author,
+      MachineId: machine,
+      ResponsibleId: responsible,
+    };*/
+
     console.log(task);
-    console.log(machine);
+    const req = await axios.post("/dcs/task/add", task);
   }
 
   useEffect(() => {
@@ -68,6 +113,12 @@ export default function NewTask() {
       title: "Działania",
       subtitle: "Dodaj nowe działanie",
     });
+  }, []);
+
+  useEffect(() => {
+    machinesDataRetriever();
+    taskTypesRetriever();
+    usersDataRetriever();
   }, []);
 
   return (
@@ -106,7 +157,7 @@ export default function NewTask() {
             autoHighlight
             openOnFocus
             value={machine.MachineName == "" ? null : machine}
-            options={mockMachinesData.filter(
+            options={machines.filter(
               (machines) => machines.Area == machine.Area
             )}
             getOptionLabel={(machines) => machines.MachineName}
@@ -114,7 +165,7 @@ export default function NewTask() {
               if (reason === "clear")
                 return setMachine({ ...machine, MachineName: "" });
               setMachine(value);
-              setTask({ ...task, MachineId: value.id });
+              setTask({ ...task, MachineId: value.Id });
             }}
             sx={{
               width: "100%",
@@ -126,7 +177,7 @@ export default function NewTask() {
             }}
             renderOption={(props, option) => {
               return (
-                <li {...props} key={option.id}>
+                <li {...props} key={option.Id}>
                   {option.MachineName}
                 </li>
               );
@@ -135,7 +186,7 @@ export default function NewTask() {
               <TextField
                 {...params}
                 error={!machine.MachineName ? true : false}
-                label="Obszar"
+                label="Maszyna"
               />
             )}
           />
@@ -155,9 +206,9 @@ export default function NewTask() {
               Kategoria
             </FormLabel>
             <RadioGroup
-              value={task.Category}
+              value={task.Priority}
               onChange={(event) =>
-                setTask({ ...task, Category: event.target.value })
+                setTask({ ...task, Priority: event.target.value })
               }
             >
               <FormControlLabel
@@ -207,7 +258,7 @@ export default function NewTask() {
               value={task.Type == "" ? null : task.Type}
               options={uniqueTypes}
               onChange={(event, value) => {
-                setTask({ ...task, Type: value });
+                setTask({ ...task, Category: value });
               }}
               sx={{
                 width: "100%",
@@ -230,12 +281,12 @@ export default function NewTask() {
               autoHighlight
               openOnFocus
               value={person == "" ? null : person}
-              options={usersDataRetriever}
+              options={users}
               getOptionLabel={(persons) => `${persons.Name} ${persons.Surname}`}
               onChange={(event, value, reason) => {
                 if (reason === "clear") return setPerson("");
                 setPerson(value);
-                setTask({ ...task, ResponsibleId: value.id });
+                setTask({ ...task, ResponsibleId: value.Id });
               }}
               sx={{
                 width: "100%",

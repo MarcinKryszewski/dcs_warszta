@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
 
 import useTheme from "@mui/material/styles/useTheme";
 import Box from "@mui/material/Box";
@@ -22,7 +23,7 @@ function Tasks(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
-  const gridData = TasksDataRetriever();
+  //const gridData = TasksDataRetriever();
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
@@ -36,12 +37,35 @@ function Tasks(props) {
     PartsStatus: { Status: "" },
     TaskStatus: { Status: "" },
   });
+  const [tasks, setTasks] = useState([
+    {
+      Id: 0,
+      Machine: { id: 0, Area: "", MachineName: "" },
+      Description: "",
+      Type: "",
+      Category: "",
+      Responsible: { id: 0, Name: "", Surname: "" },
+      PartsStatus: "",
+      LastStatus: "",
+    },
+  ]);
+  console.log(tasks);
 
-  function TasksDataRetriever() {
-    if (props.tasksData) return props.tasksData;
-    if (import.meta.env.VITE_MOCK_DATA) return mockTasksData;
-    return props.tasksData;
+  async function TasksDataRetriever() {
+    if (props.tasksData) return setTasksprops(tasksData);
+    if (import.meta.env.VITE_MOCK_DATA) return setTasks(mockTasksData);
+
+    const res = await axios.get("/dcs/task/all");
+    const data = res.data;
+    //console.log(data);
+    setTasks(data);
+
+    //return res.data; //props.tasksData;
   }
+
+  useEffect(() => {
+    TasksDataRetriever();
+  }, []);
 
   function TaskCategoryColor(category) {
     if (category == "A") return theme.palette.error.main;
@@ -98,12 +122,12 @@ function Tasks(props) {
       ),
       flex: 0.6,
       valueGetter: (params) =>
-        params.row.Machines.Area + " " + params.row.Machines.MachineName,
+        params.row.Machine.Area + " " + params.row.Machine.MachineName,
       renderCell: (params) => (
         <Box>
-          <Typography>{params.row?.Machines?.Area}</Typography>
+          <Typography>{params.row?.Machine?.Area}</Typography>
           <Typography color={colors.greenAccent[500]}>
-            {params.row?.Machines?.MachineName}
+            {params.row?.Machine?.MachineName}
           </Typography>
         </Box>
       ),
@@ -111,21 +135,21 @@ function Tasks(props) {
     {
       field: "Area",
       headerName: "Obszar",
-      valueGetter: (params) => params.row.Machines.Area,
+      valueGetter: (params) => params.row.Machine.Area,
       hide: true,
     },
     {
       field: "Machine",
       headerName: "Maszyna",
-      valueGetter: (params) => params.row.Machines.MachineName,
+      valueGetter: (params) => params.row.Machine.MachineName,
     },
     { field: "Description", headerName: "Opis", flex: 1 },
-    { field: "Type", headerName: "Rodzaj działania", flex: 0.3 },
+    { field: "Catgory", headerName: "Rodzaj działania", flex: 0.3 },
     {
-      field: "Category",
+      field: "Priority",
       headerName: "Kategoria",
       flex: 0.2,
-      renderCell: ({ row: { Category } }) => {
+      renderCell: ({ row: { Priority } }) => {
         return (
           <Box
             width="40%"
@@ -133,11 +157,11 @@ function Tasks(props) {
             p="5px"
             display="flex"
             justifyContent="center"
-            backgroundColor={() => TaskCategoryColor(Category)}
+            backgroundColor={() => TaskCategoryColor(Priority)}
             borderRadius="15px"
           >
             <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>
-              {Category}
+              {Priority}
             </Typography>
           </Box>
         );
@@ -160,12 +184,8 @@ function Tasks(props) {
       field: "PartsStatus",
       headerName: "Status części",
       flex: 0.3,
-      valueGetter: (params) => params.row.PartsStatus.Status,
-      renderCell: ({
-        row: {
-          PartsStatus: { Status },
-        },
-      }) => {
+      valueGetter: (params) => params.row.PartsStatus,
+      renderCell: ({ PartsStatus }) => {
         return (
           <Box
             width="90%"
@@ -173,11 +193,11 @@ function Tasks(props) {
             p="5px"
             display="flex"
             justifyContent="center"
-            backgroundColor={() => PartStatusColor(Status)}
+            backgroundColor={() => PartStatusColor(PartsStatus)}
             borderRadius="4px"
           >
             <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>
-              {Status}
+              {PartsStatus}
             </Typography>
           </Box>
         );
@@ -187,12 +207,8 @@ function Tasks(props) {
       field: "TaskStatus",
       headerName: "Status zadania",
       flex: 0.3,
-      valueGetter: (params) => params.row?.TaskStatus?.Status,
-      renderCell: ({
-        row: {
-          TaskStatus: { Status },
-        },
-      }) => {
+      valueGetter: (params) => params.row?.LastStatus,
+      renderCell: ({ LastStatus }) => {
         return (
           <Box
             width="90%"
@@ -200,11 +216,11 @@ function Tasks(props) {
             p="5px"
             display="flex"
             justifyContent="center"
-            backgroundColor={() => TaskStatusColor(Status)}
+            backgroundColor={() => TaskStatusColor(LastStatus)}
             borderRadius="4px"
           >
             <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>
-              {Status}
+              {LastStatus}
             </Typography>
           </Box>
         );
@@ -258,7 +274,8 @@ function Tasks(props) {
       }}
     >
       <DataGrid
-        rows={TasksDataRetriever()}
+        rows={tasks}
+        getRowId={(row) => row.Id}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
         componentsProps={{ toolbar: ["/new"] }}

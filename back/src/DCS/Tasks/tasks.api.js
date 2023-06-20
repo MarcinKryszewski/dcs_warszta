@@ -6,7 +6,6 @@ const TasksConfirmAPI = require("../TasksConfirms/tasksconfirms.api");
 
 class TaskActions {
   async AllTasks(req, res) {
-    console.log("aaaaaaaaa");
     const tasks = await Task.findAll({
       include: [
         {
@@ -71,10 +70,11 @@ class TaskActions {
   }
   //Id: null,
   async AddTask(req, res) {
+    const date = new Date();
     const description = req.body.Description;
     const category = req.body.Category;
     const priority = req.body.Priority;
-    const creationDate = req.body.CreationDate;
+    const creationDate = date;
     const finishDate = req.body.FinishDate;
     const author = req.body.AuthorId;
     const machine = req.body.MachineId;
@@ -89,6 +89,8 @@ class TaskActions {
         AuthorId: author,
         MachineId: machine,
         ResponsibleId: responsible,
+        LastStatus: "W TRAKCIE",
+        PartsStatus: "W TRAKCIE",
       },
       { isNewRecord: true }
     );
@@ -139,6 +141,12 @@ class TaskActions {
       ],
     });
     res.status(200).json(taskStatus);
+  }
+
+  async TaskTypes(req, res) {
+    const tasksTypes = ["TAG", "RCFA", "AWARIA", "DCS", "CILT", "POREMONTOWE"];
+
+    res.status(200).send(tasksTypes);
   }
 }
 

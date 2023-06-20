@@ -9,5 +9,6 @@ router.get("/last/:id", TaskActions.LastTaskStatus);
 router.post("/add", TaskActions.AddTask);
 router.put("/:id", TaskActions.UpdateTask);
 router.delete("/:id", TaskActions.DeleteTask);
+router.post("/types", TaskActions.TaskTypes);
 
 module.exports = router;
