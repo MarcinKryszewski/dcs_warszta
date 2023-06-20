@@ -5,10 +5,10 @@ import useAuth from "@/hooks/useAuth";
 //import AuthContext from "@/context/AuthContext";
 
 export default function RequireAuth({ allowedRoles }) {
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const location = useLocation();
 
-  return auth?.roles?.find((role) => allowedRoles?.includes(role)) ? (
+  return allowedRoles.find((role) => role == auth.role) ? (
     <Outlet />
   ) : (
     <Navigate to="/login" state={{ from: location }} replace />

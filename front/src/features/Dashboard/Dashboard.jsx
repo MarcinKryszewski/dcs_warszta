@@ -1,5 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -28,9 +29,74 @@ export default function Dashboard() {
 
   const { user, setUser } = useContext(UserContext);
   const { auth, setAuth } = useContext(AuthContext);
+  const [dashboardData, setDashboardData] = useState({});
+  const [tasksStatus, setTasksStatus] = useState({
+    late: 0,
+    done: 0,
+    ongoing: 0,
+    confirmed: 0,
+  });
 
-  const dashboardData = mockTasksData;
-  const tasksStatus = {
+  const [personalTasksStatus, setPersonalTasksStatus] = useState({
+    late: 0,
+    done: 0,
+    ongoing: 0,
+    confirmed: 0,
+  });
+
+  //const dashboardData = axios.get("/dcs/task/all").data; //mockTasksData;
+
+  async function dashboardDataAxios() {
+    //console.log("FETCHING DATA");
+    //console.log(await axios.get("/dcs/parts-status/last", 1).data);
+    const res = await axios.get("/dcs/task/all");
+    console.log(res.data);
+    setDashboardData(res.data);
+
+    setTasksStatus({
+      late: dashboardData.filter(
+        (task) => task.TaskStatus.LastStatus == "SPÓŹNIONE"
+      ).length,
+      done: dashboardData.filter(
+        (task) => task.TaskStatus.LastStatus == "WYKONANE"
+      ).length,
+      ongoing: dashboardData.filter(
+        (task) => task.TaskStatus.LastStatus == "W TRAKCIE"
+      ).length,
+      confirmed: dashboardData.filter(
+        (task) => task.TaskStatus.LastStatus == "ZATWIERDZONE"
+      ).length,
+    });
+
+    const personalTasks = dashboardData.filter(
+      (task) =>
+        `${task.Responsible.Name} ${task.Responsible.Surname}` ==
+        `${user.Name} ${user.Surname}`
+    );
+
+    setPersonalTasksStatus({
+      late: personalTasks.filter(
+        (task) => task.TaskStatus.LastStatus == "SPÓŹNIONE"
+      ).length,
+      done: personalTasks.filter(
+        (task) => task.TaskStatus.LastStatus == "WYKONANE"
+      ).length,
+      ongoing: personalTasks.filter(
+        (task) => task.TaskStatus.LastStatus == "W TRAKCIE"
+      ).length,
+      confirmed: personalTasks.filter(
+        (task) => task.TaskStatus.LastStatus == "ZATWIERDZONE"
+      ).length,
+    });
+
+    console.log(dashboardData);
+  }
+
+  useEffect(() => {
+    dashboardDataAxios();
+  }, []);
+
+  /*const tasksStatus = {
     late: dashboardData.filter((task) => task.TaskStatus.Status == "SPÓŹNIONE")
       .length,
     done: dashboardData.filter((task) => task.TaskStatus.Status == "WYKONANE")
@@ -41,9 +107,9 @@ export default function Dashboard() {
     confirmed: dashboardData.filter(
       (task) => task.TaskStatus.Status == "ZATWIERDZONE"
     ).length,
-  };
+  };*/
 
-  const personalTasks = dashboardData.filter(
+  /*const personalTasks = dashboardData.filter(
     (task) =>
       `${task.Responsible.Name} ${task.Responsible.Surname}` ==
       `${user.Name} ${user.Surname}`
@@ -59,7 +125,7 @@ export default function Dashboard() {
     confirmed: personalTasks.filter(
       (task) => task.TaskStatus.Status == "ZATWIERDZONE"
     ).length,
-  };
+  };*/
   const allTasks = tasksStatus.done + tasksStatus.late + tasksStatus.ongoing;
 
   useEffect(

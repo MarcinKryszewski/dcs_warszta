@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import axios from "@/api/axios";
-const LOGIN_URL = "/auth";
+const LOGIN_URL = "/dcs/auth";
 
 import Box from "@mui/material/Box";
 import useTheme from "@mui/material/styles/useTheme";
@@ -54,21 +54,19 @@ export default function Login() {
         setErrorText("Pole hasła nie może być puste!"), setPasswordError(true)
       );
 
+    const user = { username: userName, password: password };
+
     try {
-      const response = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ userName, password }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      console.log(JSON.stringify(response?.data));
+      const response = await axios.post(LOGIN_URL, user);
       const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({ userName, password, roles, accessToken });
+      const role = response?.data?.role;
+      console.log(response.data);
+
+      setAuth(response.data);
+
       setUserName("");
       setPassword("");
+
       navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {

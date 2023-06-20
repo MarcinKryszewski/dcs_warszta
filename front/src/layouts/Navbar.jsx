@@ -27,20 +27,21 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   function LoginHandle() {
-    if (auth == false) return navigate("/login");
-    if (auth == true) return console.log("LOGOUT");
+    console.log(auth);
+    if (Object.keys(auth).length === 0) return navigate("/login");
+    if (Object.keys(auth).length > 0) return setAuth({});
   }
 
   return (
     <Box display="flex" justifyContent="flex-end" p={0} width={"100%"}>
       <Box display="flex" alignItems="center">
-        {user.AccessLevel > 0 && (
+        {auth.role > 0 && (
           <Typography
             mr={1}
             variant={"h5"}
             sx={{ color: colors.greenAccent[400] }}
           >
-            Witaj {user.Name}!
+            Witaj {auth.Name}!
           </Typography>
         )}
         <IconButton onClick={colorMode.toggleColorMode}>

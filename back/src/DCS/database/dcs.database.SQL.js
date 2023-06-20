@@ -48,6 +48,7 @@ module.exports = {
         Responsibleid INTEGER NOT NULL, \
         Delete INTEGER NOT NULL DEFAULT 0, \
         DeleteDate TEXT, \
+        LastStatus TEXT, \
         PRIMARY KEY(Id AUTOINCREMENT), \
         FOREIGN KEY(ResponsibleId) REFERENCES Persons(Id), \
         FOREIGN KEY(AuthorId) REFERENCES Persons(Id), \

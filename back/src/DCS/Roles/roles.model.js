@@ -1,21 +1,27 @@
-const { Model, DataTypes, INTEGER, TEXT } = require('sequelize');
-const sequelize = require('../database/dcs.database.sqlite');
+const { Model, DataTypes, INTEGER, TEXT } = require("sequelize");
+const sequelize = require("../database/dcs.database.sqlite");
 
 class Role extends Model {}
 
-Role.init({
-    Id : {
-        type: DataTypes.INTEGER,
-        primaryKey: true
+Role.init(
+  {
+    Id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
     },
-    Name : {
-        type: DataTypes.TEXT
-    }
-}, {
-    sequelize, 
-    modelName: 'role',
+    Name: {
+      type: DataTypes.TEXT,
+    },
+    RoleCode: {
+      type: DataTypes.INTEGER,
+    },
+  },
+  {
+    sequelize,
+    modelName: "role",
     timestamps: false,
-    tableName: 'Roles'
-});
+    tableName: "Roles",
+  }
+);
 
 module.exports = Role;
