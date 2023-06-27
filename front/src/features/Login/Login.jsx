@@ -60,10 +60,9 @@ export default function Login() {
       const response = await axios.post(LOGIN_URL, user);
       const accessToken = response?.data?.accessToken;
       const role = response?.data?.role;
-      console.log(response.data);
+      console.log(role);
 
       setAuth(response.data);
-
       setUserName("");
       setPassword("");
 

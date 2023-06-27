@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
 
 import useTheme from "@mui/material/styles/useTheme";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -29,16 +30,37 @@ function NewPerson() {
     Role: { RoleId: 0, Name: "" },
     Password: "",
   });
+
+  const [persons, setPersons] = useState({
+    Name: "",
+    Surname: "",
+    Login: "",
+    Role: { RoleId: 0, Name: "" },
+    Password: "",
+  });
+
+  const [uniqueNames, setUniqueNames] = useState([]);
+  const [uniqueSurnames, setUniqueSurnames] = useState([]);
+  const [uniqueRoles, setUniqueRoles] = useState([]);
+
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
 
-  const usersDataRetriever = import.meta.env.VITE_MOCK_DATA
-    ? mockUsersData
-    : usersData;
+  async function PersonsDataRetriever() {
+    if (import.meta.env.VITE_MOCK_DATA) return setPersons(mockUsersData);
 
-  const uniqueNames = UniqueValuesFromJson(usersDataRetriever, "Name");
-  const uniqueSurnames = UniqueValuesFromJson(usersDataRetriever, "Surname");
-  const uniqueRoles = UniqueValuesFromJson(usersDataRetriever, "Role");
+    const res = await axios.get("/dcs/person/all");
+    const data = res.data;
+    setPersons(data);
+    setUniqueNames(UniqueValuesFromJson(data, "Name"));
+    setUniqueSurnames(UniqueValuesFromJson(data, "Surname"));
+    //TODO: extract unique role names
+    setUniqueRoles(UniqueValuesFromJson(data, "Role"));
+  }
+
+  useEffect(() => {
+    PersonsDataRetriever();
+  }, []);
 
   function CreatePerson() {
     if (!person.Name) return setErrorText("Podaj imię!");
@@ -48,6 +70,7 @@ function NewPerson() {
     if (!person.Role.Name) return setErrorText("Podaj uprawnienia!");
     setErrorText(null);
     console.log(person);
+    axios.post("/dcs/person/add", person);
   }
 
   useEffect(() => {

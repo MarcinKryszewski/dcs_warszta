@@ -18,15 +18,17 @@ import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import { DefaultTableToolbar, DataGrid } from "@/components/_components";
 import { mockTasksData } from "@/data/mock/mockTasks";
 import { DeleteTask } from "@/features/Tables/Tasks/DeleteTask";
+import AuthContext from "@/context/AuthContext";
 
 function Tasks(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
-  //const gridData = TasksDataRetriever();
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const { auth, setAuth } = useContext(AuthContext);
+
   const [task, setTask] = useState({
     id: 0,
     Machines: { id: 0, Area: "", MachineName: "" },
@@ -49,18 +51,24 @@ function Tasks(props) {
       LastStatus: "",
     },
   ]);
-  console.log(tasks);
 
   async function TasksDataRetriever() {
-    if (props.tasksData) return setTasksprops(tasksData);
+    console.log(props);
+
     if (import.meta.env.VITE_MOCK_DATA) return setTasks(mockTasksData);
 
     const res = await axios.get("/dcs/task/all");
     const data = res.data;
-    //console.log(data);
     setTasks(data);
 
-    //return res.data; //props.tasksData;
+    if (props.tasksData) {
+      const personalTasks = data.filter(
+        (personalTask) =>
+          `${personalTask.Responsible.Name} ${personalTask.Responsible.Surname}` ==
+          `${auth.Name} ${auth.Surname}`
+      );
+      setTasks(personalTasks);
+    }
   }
 
   useEffect(() => {
@@ -96,7 +104,7 @@ function Tasks(props) {
   );
 
   function EditHandle(row) {
-    console.log(location);
+    //console.log(location);
     navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
   }
   function RemoveHandle(row) {
@@ -104,7 +112,7 @@ function Tasks(props) {
     setOpen(true);
   }
   function DetailsHandle(row) {
-    console.log("DETAILS: " + JSON.stringify(row));
+    //console.log("DETAILS: " + JSON.stringify(row));
     navigate(`${location.pathname}/details/${row.id}`, { state: { row: row } });
   }
 

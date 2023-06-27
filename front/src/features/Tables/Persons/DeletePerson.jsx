@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "@/api/axios";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -13,7 +14,8 @@ export function DeletePerson(props) {
   const person = props.person.person;
 
   const handleDelete = () => {
-    console.log(person);
+    axios.delete(`/dcs/person/${person.Id}`, person);
+    props.action.setDeleted(true);
     props.state.setOpen(false);
   };
   const handleClose = () => {

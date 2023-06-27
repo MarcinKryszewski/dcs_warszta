@@ -15,17 +15,17 @@ export default function MyTasks() {
   const { auth, setAuth } = useContext(AuthContext);
 
   //const [authorized, authorizationHandler] = useAuth();
-  const personalTasks = mockTasksData.filter(
+  /*const personalTasks = mockTasksData.filter(
     (task) =>
       `${task.Responsible.Name} ${task.Responsible.Surname}` ==
-      `${user.Name} ${user.Surname}`
-  );
+      `${auth.Name} ${auth.Surname}`
+  );*/
 
-  //console.log(user);
+  //console.log(auth);
 
   return (
     <Box height={"100%"}>
-      {auth ? <Tasks tasksData={personalTasks} /> : <Navigate to="/login" />}
+      {auth ? <Tasks tasksData={true} /> : <Navigate to="/login" />}
     </Box>
   );
 }

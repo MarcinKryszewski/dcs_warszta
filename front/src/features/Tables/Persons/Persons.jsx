@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
 
 import useTheme from "@mui/material/styles/useTheme";
 import Box from "@mui/material/Box";
@@ -16,15 +17,27 @@ import { DeletePerson } from "@/features/Tables/Persons/DeletePerson";
 
 import { mockUsersData } from "@/data/mock/mockUsers";
 
-function Persons(usersData) {
+function Persons(props) {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
-  const gridData = import.meta.env.VITE_MOCK_DATA ? mockUsersData : usersData;
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const [person, setPerson] = useState({ id: 0, Name: "", Surname: "" });
+  const [persons, setPersons] = useState({ id: 0, Name: "", Surname: "" });
+
+  async function PersonsDataRetriever() {
+    if (import.meta.env.VITE_MOCK_DATA) return setPersons(mockUsersData);
+    const res = await axios.get("/dcs/person/all");
+    const data = res.data;
+    setPersons(data);
+  }
+
+  useEffect(() => {
+    PersonsDataRetriever();
+  }, []);
 
   useEffect(
     () =>
@@ -36,11 +49,17 @@ function Persons(usersData) {
   );
 
   function EditHandle(row) {
-    navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
+    navigate(`${location.pathname}/edit/${row.Id}`, { state: { row: row } });
   }
   function RemoveHandle(row) {
     setPerson(row);
+
     setOpen(true);
+  }
+
+  if (deleted) {
+    PersonsDataRetriever();
+    setDeleted(false);
   }
 
   const columns = [
@@ -100,13 +119,18 @@ function Persons(usersData) {
       }}
     >
       <DataGrid
-        rows={gridData}
+        rows={persons}
+        getRowId={(row) => row.Id}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
         componentsProps={{ toolbar: ["/new"] }}
         localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
       />
-      <DeletePerson state={{ open, setOpen }} person={{ person }} />
+      <DeletePerson
+        state={{ open, setOpen }}
+        person={{ person }}
+        action={{ deleted, setDeleted }}
+      />
     </Box>
   );
 }

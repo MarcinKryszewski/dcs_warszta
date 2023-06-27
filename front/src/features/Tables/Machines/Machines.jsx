@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "@/api/axios";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -16,20 +17,34 @@ import { mockMachinesData } from "@/data/mock/mockMachines";
 import { HeaderTitleContext } from "@/context/HeaderTitleContext";
 import DeleteMachine from "@/features/Tables/Machines/DeleteMachine";
 
-function Machines(machinesData) {
+function Machines(props) {
   console.log("Machines");
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const { titleText, setTitleText } = useContext(HeaderTitleContext);
 
-  const gridData = import.meta.env.VITE_MOCK_DATA
-    ? mockMachinesData
-    : machinesData;
-
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [machine, setMachine] = useState({ id: 0, Area: "", MachineName: "" });
+  const [machines, setMachines] = useState({
+    id: 0,
+    Area: "",
+    MachineName: "",
+  });
+
+  async function MachinesDataRetriever() {
+    if (props.machinesData) return setMachines(props.machinesData);
+    if (import.meta.env.VITE_MOCK_DATA) return setMachines(mockMachinesData);
+
+    const res = await axios.get("/dcs/machine/all");
+    const data = res.data;
+    setMachines(data);
+  }
+
+  useEffect(() => {
+    MachinesDataRetriever();
+  }, []);
 
   useEffect(
     () =>
@@ -98,7 +113,8 @@ function Machines(machinesData) {
       }}
     >
       <DataGrid
-        rows={gridData}
+        rows={machines}
+        getRowId={(row) => row.Id}
         columns={columns}
         components={{ Toolbar: DefaultTableToolbar }}
         componentsProps={{ toolbar: ["/new"] }}

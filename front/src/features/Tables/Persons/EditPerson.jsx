@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
 
 import useTheme from "@mui/material/styles/useTheme";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -29,19 +30,43 @@ function EditPerson() {
     Role: { RoleId: 0, Name: "" },
     Password: "",
   });
+  const [persons, setPersons] = useState({
+    Name: "",
+    Surname: "",
+    Login: "",
+    Role: { RoleId: 0, Name: "" },
+    Password: "",
+  });
+
+  const [uniqueNames, setUniqueNames] = useState([]);
+  const [uniqueSurnames, setUniqueSurnames] = useState([]);
+  const [uniqueRoles, setUniqueRoles] = useState([]);
+
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const usersDataRetriever = import.meta.env.VITE_MOCK_DATA
-    ? mockUsersData
-    : usersData;
+  async function PersonsDataRetriever() {
+    if (import.meta.env.VITE_MOCK_DATA) return setPersons(mockUsersData);
 
-  const uniqueNames = UniqueValuesFromJson(usersDataRetriever, "Name");
-  const uniqueSurnames = UniqueValuesFromJson(usersDataRetriever, "Surname");
-  const uniqueRoles = UniqueValuesFromJson(usersDataRetriever, "Role");
+    const res = await axios.get("/dcs/person/all");
+    const data = res.data;
+    setPersons(data);
+    setUniqueNames(UniqueValuesFromJson(data, "Name"));
+    setUniqueSurnames(UniqueValuesFromJson(data, "Surname"));
+    //TODO: extract unique role names
+    setUniqueRoles(UniqueValuesFromJson(data, "Role"));
+  }
 
-  function CreatePerson() {
+  useEffect(() => {
+    PersonsDataRetriever();
+  }, []);
+
+  //const uniqueNames = UniqueValuesFromJson(persons, "Name");
+  //const uniqueSurnames = UniqueValuesFromJson(persons, "Surname");
+  //const uniqueRoles = UniqueValuesFromJson(persons, "Role");
+
+  function EditPerson() {
     if (!person.Name) return setErrorText("Podaj imię!");
     if (!person.Surname) return setErrorText("Podaj nazwisko!");
     if (!person.Login) return setErrorText("Podaj login!");
@@ -49,12 +74,13 @@ function EditPerson() {
     if (!person.Role.Name) return setErrorText("Podaj uprawnienia!");
     setErrorText(null);
     console.log(person);
+    axios.put(`/dcs/person/${person.Id}`, person);
   }
 
   useEffect(() => {
     setTitleText({
       title: "Osoby",
-      subtitle: "Dodaj nową osobę",
+      subtitle: "Zmodyfikuj istniejącą osobę",
     });
     setPerson(state.row);
   }, []);
@@ -200,7 +226,7 @@ function EditPerson() {
           <Button
             variant="contained"
             color="success"
-            onClick={() => CreatePerson()}
+            onClick={() => EditPerson()}
             sx={{ boxShadow: `0 0 10px 1px ${colors.greenAccent[400]};` }}
           >
             <Typography>ZAPISZ</Typography>
