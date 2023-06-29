@@ -65,7 +65,9 @@ function Admin() {
             <Route path="/tasks/details/:id" element={<DetailsTask />} />
 
             {/* PRIVATE */}
-            <Route element={<RequireAuth allowedRoles={[ROLES.USER]} />}>
+            <Route
+              element={<RequireAuth allowedRoles={[ROLES.USER, ROLES.ADMIN]} />}
+            >
               <Route path="/mytask" element={<MyTask />} />
               <Route path="/mytask/edit/:id" element={<EditTask />} />
               <Route path="/tasks/edit/:id" element={<EditTask />} />

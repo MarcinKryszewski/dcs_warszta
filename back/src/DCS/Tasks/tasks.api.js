@@ -111,7 +111,7 @@ class TaskActions {
     task.Description = req.body.Description;
     task.Category = req.body.Category;
     task.Priority = req.body.Priority;
-    task.CreationDate = req.body.CreationDate;
+    //task.CreationDate = req.body.CreationDate;
     task.FinishDate = req.body.FinishDate;
     task.AuthorId = req.body.Author;
     task.MachineId = req.body.Machine;

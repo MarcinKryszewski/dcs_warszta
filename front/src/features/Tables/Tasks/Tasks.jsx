@@ -27,13 +27,14 @@ function Tasks(props) {
   const location = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   const { auth, setAuth } = useContext(AuthContext);
 
   const [task, setTask] = useState({
     id: 0,
-    Machines: { id: 0, Area: "", MachineName: "" },
+    Machine: { id: 0, Area: "", MachineName: "" },
     Description: "",
-    Type: "",
+    Priority: "",
     Category: "",
     Responsible: { id: 0, Name: "", Surname: "" },
     PartsStatus: { Status: "" },
@@ -44,7 +45,7 @@ function Tasks(props) {
       Id: 0,
       Machine: { id: 0, Area: "", MachineName: "" },
       Description: "",
-      Type: "",
+      Priority: "",
       Category: "",
       Responsible: { id: 0, Name: "", Surname: "" },
       PartsStatus: "",
@@ -53,8 +54,6 @@ function Tasks(props) {
   ]);
 
   async function TasksDataRetriever() {
-    console.log(props);
-
     if (import.meta.env.VITE_MOCK_DATA) return setTasks(mockTasksData);
 
     const res = await axios.get("/dcs/task/all");
@@ -104,16 +103,19 @@ function Tasks(props) {
   );
 
   function EditHandle(row) {
-    //console.log(location);
-    navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
+    navigate(`${location.pathname}/edit/${row.Id}`, { state: { row: row } });
   }
   function RemoveHandle(row) {
     setTask(row);
     setOpen(true);
   }
   function DetailsHandle(row) {
-    //console.log("DETAILS: " + JSON.stringify(row));
-    navigate(`${location.pathname}/details/${row.id}`, { state: { row: row } });
+    navigate(`${location.pathname}/details/${row.Id}`, { state: { row: row } });
+  }
+
+  if (deleted) {
+    TasksDataRetriever();
+    setDeleted(false);
   }
 
   const columns = [
@@ -152,7 +154,7 @@ function Tasks(props) {
       valueGetter: (params) => params.row.Machine.MachineName,
     },
     { field: "Description", headerName: "Opis", flex: 1 },
-    { field: "Catgory", headerName: "Rodzaj działania", flex: 0.3 },
+    { field: "Category", headerName: "Rodzaj działania", flex: 0.3 },
     {
       field: "Priority",
       headerName: "Kategoria",
@@ -293,7 +295,11 @@ function Tasks(props) {
           Machine: false,
         }}
       />
-      <DeleteTask state={{ open, setOpen }} task={{ task }} />
+      <DeleteTask
+        state={{ open, setOpen }}
+        task={{ task }}
+        action={{ deleted, setDeleted }}
+      />
     </Box>
   );
 }

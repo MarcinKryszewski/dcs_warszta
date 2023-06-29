@@ -56,12 +56,12 @@ function Machines(props) {
   );
 
   function EditHandle(row) {
-    navigate(`${location.pathname}/edit/${row.id}`, { state: { row: row } });
+    //navigate(`${location.pathname}/edit/${row.Id}`, { state: { row: row } });
   }
 
   function RemoveHandle(row) {
-    setMachine(row);
-    setOpen(true);
+    /* setMachine(row);
+    setOpen(true); */
   }
 
   const columns = [

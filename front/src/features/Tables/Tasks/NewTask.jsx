@@ -33,6 +33,7 @@ export default function NewTask() {
     Category: "",
     ResponsibleId: 0,
     Priority: "",
+    AuthorId: 1,
   });
   const [person, setPerson] = useState("");
   const [machine, setMachine] = useState({
@@ -106,6 +107,7 @@ export default function NewTask() {
 
     console.log(task);
     const req = await axios.post("/dcs/task/add", task);
+    navigate(-1);
   }
 
   useEffect(() => {

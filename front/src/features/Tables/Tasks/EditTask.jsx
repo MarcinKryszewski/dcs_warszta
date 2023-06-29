@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "@/api/axios";
 
 import useTheme from "@mui/material/styles/useTheme";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -32,40 +33,93 @@ export default function EditTask() {
     Id: 0,
     MachineId: 0,
     Description: "",
-    Type: "",
+    Priority: "",
     Category: "",
     ResponsibleId: 0,
   });
   const [person, setPerson] = useState("");
   const [machine, setMachine] = useState({
-    id: 0,
+    Id: 0,
     Area: "",
     MachineName: "",
   });
+
+  const [machines, setMachines] = useState([
+    {
+      Id: 0,
+      Area: "Area",
+      MachineName: "MachineName",
+    },
+  ]);
+  const [users, setUsers] = useState([{ Id: 0, Name: "Name", Surname: "" }]);
+  const [uniqueAreas, setUniqueAreas] = useState([""]);
+  const [uniqueTypes, setUniqueTypes] = useState([""]);
+
   const [errorText, setErrorText] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const usersDataRetriever = import.meta.env.VITE_MOCK_DATA
-    ? mockUsersData
-    : usersData;
+  async function machinesDataRetriever() {
+    if (import.meta.env.VITE_MOCK_DATA) {
+      setMachines(mockMachinesData);
+      return;
+    }
+    const res = await axios.get("/dcs/machine/all");
+    const data = res.data;
+    setUniqueAreas(UniqueValuesFromJson(data, "Area"));
+    setMachines(data);
+  }
 
-  const machinesDataRetriever = import.meta.env.VITE_MOCK_DATA
-    ? mockMachinesData
-    : machinesData;
+  async function taskTypesRetriever() {
+    if (import.meta.env.VITE_MOCK_DATA) {
+      setUniqueTypes(UniqueValuesFromJson(mockTasksData, "Type"));
+      return;
+    }
+    const res = await axios.post("/dcs/task/types");
+    const data = res.data;
+    setUniqueTypes(data);
+  }
 
-  const tasksTypesDataRetriever = import.meta.env.VITE_MOCK_DATA
-    ? mockTasksData
-    : tasksTypesData;
+  async function usersDataRetriever() {
+    if (import.meta.env.VITE_MOCK_DATA) {
+      setUsers(mockUsersData);
+      return;
+    }
+    const res = await axios.get("/dcs/person/all");
+    const data = res.data;
+    setUsers(data);
+  }
 
-  const uniqueAreas = UniqueValuesFromJson(machinesDataRetriever, "Area");
-  const uniqueTypes = UniqueValuesFromJson(tasksTypesDataRetriever, "Type");
+  async function taskDataRetriever() {
+    const res = await axios.get(`${something.Id}`);
+    setTask(res);
+  }
 
-  function CreateTask() {
+  async function machineDataRetriever() {
+    const res = await axios.get(`${something.Id}`);
+    setMachine(res);
+  }
+
+  useEffect(() => {
+    setTitleText({
+      title: "Działania",
+      subtitle: "Dodaj nowe działanie",
+    });
+  }, []);
+
+  useEffect(() => {
+    machinesDataRetriever();
+    taskTypesRetriever();
+    usersDataRetriever();
+  }, []);
+
+  async function EditTask() {
     //if (!person.Name) return setErrorText("Podaj imię!");
     setErrorText(null);
-    console.log(task);
-    console.log(machine);
+    const req = await axios.put("/dcs/task/" + task.Id, task);
+    console.log(req);
+    //console.log(task);
+    //console.log(machine);
   }
 
   useEffect(() => {
@@ -73,19 +127,20 @@ export default function EditTask() {
       title: "Działania",
       subtitle: "Edytuj działanie",
     });
+    console.log(state.row);
     setTask({
-      Id: state.row.id,
-      MachineId: state.row.Machines.id,
+      Id: state.row.Id,
+      MachineId: state.row.Machine.Id,
       Description: state.row.Description,
-      Type: state.row.Type,
       Category: state.row.Category,
-      ResponsibleId: state.row.Responsible.id,
+      Priority: state.row.Priority,
+      ResponsibleId: state.row.Responsible.Id,
     });
     setPerson(state.row.Responsible);
     setMachine({
-      id: state.row.Machines.id,
-      Area: state.row.Machines.Area,
-      MachineName: state.row.Machines.MachineName,
+      Id: state.row.Machine.Id,
+      Area: state.row.Machine.Area,
+      MachineName: state.row.Machine.MachineName,
     });
   }, []);
 
@@ -126,7 +181,7 @@ export default function EditTask() {
               autoHighlight
               openOnFocus
               value={machine.MachineName == "" ? null : machine}
-              options={mockMachinesData.filter(
+              options={machines.filter(
                 (machines) => machines.Area == machine.Area
               )}
               getOptionLabel={(machines) => machines.MachineName}
@@ -175,9 +230,9 @@ export default function EditTask() {
                 Kategoria
               </FormLabel>
               <RadioGroup
-                value={task.Category}
+                value={task.Priority}
                 onChange={(event) =>
-                  setTask({ ...task, Category: event.target.value })
+                  setTask({ ...task, Priority: event.target.value })
                 }
               >
                 <FormControlLabel
@@ -224,10 +279,10 @@ export default function EditTask() {
             <Stack spacing={3} width={"100%"}>
               <Autocomplete
                 openOnFocus
-                value={task.Type == "" ? null : task.Type}
+                value={task.Category == "" ? null : task.Type}
                 options={uniqueTypes}
                 onChange={(event, value) => {
-                  setTask({ ...task, Type: value });
+                  setTask({ ...task, Category: value });
                 }}
                 sx={{
                   width: "100%",
@@ -240,7 +295,7 @@ export default function EditTask() {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    error={!task.Type ? true : false}
+                    error={!task.Category ? true : false}
                     label="Rodzaj"
                   />
                 )}
@@ -250,14 +305,14 @@ export default function EditTask() {
                 autoHighlight
                 openOnFocus
                 value={person == "" ? null : person}
-                options={usersDataRetriever}
+                options={users}
                 getOptionLabel={(persons) =>
                   `${persons.Name} ${persons.Surname}`
                 }
                 onChange={(event, value, reason) => {
                   if (reason === "clear") return setPerson("");
                   setPerson(value);
-                  setTask({ ...task, ResponsibleId: value.id });
+                  setTask({ ...task, ResponsibleId: value.Id });
                 }}
                 sx={{
                   width: "100%",
@@ -269,7 +324,7 @@ export default function EditTask() {
                 }}
                 renderOption={(props, option) => {
                   return (
-                    <li {...props} key={option.id}>
+                    <li {...props} key={option.Id}>
                       {option.Name} {option.Surname}
                     </li>
                   );
@@ -308,7 +363,7 @@ export default function EditTask() {
             <Button
               variant="contained"
               color="success"
-              onClick={() => CreateTask()}
+              onClick={() => EditTask()}
               sx={{ boxShadow: `0 0 10px 1px ${colors.greenAccent[400]};` }}
             >
               <Typography>ZAPISZ</Typography>

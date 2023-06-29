@@ -8,6 +8,8 @@ export default function RequireAuth({ allowedRoles }) {
   const { auth, setAuth } = useAuth();
   const location = useLocation();
 
+  const ewhat = allowedRoles.find((role) => role == auth.role);
+
   return allowedRoles.find((role) => role == auth.role) ? (
     <Outlet />
   ) : (
