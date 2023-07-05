@@ -56,10 +56,6 @@ export default function NewTask() {
   const [uniqueAreas, setUniqueAreas] = useState();
   const [uniqueTypes, setUniqueTypes] = useState();
 
-  /*const usersDataRetriever = useState(
-    import.meta.env.VITE_MOCK_DATA ? mockUsersData : mockUsersData
-  );*/
-
   async function machinesDataRetriever() {
     if (import.meta.env.VITE_MOCK_DATA) {
       setMachines(mockMachinesData);

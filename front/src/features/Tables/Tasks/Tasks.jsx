@@ -59,6 +59,7 @@ function Tasks(props) {
     const res = await axios.get("/dcs/task/all");
     const data = res.data;
     setTasks(data);
+    console.log(data);
 
     if (props.tasksData) {
       const personalTasks = data.filter(
@@ -195,7 +196,7 @@ function Tasks(props) {
       headerName: "Status części",
       flex: 0.3,
       valueGetter: (params) => params.row.PartsStatus,
-      renderCell: ({ PartsStatus }) => {
+      renderCell: (params) => {
         return (
           <Box
             width="90%"
@@ -203,11 +204,11 @@ function Tasks(props) {
             p="5px"
             display="flex"
             justifyContent="center"
-            backgroundColor={() => PartStatusColor(PartsStatus)}
+            backgroundColor={() => PartStatusColor(params.row.PartsStatus)}
             borderRadius="4px"
           >
             <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>
-              {PartsStatus}
+              {params.row.PartsStatus}
             </Typography>
           </Box>
         );
@@ -217,8 +218,8 @@ function Tasks(props) {
       field: "TaskStatus",
       headerName: "Status zadania",
       flex: 0.3,
-      valueGetter: (params) => params.row?.LastStatus,
-      renderCell: ({ LastStatus }) => {
+      valueGetter: (params) => params.row.LastStatus,
+      renderCell: (params) => {
         return (
           <Box
             width="90%"
@@ -226,11 +227,11 @@ function Tasks(props) {
             p="5px"
             display="flex"
             justifyContent="center"
-            backgroundColor={() => TaskStatusColor(LastStatus)}
+            backgroundColor={() => TaskStatusColor(params.row.LastStatus)}
             borderRadius="4px"
           >
             <Typography color={colors.grey[700]} sx={{ fontWeight: 600 }}>
-              {LastStatus}
+              {params.row.LastStatus}
             </Typography>
           </Box>
         );

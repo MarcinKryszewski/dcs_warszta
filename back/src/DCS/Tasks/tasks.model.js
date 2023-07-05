@@ -42,6 +42,9 @@ Task.init(
     LastStatus: {
       type: DataTypes.TEXT,
     },
+    PartsStatus: {
+      type: DataTypes.TEXT,
+    },
   },
   {
     sequelize,
